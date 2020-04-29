@@ -1,0 +1,203 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 5.0 Transitional//EN">
+<HTML>
+
+ <HEAD>
+  <meta charset="utf-8">
+  <TITLE> Menú </TITLE>
+  <META NAME="Generator" CONTENT="EditPlus">
+  <META NAME="Author" CONTENT="Jose de Frias">
+  <META NAME="Keywords" CONTENT="">
+  <META NAME="Description" CONTENT="">
+  <link rel="StyleSheet" href="css/comun.css">
+  <script type="text/javascript" src="funciones_js/funciones.js"></script>
+  <link rel="shortcut icon" type="image/x-icon" href="imagenes/favicon_hit.ico">
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+  <link rel="StyleSheet" href="css/calendario/calendar-blue2.css">
+  <script type="text/javascript" src="funciones_js/calendario/calendar.js"></script>
+  <script type="text/javascript" src="funciones_js/calendario/calendar-es.js"></script>
+  <script type="text/javascript" src="funciones_js/calendario/calendar-setup.js"></script>
+ </HEAD>
+
+<body background="imagenes/fondo.jpg">
+
+	{include file="$cabecera"}
+	{include file="$menu"}
+
+	<form name="mantenimiento_tabla" method = "post" action="">
+		
+		<table border = "0" align = "left">
+			<tr>
+				<td>
+					<input type=image src="imagenes/selector_inicio2.jpg" width="25" height="15" onclick="Selector(1);">
+					<input type= "hidden" name= "botonSelector" value="0">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_anterior2.jpg" width="25" height="15" onclick="Selector(2);">	
+				</td>			
+				<td>
+					<select name="filadesde" align="" onchange="submit();"> 
+						{foreach from=$combo item=fila}
+							<!--<option value="{$fila.inicio}">{$fila.inicio} - {$fila.fin}</option>-->
+							
+							{if {$filades} == {$fila.inicio}}
+								<option value="{$fila.inicio}" selected>{$fila.inicio} - {$fila.fin}</option>
+							{else}
+								<option value="{$fila.inicio}">{$fila.inicio} - {$fila.fin}</option>
+							{/if}
+							
+						{/foreach}
+					</select> 
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_siguiente2.jpg" width="25" height="15" onclick="Selector(3);">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_fin2.jpg" width="25" height="15" onclick="Selector(4);">
+				</td>
+				<td>
+					<th>&nbsp;&nbsp;&nbsp;</th>
+				</td>
+				<td>
+					<th align='left'>Fecha desde:</th>
+				</td>
+
+				<td><input type= 'text' id= 'buscar_fecha_desde' name= 'buscar_fecha_desde' value="{$buscar_fecha_desde}" size='10'>
+						<img id="botonbuscar_fecha_desde" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'buscar_fecha_desde',
+							button : "botonbuscar_fecha_desde",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>					
+				</td>
+				<td>
+					<th align='left'>Fecha desde:</th>
+				</td>
+
+				<td><input type= 'text' id= 'buscar_fecha_hasta' name= 'buscar_fecha_hasta' value="{$buscar_fecha_hasta}" size='10'>
+						<img id="botonbuscar_fecha_hasta" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'buscar_fecha_hasta',
+							button : "botonbuscar_fecha_hasta",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>					
+				</td>
+				<td>
+					<th>&nbsp;&nbsp;&nbsp;</th>
+				</td>
+				<td>
+					<th>Sistema:</th>
+				</td>
+				<td>
+					<select id="buscar_desde" name="buscar_desde" style="width:100px;"> 
+						{foreach from=$comboSistemas item=fila11}
+							{if {$buscar_desde} == {$fila11.valor}}
+								<option value="{$fila11.valor}" selected>{$fila11.mostrar}</option>
+							{else}
+								<option value="{$fila11.valor}">{$fila11.mostrar}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>
+				</td>
+				<td>
+					<th>&nbsp;&nbsp;&nbsp;</th>
+				</td>
+				<td>
+					<th>Usuario:</th>
+				</td>
+				<td>
+					<input type= 'text' name= 'buscar_usuario' size='25' value="{$buscar_usuario}">
+				</td>
+			</tr>
+		</table>
+
+		<BR>	
+
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" class="lineatitulo">
+			<tbody>
+				<tr>
+					<td>
+						<img width="20" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_buscar.jpg" width="70" height="25">-->
+						<input type="button" id="boton_buscar" value="BUSCAR" class="boton"  onClick="Buscar_general()"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_salir.jpg" width="70" height="25" onClick="salir('S')">-->
+						<input type= "hidden" name= "ir_a" value="">
+					</td>
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		{$mensaje1}
+		{$mensaje2}
+
+		{section name=i loop=$acceso_usuarios}
+		{/section}
+		<table border = "0" align = "left" class="fondotabla" style="clear:both">
+			<tr class="cabeceratabla">
+
+				<th>Fecha/Hora</th>
+				<th>Sistema</th>
+				<th>Usuario</th>
+				<th>Nombre</th>
+				<th>Localidad</th>
+				<th>Dirección</th>
+				<th>Email</th>
+				<th>Telefono</th>
+				
+
+			</tr>
+
+			{section name=i loop=$acceso_usuarios}
+			<tr>
+				<!--<td align = "center">
+					<input type= 'checkbox' name= 'seleccion{$smarty.section.i.index}' value="" onChange="desmarcarBorrar({$smarty.section.i.index})">
+					<input type= 'hidden' name= 'selec{$smarty.section.i.index}' value="N">
+				</td>-->
+				<td><input type= 'text' name= 'fecha_acceso{$smarty.section.i.index}' size='25' value="{$acceso_usuarios[i].fecha_acceso}" class="camposololecturacenter"></td>
+
+				<td><input type= 'text' name= 'desde{$smarty.section.i.index}' size='20' class="camposololecturatext" value="{$acceso_usuarios[i].desde}" class="camposololecturacenter"></td>
+
+				<td><input type= 'text' name= 'usuario{$smarty.section.i.index}' size='20' value="{$acceso_usuarios[i].usuario}" class="camposololecturatext"></td>
+				<td><input type= 'text' name= 'nombre{$smarty.section.i.index}' size='25' value="{$acceso_usuarios[i].nombre}" class="camposololecturatext"></td>
+				<td><input type= 'text' name= 'localidad{$smarty.section.i.index}' size='25' value="{$acceso_usuarios[i].localidad}" class="camposololecturatext"></td>
+				<td><input type= 'text' name= 'direccion{$smarty.section.i.index}' size='30' value="{$acceso_usuarios[i].direccion}" class="camposololecturatext"></td>
+				<td><input type= 'text' name= 'email{$smarty.section.i.index}' size='30' value="{$acceso_usuarios[i].email}" class="camposololecturatext"></td>
+				<td><input type= 'text' name= 'telefono{$smarty.section.i.index}' size='12' value="{$acceso_usuarios[i].telefono}" class="camposololecturacenter")"></td>
+
+
+			</tr>
+			{/section}
+
+		</table>
+
+		{include file="$pie"}
+	</form>
+
+
+ </BODY>
+</HTML>
+
+
+
+

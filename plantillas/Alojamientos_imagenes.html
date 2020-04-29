@@ -1,0 +1,352 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 5.0 Transitional//EN">
+<HTML>
+
+
+ <HEAD>
+  <meta charset="utf-8">
+  <TITLE> Menú </TITLE>
+  <META NAME="Generator" CONTENT="EditPlus">
+  <META NAME="Author" CONTENT="Jose de Frias">
+  <META NAME="Keywords" CONTENT="">
+  <META NAME="Description" CONTENT="">
+  <link rel="StyleSheet" href="css/comun.css">
+  <script type="text/javascript" src="funciones_js/funciones.js"></script>
+  <link rel="shortcut icon" type="image/x-icon" href="imagenes/favicon_hit.ico">
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+ </HEAD>
+
+<body background="imagenes/fondo.jpg">
+
+	{include file="$cabecera"}
+	{include file="$menu"}
+
+	<form name="mantenimiento_tabla" method = "post" action="" enctype="multipart/form-data">
+		
+		<table border = "0" align = "left">
+			<tr>
+				<td>
+					<input type=image src="imagenes/selector_inicio2.jpg" width="25" height="15" onclick="Selector(1);">
+					<input type= "hidden" name= "botonSelector" value="0">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_anterior2.jpg" width="25" height="15" onclick="Selector(2);">	
+				</td>			
+				<td>
+					<select name="filadesde" align="" onchange="submit();"> 
+						{foreach from=$combo item=fila}
+							<!--<option value="{$fila.inicio}">{$fila.inicio} - {$fila.fin}</option>-->
+							
+							{if {$filades} == {$fila.inicio}}
+								<option value="{$fila.inicio}" selected>{$fila.inicio} - {$fila.fin}</option>
+							{else}
+								<option value="{$fila.inicio}">{$fila.inicio} - {$fila.fin}</option>
+							{/if}
+							
+						{/foreach}
+					</select> 
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_siguiente2.jpg" width="25" height="15" onclick="Selector(3);">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_fin2.jpg" width="25" height="15" onclick="Selector(4);">
+				</td>
+				<td>
+					<th>&nbsp;&nbsp;&nbsp;</th>
+				</td>
+				<td>
+					<th>Alojamiento</th>
+				</td>
+				<td>
+					<select name="buscar_alojamiento" align="" onChange="submit();"> 
+						{foreach from=$comboAlojamientos item=fila}
+							{if {$buscar_alojamiento} == {$fila.id}}
+								<option value="{$fila.id}" selected>{$fila.nombre}</option>
+							{else}
+								<option value="{$fila.id}">{$fila.nombre}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>
+				<td>
+					<th>&nbsp;&nbsp;&nbsp;</th>
+				</td>
+				<td>
+					<th>Tipo</th>
+				</td>
+				<td>
+					<select name="buscar_tipo" align="" onChange="submit();"> 
+						{foreach from=$comboTipos item=fila}
+							{if {$buscar_tipo} == {$fila.valor}}
+								<option value="{$fila.valor}" selected>{$fila.mostrar}</option>
+							{else}
+								<option value="{$fila.valor}">{$fila.mostrar}</option>
+							{/if}
+						{/foreach}
+					</select> 
+
+
+				</td>
+			</tr>
+		</table>
+
+		<BR>	
+
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" style="padding:15px 0px 15px 0px;">
+			<tbody>
+				<tr>
+					<td>
+						<img width="20" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<input type="button" id="boton_buscar" value="BUSCAR" class="boton" onClick="Buscar_general()"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_grabar.jpg" width="70" height="25" onClick="grabar()">-->
+						<input type="button" id="boton_grabar" value="GRABAR" class="boton" onClick="grabar()"/>
+						<input type= "hidden" name= "actuar" value="">
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_volver.jpg" width="70" height="25" onClick="salir('V')">-->
+						<input type="button" id="boton_volver" value="VOLVER" class="boton" onClick="salir('V')"/>
+						<input type= "hidden" name= "ir_a" value="">
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_salir.jpg" width="70" height="25" onClick="salir('S')">-->
+					</td>
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		{$mensaje1}
+		{$mensaje2}
+
+		<table border = "0" align = "left" width="85%" style="clear:both">
+			<tr class="cabeceratabla">
+				<th>Sel</th>
+				<th>Id</th>
+				<th>Cod. Alojamiento</th>
+				<th>Tipo</th>
+				<th>Numero</th>
+				<th>URL</th>
+				<th>Imagen</th>
+				<th>Borrar</th>
+			</tr>
+
+			{section name=i loop=$alojamientos_imagenes}
+			<tr height="250">
+				<td align = "center">
+					<input type= 'checkbox' name= 'seleccion{$smarty.section.i.index}' value="" onChange="desmarcarBorrar({$smarty.section.i.index})">
+					<input type= 'hidden' name= 'selec{$smarty.section.i.index}' value="N">
+				</td>
+
+				<td><input type= 'text' name= 'id{$smarty.section.i.index}' size='8' value="{$alojamientos_imagenes[i].id}" readonly></td>
+
+				<td><input type= 'text' name= 'alojamiento{$smarty.section.i.index}' size='25' value="{$alojamientos_imagenes[i].alojamiento}" readonly></td>
+
+				<td>
+					<select name= 'tipo{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+						{foreach from=$comboTipos item=fila2}
+							{if {$alojamientos_imagenes[i].tipo} == {$fila2.valor}}
+								<option value="{$fila2.valor}" selected>{$fila2.mostrar}</option>
+							{else}
+								<option value="{$fila2.valor}">{$fila2.mostrar}</option>
+							{/if}	
+						{/foreach}
+					</select> 
+				</td>
+				<td>
+					<select name= 'numero{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+						{foreach from=$comboNumeros item=fila2}
+							{if {$alojamientos_imagenes[i].numero} == {$fila2.valor}}
+								<option value="{$fila2.valor}" selected>{$fila2.mostrar}</option>
+							{else}
+								<option value="{$fila2.valor}">{$fila2.mostrar}{$alojamientos_imagenes[i].tipo}</option>
+							{/if}	
+						{/foreach}
+					</select> 
+				</td>
+
+				<td><input type= 'text' name= 'url{$smarty.section.i.index}' size='40' value="{$alojamientos_imagenes[i].url}" onChange="seleccionar({$smarty.section.i.index})"></td>
+
+				<TD>
+
+					{if {$alojamientos_imagenes[i].url} == ""}
+
+						<img border="1" alt="" src="imagenes/alojamientos/{$alojamientos_imagenes[i].alojamiento}_{$alojamientos_imagenes[i].tipo}_{$alojamientos_imagenes[i].numero}.jpg" align="left" height="200" width="250" style="color:#000066; font-weight: bold; text-align:center; box-shadow: 8px 5px 25px #000;
+																-moz-box-shadow: -8px -5px 25px #000;
+																-webkit-box-shadow: -8px -5px 25px #000;
+																border-radius: 10px 10px 10px 10px;">
+
+					{else}
+						<img border="1" alt="" src="{$alojamientos_imagenes[i].url}" align="left" height="200" width="250" style="color:#000066; font-weight: bold; text-align:center; box-shadow: 8px 5px 25px #000;
+																-moz-box-shadow: -8px -5px 25px #000;
+																-webkit-box-shadow: -8px -5px 25px #000;
+																border-radius: 10px 10px 10px 10px;">
+					{/if}
+
+				</TD>
+
+				<td align = "center">
+					<input type= 'checkbox' name= 'borrar{$smarty.section.i.index}' value="" onChange="desmarcarSeleccion({$smarty.section.i.index})">
+					<input type= 'hidden' name= 'borra{$smarty.section.i.index}' value="N">
+				</td>
+			</tr>
+			{/section}
+
+		</table>
+
+		<table width="100%" cellspacing="0" cellpadding="0" border="0" summary="" style="padding:15px 0px 15px 0px;">
+			<tbody>
+				<tr>
+					<td>
+						<img width="200" height="2" alt="" src="imagenes/cghes.gif">
+					</td>
+					<td width="100%">
+						<img width="100%" height="2" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<img width="100" height="2" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+
+
+		<table border = "0" align = "left" class="fondotabla" style="clear:both">
+
+			<tr class="cabeceratabla">
+				<th>Sel</th>
+				<th>Cod. Alojamiento</th>
+				<th>Tipo</th>
+				<th>Numero</th>
+				<th>Nueva Imagen</th>
+			</tr>
+
+			{section name=j loop=$alojamientos_imagenes_nuevos}
+			<tr height="40">
+				<td align = "center">
+					<input type= 'checkbox' name= 'Nuevoseleccion{$smarty.section.j.index}' value="">
+					<input type= 'hidden' name= 'Nuevoselec{$smarty.section.j.index}' value="N">
+				</td>
+
+				<td>
+					<select name= 'Nuevoalojamiento{$smarty.section.j.index}' align="" onchange="Nuevosseleccionar({$smarty.section.j.index})"> 
+						{foreach from=$comboAlojamientos item=fila3}
+
+							{if {$recuperaalojamiento} == {$fila3.codigo} and {$smarty.section.j.index} == 0}
+								<option value="{$recuperaalojamiento}" selected>{$fila3.nombre}</option>
+							{else}
+								<option value="{$fila3.id}">{$fila3.nombre}</option>
+							{/if}
+
+
+						{/foreach}
+					</select> 
+				</td>
+
+				<td>
+					<select name= 'Nuevotipo{$smarty.section.j.index}' align="" onchange="Nuevosseleccionar({$smarty.section.j.index})"> 
+						{foreach from=$comboTipos item=fila4}
+
+							{if {$recuperatipo} == {$fila4.valor} and {$smarty.section.j.index} == 0}
+								<option value="{$recuperatipo}" selected>{$fila4.mostrar}</option>
+							{else}
+								<option value="{$fila4.valor}">{$fila4.mostrar}</option>
+							{/if}
+
+
+						{/foreach}
+					</select> 
+				</td>
+
+				<td>
+					<select name= 'Nuevonumero{$smarty.section.j.index}' align="" onchange="Nuevosseleccionar({$smarty.section.j.index})"> 
+						{foreach from=$comboNumeros item=fila5}
+
+							{if {$recuperanumero} == {$fila5.valor} and {$smarty.section.j.index} == 0}
+								<option value="{$recuperanumero}" selected>{$fila5.mostrar}</option>
+							{else}
+								<option value="{$fila5.valor}">{$fila5.mostrar}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>
+				<td>
+					<input name="upfile{$smarty.section.j.index}" id="upfile{$smarty.section.j.index}" type="file"/>
+				</td>
+			{/section}
+
+		</table>
+
+
+		<table width="100%" cellspacing="0" cellpadding="0" border="0" summary="" style="padding:15px 0px 15px 0px;">
+			<tbody>
+				<tr>
+					<td>
+						<img width="20" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<input type="button" id="boton_buscar" value="BUSCAR"  class="boton" onClick="Buscar_general()"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_grabar.jpg" width="70" height="25" onClick="grabar()">-->
+						<input type="button" id="boton_grabar" value="GRABAR" class="boton" onClick="grabar()"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_volver.jpg" width="70" height="25" onClick="salir('V')">-->
+						<input type="button" id="boton_volver" value="VOLVER" class="boton" onClick="salir('V')"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_salir.jpg" width="70" height="25" onClick="salir('S')">-->
+					</td>
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		{include file="$pie"}
+	</form>
+
+
+ </BODY>
+</HTML>
+
+
+
+

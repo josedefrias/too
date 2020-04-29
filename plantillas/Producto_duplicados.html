@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 5.0 Transitional//EN">
+<HTML>
+
+ <HEAD>
+  <meta charset="utf-8">
+  <TITLE> Menú </TITLE>
+  <META NAME="Generator" CONTENT="EditPlus">
+  <META NAME="Author" CONTENT="Jose de Frias">
+  <META NAME="Keywords" CONTENT="">
+  <META NAME="Description" CONTENT="">
+  <link rel="StyleSheet" href="css/comun.css">
+  <script type="text/javascript" src="funciones_js/funciones.js"></script>
+  <link rel="shortcut icon" type="image/x-icon" href="imagenes/favicon_hit.ico">
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+ </HEAD>
+
+<body background="imagenes/fondo.jpg">
+
+	{include file="$cabecera"}
+	{include file="$menu"}
+
+	<form name="mantenimiento_tabla" method = "post" action="">
+		
+
+					<!--<td>
+						<input type="image" src="imagenes/boton_grabar.jpg" width="70" height="25" onClick="grabar_Tipo_Registro()">
+						<input type= "hidden" name= "actuar" value="">
+					</td>-->
+
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" class="lineatitulo" style="clear:both" style="padding:15px 0px 15px 0px;">
+			<tbody>
+				<tr>
+					<td>
+						<img width="20" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					</td>
+
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_salir.jpg" width="70" height="25" onClick="salir('S')">-->
+						<input type= "hidden" name= "ir_a" value="">
+					</td>
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+<br>
+
+		{$mensaje1}
+		{$mensaje2}
+<br>
+			<table width="60%" border = "0" align = "left" height="40" class="fondotabla">
+				<tr height="40">
+					<th>Folleto Original</th>
+					<td>
+						<select name= 'folleto_original' align="" style="width:200px;"> 
+							{foreach from=$comboFolletos item=fila1}
+								{if {$folleto_original} == {$fila1.codigo}}
+									<option value="{$fila1.codigo}" selected>{$fila1.nombre}</option>
+								{else}
+									<option value="{$fila1.codigo}">{$fila1.nombre}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+					<th align = "left">Cuadro original</th>
+					<td><input type= 'text' name= 'cuadro_original' size='10' value="{$cuadro_original}"></td>
+				</tr>
+				<tr height="40">
+					<th>Folleto Nuevo</th>
+					<td>
+						<select name= 'folleto_nuevo' align="" style="width:200px;"> 
+							{foreach from=$comboFolletos item=fila1}
+								{if {$folleto_nuevo} == {$fila1.codigo}}
+									<option value="{$fila1.codigo}" selected>{$fila1.nombre}</option>
+								{else}
+									<option value="{$fila1.codigo}">{$fila1.nombre}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+					<th align = "left">Cuadro nuevo</th>
+					<td><input type= 'text' name= 'cuadro_nuevo' size='10' value="{$cuadro_nuevo}"></td>
+				</tr>
+			</table>
+
+			<table width="50%" border = "0" align = "left" height="40">
+				<tr height="40">
+					<th>Numero de Noches</th>
+					<td><input type= 'text' name= 'numero_noches' size='10' value="{$numero_noches}"></td>
+				</tr>
+
+				<tr height="40">
+					<th>Calculo Alojamientos</th>
+
+					<th>Dividir</th>
+					<td><input type= 'text' name= 'dividir' size='10' value="{$dividir}"></td>
+					<th align = "left">Multiplicar</th>
+					<td><input type= 'text' name= 'multiplicar' size='10' value="{$multiplicar}"></td>
+				</tr>
+			</table>
+
+
+
+
+			<table width="60%" border = "0" align = "left" height="60" style="clear:both" cellspacing="10">
+				<tr height="40">
+
+					<td>
+						<input type="button" id="boton_duplicar_cuadro" value="DUPLICAR CUADRO COMPLETO" class="boton" onClick="duplicar_producto('DC')"/>
+						<input type= "hidden" name= "actuar" value="">
+						<input type= "hidden" name= "ir_a" value="">
+					</td>
+					<td>
+						<input type="button" id="boton_duplicar_cuadro" value="DUPLICAR CUADRO SIN PRECIOS" class="boton" onClick="duplicar_producto('DS')"/>
+					</td>
+					<td>
+						<input type="button" id="boton_duplicar_calendario" value="DUPLICAR CALENDARIO" class="boton" onClick="duplicar_producto('CA')"/>
+					</td>
+					<td>
+						<input type="button" id="boton_duplicar_condiciones_cuadro" value="DUPLICAR CONDICIONES CUADRO" class="boton" onClick="duplicar_producto('CC')"/>
+					</td>
+			
+				</tr>
+
+
+			</table>
+
+
+
+		{include file="$pie"}
+	</form>
+
+ </BODY>
+</HTML>
+
+
+
+

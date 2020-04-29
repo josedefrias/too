@@ -1,0 +1,295 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 5.0 Transitional//EN">
+<HTML>
+
+ <HEAD>
+  <meta charset="utf-8">
+  <TITLE> Menú </TITLE>
+  <META NAME="Generator" CONTENT="EditPlus">
+  <META NAME="Author" CONTENT="Jose de Frias">
+  <META NAME="Keywords" CONTENT="">
+  <META NAME="Description" CONTENT="">
+  <link rel="StyleSheet" href="css/comun.css">
+  <script type="text/javascript" src="funciones_js/funciones.js"></script>
+  <link rel="shortcut icon" type="image/x-icon" href="imagenes/favicon_hit.ico">
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+ </HEAD>
+
+<body background="imagenes/fondo.jpg">
+
+	{include file="$cabecera"}
+	{include file="$menu"}
+
+	<form name="mantenimiento_tabla" method = "post" action="">
+		
+		<table border = "0" align = "left">
+			<tr>
+				<td>
+					<input type=image src="imagenes/selector_inicio2.jpg" width="25" height="15" onclick="Selector(1);">
+					<input type= "hidden" name= "botonSelector" value="0">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_anterior2.jpg" width="25" height="15" onclick="Selector(2);">	
+				</td>			
+				<td>
+					<select name="filadesde" align="" onchange="submit();"> 
+						{foreach from=$combo item=fila}
+							<!--<option value="{$fila.inicio}">{$fila.inicio} - {$fila.fin}</option>-->
+							
+							{if {$filades} == {$fila.inicio}}
+								<option value="{$fila.inicio}" selected>{$fila.inicio} - {$fila.fin}</option>
+							{else}
+								<option value="{$fila.inicio}">{$fila.inicio} - {$fila.fin}</option>
+							{/if}
+							
+						{/foreach}
+					</select> 
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_siguiente2.jpg" width="25" height="15" onclick="Selector(3);">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_fin2.jpg" width="25" height="15" onclick="Selector(4);">
+				</td>
+				<td>
+					<th>&nbsp;&nbsp;&nbsp;</th>
+				</td>
+				<td>
+					<th>Fecha:</th>
+				</td>
+				<td>
+					<input type= 'text' name= 'buscar_fecha' size='10' value="{$buscar_fecha}">
+				</td>
+				<td>
+					<th>&nbsp;&nbsp;&nbsp;</th>
+				</td>
+				<td>
+					<th>Origen:</th>
+				</td>
+				<td>
+					<input type= 'text' name= 'buscar_origen' size='4' value="{$buscar_origen}">
+				</td>
+				<td>
+					<th>&nbsp;&nbsp;&nbsp;</th>
+				</td>
+				<td>
+					<th>Destino:</th>
+				</td>
+				<td>
+					<input type= 'text' name= 'buscar_destino' size='4' value="{$buscar_destino}">
+				</td>
+			</tr>
+		</table>
+
+		<BR>	
+
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" class="lineatitulo">
+			<tbody>
+				<tr>
+					<td>
+						<img width="20" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+
+
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_buscar.jpg" width="70" height="25">-->
+						<input type="button" id="boton_buscar" value="BUSCAR" class="boton" onClick="Buscar_general()"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_grabar.jpg" width="70" height="25" onClick="grabar()">-->
+						<input type="button" id="boton_grabar" value="ACTUALIZAR DISPONIBILIDAD" class="boton"  onClick="Cargar_Disponibilidad_Nocturna_Api()"/>
+						<input type= "hidden" name= "actuar" value="">
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_salir.jpg" width="70" height="25" onClick="salir('S')">-->
+						<input type= "hidden" name= "ir_a" value="">
+					</td>
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		{$mensaje1}
+		{$mensaje2}
+
+		<table border = "0" align = "left" class="fondotabla" style="clear:both">
+			<tr class="cabeceratabla">
+				<th>Fecha</th>
+				<th>Orig</th>
+				<th>Dest</th>
+				<th>Cia</th>
+				<th>Vuelo</th>
+				<th>Salida</th>
+				<th>Llegada</th>
+				<th>C1</th>
+				<th>D1</th>
+				<th>C2</th>
+				<th>D2</th>
+				<th>C3</th>
+				<th>D3</th>
+				<th>C4</th>
+				<th>D4</th>
+				<th>C5</th>
+				<th>D5</th>
+				<th>C6</th>
+				<th>D6</th>
+				<th>C7</th>
+				<th>D7</th>
+				<th>C8</th>
+				<th>D8</th>
+				<th>C9</th>
+				<th>D9</th>
+				<th>C10</th>
+				<th>D10</th>
+				<th>C11</th>
+				<th>D11</th>
+				<th>C12</th>
+				<th>D12</th>
+				<th>C13</th>
+				<th>D13</th>
+				<th>C14</th>
+				<th>D14</th>
+				<th>C15</th>
+				<th>D15</th>
+				<th>C16</th>
+				<th>D16</th>
+				<th>C17</th>
+				<th>D17</th>
+				<th>C18</th>
+				<th>D18</th>
+				<th>C19</th>
+				<th>D19</th>
+				<th>C20</th>
+				<th>D20</th>
+				<th>C21</th>
+				<th>D21</th>
+				<th>C22</th>
+				<th>D22</th>
+				<th>C23</th>
+				<th>D23</th>
+				<th>C24</th>
+				<th>D24</th>
+				<th>C25</th>
+				<th>D25</th>
+				<th>Ultima Actualización</th>
+
+
+			</tr>
+
+			{section name=i loop=$amadeus_api}
+			<tr>
+
+				<td><input type= 'text' name= 'fecha{$smarty.section.i.index}' size='10' value="{$amadeus_api[i].fecha}" readonly></td>
+				<td><input type= 'text' name= 'origen{$smarty.section.i.index}' size='3' value="{$amadeus_api[i].origen}"></td>
+				<td><input type= 'text' name= 'destino{$smarty.section.i.index}' size='3' value="{$amadeus_api[i].destino}"></td>
+				<td><input type= 'text' name= 'cia{$smarty.section.i.index}' size='2' value="{$amadeus_api[i].cia}"></td>
+				<td><input type= 'text' name= 'vuelo{$smarty.section.i.index}' size='4' value="{$amadeus_api[i].vuelo}"></td>
+				<td><input type= 'text' name= 'hora_salida{$smarty.section.i.index}' size='5' value="{$amadeus_api[i].hora_salida}"></td>
+				<td><input type= 'text' name= 'hora_llegada{$smarty.section.i.index}' size='5' value="{$amadeus_api[i].hora_llegada}"></td>
+
+
+
+				<td><input type= 'text' name= 'clase1{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].clase1}" style="font-weight: bold; text-align:center; background-color:#D8D8D8;"></td>
+				<td><input type= 'text' name= 'disp1{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].disp1}" style="text-align:center; background-color:#FFFEBC;"></td>
+
+				<td><input type= 'text' name= 'clase2{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].clase2}" style="font-weight: bold; text-align:center; background-color:#D8D8D8;"></td>
+				<td><input type= 'text' name= 'disp2{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].disp2}" style="text-align:center; background-color:#FFFEBC;"></td>
+
+				<td><input type= 'text' name= 'clase3{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].clase3}" style="font-weight: bold; text-align:center; background-color:#D8D8D8;"></td>
+				<td><input type= 'text' name= 'disp3{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].disp3}" style="text-align:center; background-color:#FFFEBC;"></td>
+
+				<td><input type= 'text' name= 'clase4{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].clase4}" style="font-weight: bold; text-align:center; background-color:#D8D8D8;"></td>
+				<td><input type= 'text' name= 'disp4{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].disp4}" style="text-align:center; background-color:#FFFEBC;"></td>
+
+				<td><input type= 'text' name= 'clase5{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].clase5}" style="font-weight: bold; text-align:center; background-color:#D8D8D8;"></td>
+				<td><input type= 'text' name= 'disp5{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].disp5}" style="text-align:center; background-color:#FFFEBC;"></td>
+
+				<td><input type= 'text' name= 'clase6{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].clase6}" style="font-weight: bold; text-align:center; background-color:#D8D8D8;"></td>
+				<td><input type= 'text' name= 'disp6{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].disp6}" style="text-align:center; background-color:#FFFEBC;"></td>
+
+				<td><input type= 'text' name= 'clase7{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].clase7}" style="font-weight: bold; text-align:center; background-color:#D8D8D8;"></td>
+				<td><input type= 'text' name= 'disp7{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].disp7}" style="text-align:center; background-color:#FFFEBC;"></td>
+
+				<td><input type= 'text' name= 'clase8{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].clase8}" style="font-weight: bold; text-align:center; background-color:#D8D8D8;"></td>
+				<td><input type= 'text' name= 'disp8{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].disp8}" style="text-align:center; background-color:#FFFEBC;"></td>
+
+				<td><input type= 'text' name= 'clase9{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].clase9}" style="font-weight: bold; text-align:center; background-color:#D8D8D8;"></td>
+				<td><input type= 'text' name= 'disp9{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].disp9}" style="text-align:center; background-color:#FFFEBC;"></td>
+
+				<td><input type= 'text' name= 'clase10{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].clase10}" style="font-weight: bold; text-align:center; background-color:#D8D8D8;"></td>
+				<td><input type= 'text' name= 'disp10{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].disp10}" style="text-align:center; background-color:#FFFEBC;"></td>
+
+				<td><input type= 'text' name= 'clase11{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].clase11}" style="font-weight: bold; text-align:center; background-color:#D8D8D8;"></td>
+				<td><input type= 'text' name= 'disp11{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].disp11}" style="text-align:center; background-color:#FFFEBC;"></td>
+
+				<td><input type= 'text' name= 'clase12{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].clase12}" style="font-weight: bold; text-align:center; background-color:#D8D8D8;"></td>
+				<td><input type= 'text' name= 'disp12{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].disp12}" style="text-align:center; background-color:#FFFEBC;"></td>
+
+				<td><input type= 'text' name= 'clase13{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].clase13}" style="font-weight: bold; text-align:center; background-color:#D8D8D8;"></td>
+				<td><input type= 'text' name= 'disp13{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].disp13}" style="text-align:center; background-color:#FFFEBC;"></td>
+
+				<td><input type= 'text' name= 'clase14{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].clase14}" style="font-weight: bold; text-align:center; background-color:#D8D8D8;"></td>
+				<td><input type= 'text' name= 'disp14{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].disp14}" style="text-align:center; background-color:#FFFEBC;"></td>
+
+				<td><input type= 'text' name= 'clase15{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].clase15}" style="font-weight: bold; text-align:center; background-color:#D8D8D8;"></td>
+				<td><input type= 'text' name= 'disp15{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].disp15}" style="text-align:center; background-color:#FFFEBC;"></td>
+
+				<td><input type= 'text' name= 'clase16{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].clase16}" style="font-weight: bold; text-align:center; background-color:#D8D8D8;"></td>
+				<td><input type= 'text' name= 'disp16{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].disp16}" style="text-align:center; background-color:#FFFEBC;"></td>
+
+				<td><input type= 'text' name= 'clase17{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].clase17}" style="font-weight: bold; text-align:center; background-color:#D8D8D8;"></td>
+				<td><input type= 'text' name= 'disp17{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].disp17}" style="text-align:center; background-color:#FFFEBC;"></td>
+
+				<td><input type= 'text' name= 'clase18{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].clase18}" style="font-weight: bold; text-align:center; background-color:#D8D8D8;"></td>
+				<td><input type= 'text' name= 'disp18{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].disp18}" style="text-align:center; background-color:#FFFEBC;"></td>
+
+				<td><input type= 'text' name= 'clase19{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].clase19}" style="font-weight: bold; text-align:center; background-color:#D8D8D8;"></td>
+				<td><input type= 'text' name= 'disp19{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].disp19}" style="text-align:center; background-color:#FFFEBC;"></td>
+
+				<td><input type= 'text' name= 'clase20{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].clase20}" style="font-weight: bold; text-align:center; background-color:#D8D8D8;"></td>
+				<td><input type= 'text' name= 'disp20{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].disp20}" style="text-align:center; background-color:#FFFEBC;"></td>
+
+				<td><input type= 'text' name= 'clase21{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].clase21}" style="font-weight: bold; text-align:center; background-color:#D8D8D8;"></td>
+				<td><input type= 'text' name= 'disp21{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].disp21}" style="text-align:center; background-color:#FFFEBC;"></td>
+
+				<td><input type= 'text' name= 'clase22{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].clase22}" style="font-weight: bold; text-align:center; background-color:#D8D8D8;"></td>
+				<td><input type= 'text' name= 'disp22{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].disp22}" style="text-align:center; background-color:#FFFEBC;"></td>
+
+				<td><input type= 'text' name= 'clase23{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].clase23}" style="font-weight: bold; text-align:center; background-color:#D8D8D8;"></td>
+				<td><input type= 'text' name= 'disp23{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].disp23}" style="text-align:center; background-color:#FFFEBC;"></td>
+
+				<td><input type= 'text' name= 'clase24{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].clase24}" style="font-weight: bold; text-align:center; background-color:#D8D8D8;"></td>
+				<td><input type= 'text' name= 'disp24{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].disp24}" style="text-align:center; background-color:#FFFEBC;"></td>
+
+				<td><input type= 'text' name= 'clase25{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].clase25}" style="font-weight: bold; text-align:center; background-color:#D8D8D8;"></td>
+				<td><input type= 'text' name= 'disp25{$smarty.section.i.index}' size='1' value="{$amadeus_api[i].disp25}" style="text-align:center; background-color:#FFFEBC;"></td>
+
+				<td><input type= 'text' name= 'ultima_actualizacion{$smarty.section.i.index}' size='22' value="{$amadeus_api[i].ultima_actualizacion}"></td>
+
+
+			</tr>
+			{/section}
+
+		</table>
+
+		{include file="$pie"}
+	</form>
+
+
+ </BODY>
+</HTML>
+
+
+
+

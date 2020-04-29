@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 5.0 Transitional//EN">
+<HTML>
+
+  <link rel="StyleSheet" href="css/menu.css">
+
+ <HEAD>
+  <meta charset="utf-8">
+  <TITLE> Menú </TITLE>
+  <META NAME="Author" CONTENT="Jose de Frias">
+  <META NAME="Keywords" CONTENT="">
+  <META NAME="Description" CONTENT="">
+  <link rel="StyleSheet" href="css/comun.css">
+  <script type="text/javascript" src="funciones_js/funciones.js"></script>
+  <link rel="shortcut icon" type="image/x-icon" href="imagenes/favicon_hit.ico">
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+  <link rel="StyleSheet" href="css/calendario/calendar-blue2.css">
+  <script type="text/javascript" src="funciones_js/calendario/calendar.js"></script>
+  <script type="text/javascript" src="funciones_js/calendario/calendar-es.js"></script>
+  <script type="text/javascript" src="funciones_js/calendario/calendar-setup.js"></script>
+ </HEAD>
+
+<body background="imagenes/Fondo.jpg">
+
+	{include file="$cabecera"}
+	{include file="$menu"}
+
+	<form name="mantenimiento_tabla" method = "post" action="">
+
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" class="lineatitulo" style="clear:both">
+			<tbody>
+				<tr>
+					<td>
+						<img width="20" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+
+
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					</td>
+
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_salir.jpg" width="70" height="25" onClick="salir('S')">-->
+						<input type= "hidden" name= "ir_a" value="">
+					</td>
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+<br>
+<br>
+			<table width="95%" border = "0" align = "left" height="40" class="fondotabla" style="padding:15px 0px 15px 0px;">
+				<tr height="50">
+				
+					<td>
+						
+						<input type="button" id="boton_excel_salida" value="Excel de Control de Desajuste de Cupos"  style="align:left; width:400px; height:22px; color:#FFFFFF; background:#0066CC; font-family:Arial; font-weight: bold; font-size:14px; text-align:center; border-radius: 10px 10px 10px 10px;" onClick="javascript: window.location.href='Excel_Control_Desajuste_Cupos_Aereos.php';"/>						
+
+					</td>				
+				
+
+
+					<th></th>
+					<td></td>					
+					
+				</tr>
+
+
+
+			</table>
+
+
+
+		{include file="$pie"}
+	</form>
+
+ </BODY>
+</HTML>
+
+
+
+

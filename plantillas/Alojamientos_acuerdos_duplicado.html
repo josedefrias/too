@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 5.0 Transitional//EN">
+<HTML>
+
+ <HEAD>
+  <meta charset="utf-8">
+  <TITLE> Menú </TITLE>
+  <META NAME="Generator" CONTENT="EditPlus">
+  <META NAME="Author" CONTENT="Jose de Frias">
+  <META NAME="Keywords" CONTENT="">
+  <META NAME="Description" CONTENT="">
+  <link rel="StyleSheet" href="css/comun.css">
+  <script type="text/javascript" src="funciones_js/funciones.js"></script>
+  <<link rel="shortcut icon" type="image/x-icon" href="imagenes/favicon_hit.ico">
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+ </HEAD>
+
+<body background="imagenes/fondo.jpg">
+
+	{include file="$cabecera"}
+	{include file="$menu"}
+
+	<form name="mantenimiento_tabla" method = "post" action="">
+
+
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" class="lineatitulo" style="padding:15px 0px 15px 0px;">
+			<tbody>
+				<tr>
+					<td>
+						<img width="20" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+
+					<!--<td align='left' bgcolor='#333399' width="30%" height="20px" style="color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+						<font color='#CCFFFF' size='4'><B><I>Datos Generales - Empresas</I></B></font>
+					</td>-->
+
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<input type="button" id="boton_grabar" value="DUPLICAR" class="boton" onClick="grabar()"/>
+						<input type= "hidden" name= "actuar" value="">
+						<input type= "hidden" name= "ir_a" value="">
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+
+					<td>
+						<!--<input type="image" src="imagenes/boton_salir.jpg" width="70" height="25" onClick="salir('S')">-->
+						<input type= "hidden" name= "ir_a" value="">
+					</td>
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+
+
+
+
+<br>
+
+		{$mensaje1}
+		{$mensaje2}
+<br>
+			<table width="60%" border = "0" align = "left" height="40" class="fondotabla">
+				<tr>
+					<th>Alojamiento Original</th>
+					<td>
+						<select name= 'alojamiento_original' align=""> 
+							{foreach from=$comboAlojamientos item=fila1}
+								{if {$alojamiento_original} == {$fila1.id}}
+									<option value="{$fila1.id}" selected>{$fila1.nombre}</option>
+								{else}
+									<option value="{$fila1.id}">{$fila1.nombre}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+					<th align = "left">Acuerdo original</th>
+					<td><input type= 'text' name= 'acuerdo_original' size='7' value="{$acuerdo_original}"></td>
+				</tr>
+				<tr>
+					<th>Alojamiento Nuevo</th>
+					<td>
+						<select name= 'alojamiento_nuevo' align=""> 
+							{foreach from=$comboAlojamientos item=fila1}
+								{if {$alojamiento_nuevo} == {$fila1.id}}
+									<option value="{$fila1.id}" selected>{$fila1.nombre}</option>
+								{else}
+									<option value="{$fila1.id}">{$fila1.nombre}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+					<th align = "left">Acuerdo nuevo</th>
+					<td><input type= 'text' name= 'acuerdo_nuevo' size='7' value="{$acuerdo_nuevo}"></td>
+				</tr>
+			</table>
+
+
+
+		{include file="$pie"}
+	</form>
+
+ </BODY>
+</HTML>
+
+
+
+

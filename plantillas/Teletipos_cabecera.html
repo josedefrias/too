@@ -1,0 +1,352 @@
+
+
+		<table border = "0" align = "left">
+			<tr>
+				<td>
+					<input type=image src="imagenes/selector_inicio2.jpg" width="25" height="15" onclick="Selector(1);">
+					<input type= "hidden" name= "botonSelector" value="0">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_anterior2.jpg" width="25" height="15" onclick="Selector(2);">	
+				</td>
+				<td>
+					<select name="filadesde" align="" onchange="submit();"> 
+						{foreach from=$combo item=fila}
+							<!--<option value="{$fila.inicio}">{$fila.inicio} - {$fila.fin}</option>-->
+							
+							{if {$filades} == {$fila.inicio}}
+								<option value="{$fila.inicio}" selected>{$fila.inicio} - {$fila.fin}</option>
+							{else}
+								<option value="{$fila.inicio}">{$fila.inicio} - {$fila.fin}</option>
+							{/if}
+							
+						{/foreach}
+					</select> 
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_siguiente2.jpg" width="25" height="15" onclick="Selector(3);">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_fin2.jpg" width="25" height="15" onclick="Selector(4);">
+				</td>
+				<td>
+					<th>&nbsp;&nbsp;&nbsp;</th>
+				</td>
+				<td>
+					<th>Teletipo:</th>
+				</td>
+				<td>
+					<select name="buscar_id" style=" width:250px" align="" onchange="submit()"> 
+						{foreach from=$comboTeletipos item=fila}
+							{if {$buscar_id} == {$fila.id}}
+								<option value="{$fila.id}" selected>{$fila.nombre}</option>
+							{else}
+								<option value="{$fila.id}">{$fila.nombre}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>
+				<td>
+					<th>Nombre:</th>
+				</td>
+				<td>
+					<input type= 'text' name= 'buscar_nombre' size='30' value="{$buscar_nombre}">
+				</td>
+				<td>
+					<th>Buscar Destino:</th>
+				</td>
+				<td>
+					<select name="buscar_destino" style=" width:120px" align=""> 
+						{foreach from=$comboDestinos item=fila}
+							{if {$buscar_destino} == {$fila.codigo}}
+								<option value="{$fila.codigo}" selected>{$fila.nombre}</option>
+							{else}
+								<option value="{$fila.codigo}">{$fila.nombre}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>				
+			</tr>
+		</table>
+
+		<BR>	
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" style="padding:15px 0px 15px 0px;">
+			<tbody>
+				<tr height="20"></tr>
+				<tr>
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+
+					<td align='center' bgcolor='#333399' width="30%" height="20px" style="color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+						<font color='#CCFFFF' size='4'><B><I>Datos Generales</I></B></font>
+					</td>
+
+
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<input type="button" id="boton_buscar" value="BUSCAR" class="boton"  onClick="Buscar_Teletipo()"/>
+
+
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_grabar.jpg" width="70" height="25" onClick="grabar_Tipo_Registro()">-->
+						<input type="button" id="boton_grabar" value="GRABAR" class="boton"  onClick="grabar_Tipo_Registro()"/>
+						<input type= "hidden" name= "actuar" value="">
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_nuevo.jpg" width="70" height="25" onClick="NuevoRegistro_Folletos()">-->
+						<input type="button" id="boton_nuevo" value="NUEVO" class="boton"  onClick="NuevoRegistro_Teletipos()"/>
+
+						<input type= "hidden" name= "nuevo_registro" value="{$nuevo_registro}">
+						<input type= "hidden" name= "grabar_registro" value="">
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+
+ 					<td>
+						<input type="button" id="boton_ocultar_cuadro" value="Ocultar/Mostrar" class="boton"  onClick="mostrarOcultar('seccion_cabecera_teletipo')"/>
+					</td>
+
+
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<input type= "hidden" name= "ir_a" value="">
+					</td>
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+<!--<div id='seccion_cabecera_teletipo' style="display: {$seccion_cabecera_teletipo_display}">
+<input type= 'hidden' name= 'seccion_cabecera_teletipo_display' value="{$seccion_cabecera_teletipo_display}">-->
+		{$mensaje1}
+		{$mensaje2}
+
+		{section name=i loop=$teletipos}
+			<table width="95%" border = "0" align = "left" height="40" style="clear:both">
+				<tr>
+					<th align="left">Modificar</th>
+					<td align = "left">
+						<input type= 'checkbox' name= 'seleccion{$smarty.section.i.index}' value="" onChange="desmarcarBorrar({$smarty.section.i.index})">
+						<input type= 'hidden' name= 'selec{$smarty.section.i.index}' value="N">
+					</td>
+					<th align="left">Borrar</th>
+					<td align = "left">
+						<input type= 'checkbox' name= 'borrar{$smarty.section.i.index}' value="" onChange="desmarcarSeleccion({$smarty.section.i.index})">
+						<input type= 'hidden' name= 'borra{$smarty.section.i.index}' value="N">
+					</td>
+					<th style="padding: 0px 0px 0px 20px;">Id</th><td><input type= 'text' name= 'id{$smarty.section.i.index}' size='5' value="{$teletipos[i].id}" class="camposololecturacenter"></td>
+					
+					<th align="left">Formato</th>
+					<td>
+						<select name='formato{$smarty.section.i.index}' style=" width:260px" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboFormato item=fila}
+								{if {$teletipos[i].formato} == {$fila.valor}}
+									<option value="{$fila.valor}" selected>{$fila.mostrar}</option>
+								{else}
+									<option value="{$fila.valor}">{$fila.mostrar}</option>
+								{/if}
+							{/foreach}
+						</select> 
+					</td>		
+					
+					<th align="left">Colores</th>
+					<td colspan="3">
+						<select name='colores{$smarty.section.i.index}' style=" width:220px" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboColores item=fila}
+								{if {$teletipos[i].colores} == {$fila.id}}
+									<option value="{$fila.id}" selected>{$fila.nombre}</option>
+								{else}
+									<option value="{$fila.id}">{$fila.nombre}</option>
+								{/if}
+							{/foreach}
+						</select> 
+					</td>
+					
+				</tr>
+
+
+				<tr height="40">
+
+					<th colspan="2" align="left" width="80">Nombre</th>
+					<td colspan="6"><input type= 'text' name= 'nombre{$smarty.section.i.index}' size='75' value="{$teletipos[i].nombre}" style="color:#000066; font-weight: bold;" onChange="seleccionar({$smarty.section.i.index})"></td>
+
+					<th align="left">F. Lanzamiento</th>
+					<td colspan="1"><input type= 'text' name= 'fecha_lanzamiento{$smarty.section.i.index}' size='10' value="{$teletipos[i].fecha_lanzamiento}" style="text-align:center; color:#000066; font-weight: bold;" onChange="seleccionar({$smarty.section.i.index})"></td>
+
+					<th align="left">Destino</th>
+					<td>
+						<select name='destino{$smarty.section.i.index}' style=" width:200px" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboDestinos item=fila}
+								{if {$teletipos[i].destino} == {$fila.codigo}}
+									<option value="{$fila.codigo}" selected>{$fila.nombre}</option>
+								{else}
+									<option value="{$fila.codigo}">{$fila.nombre}</option>
+								{/if}
+							{/foreach}
+						</select> 
+					</td>
+
+				
+				</tr>
+			</table>	
+
+	<div id='seccion_cabecera_teletipo' style="display: {$seccion_cabecera_teletipo_display}">
+	<input type= 'hidden' name= 'seccion_cabecera_teletipo_display' value="{$seccion_cabecera_teletipo_display}">
+			
+			<table width="95%" border = "0" align = "left" height="30" class="fondotabla" style="clear:both">
+				<tr height="40">
+
+					<th align="left" width="126">Cuadro Base</th>
+					<td colspan="1">
+						<select name='cuadro{$smarty.section.i.index}' style=" width:330px" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboCuadros item=fila}
+								{if {$teletipos[i].cuadro} == {$fila.clave}}
+									<option value="{$fila.clave}" selected>{$fila.nombre}</option>
+								{else}
+									<option value="{$fila.clave}">{$fila.nombre}</option>
+								{/if}
+							{/foreach}
+						</select> 
+					</td>
+
+					<th align="left" width="60">Titulo</th>
+					<td colspan="1"><input type= 'text' name= 'titulo{$smarty.section.i.index}' size='30' value="{$teletipos[i].titulo}"  onChange="seleccionar({$smarty.section.i.index})"></td>
+
+					<th align="left" width="50">Dias</th>
+					<td colspan="1"><input type= 'text' style="text-align:center;" name= 'dias{$smarty.section.i.index}' size='5' value="{$teletipos[i].dias}"  onChange="seleccionar({$smarty.section.i.index})"></td>
+					
+			
+					
+				</tr>
+				
+
+				<tr height="40">
+
+					<th align="left">Imagen Cabecera</th>
+					<td colspan="1">						
+						<select name='cabecera_imagen{$smarty.section.i.index}' style=" width:245px" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboLogos item=fila}
+								{if {$teletipos[i].cabecera_imagen} == {$fila.id}}
+									<option value="{$fila.id}" selected>{$fila.nombre}</option>
+								{else}
+									<option value="{$fila.id}">{$fila.nombre}</option>
+								{/if}
+							{/foreach}
+						</select> 
+					</td>	
+
+					<th align="left">Logo Dcto. 1</th>
+					<td colspan="1">						
+						<select name='logo_dcto_1{$smarty.section.i.index}' style=" width:245px" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboLogos item=fila}
+								{if {$teletipos[i].logo_dcto_1} == {$fila.id}}
+									<option value="{$fila.id}" selected>{$fila.nombre}</option>
+								{else}
+									<option value="{$fila.id}">{$fila.nombre}</option>
+								{/if}
+							{/foreach}
+						</select> 
+					</td>	
+
+					<th align="left">Logo Dcto. 2</th>
+					<td colspan="1">						
+						<select name='logo_dcto_2{$smarty.section.i.index}' style=" width:245px" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboLogos item=fila}
+								{if {$teletipos[i].logo_dcto_2} == {$fila.id}}
+									<option value="{$fila.id}" selected>{$fila.nombre}</option>
+								{else}
+									<option value="{$fila.id}">{$fila.nombre}</option>
+								{/if}
+							{/foreach}
+						</select> 
+					</td>				
+					
+				</tr>
+
+				<tr height="40">
+					<th width="125" align = "left">Tex. Libre 1</th>
+					<td colspan="1" rowspan="1">
+						<textarea name='texto_libre_1{$smarty.section.i.index}' cols="28" rows="2" value="{$teletipos[i].texto_libre_1}" onChange="seleccionar({$smarty.section.i.index})">{$teletipos[i].texto_libre_1}</textarea>
+					</td>
+
+					<th width="100" align = "left">Text. Libre 2</th>
+					<td colspan="1" rowspan="1">
+						<textarea name='texto_libre_2{$smarty.section.i.index}' cols="28" rows="2" value="{$teletipos[i].texto_libre_2}" onChange="seleccionar({$smarty.section.i.index})">{$teletipos[i].texto_libre_2}</textarea>
+					</td>
+
+					<th width="95" align = "left">Tex. Libre 3</th>
+					<td colspan="1" rowspan="1">
+						<textarea name='texto_libre_3{$smarty.section.i.index}' cols="28" rows="2" value="{$teletipos[i].texto_libre_3}" onChange="seleccionar({$smarty.section.i.index})">{$teletipos[i].texto_libre_3}</textarea>
+					</td>
+				</tr>
+
+		
+
+				<tr height="40">
+					<th width="150px" align = "left">Texto Pie (Si no se teclea ningún texto se creará uno automáticamente)</th>
+					<td colspan="5" rowspan="3">
+						<textarea name='texto_pie{$smarty.section.i.index}' cols="160" rows="4" value="{$teletipos[i].texto_pie}" onChange="seleccionar({$smarty.section.i.index})">{$teletipos[i].texto_pie}</textarea>
+					</td>
+				</tr>
+
+			</table>
+
+		<table width="95%" border = "0" align = "left" class="fondotabla" style="clear:both; padding:0cm 0cm 0.5cm 0cm;">
+			<tr class="tablatacabecerateletipo">
+				<th colspan="3">Cabecera 1</th>
+				<th colspan="3">Cabecera 2</th>
+				<th colspan="3">Cabecera 3</th>
+
+			</tr>
+			<tr class="tablatacabecerateletipo">
+				<th>F. Desde</th>
+				<th>F. Hasta</th>
+				<th>Cabecera</th>
+				<th>F. Desde</th>
+				<th>F. Hasta</th>
+				<th>Cabecera</th>
+				<th>F. Desde</th>
+				<th>F. Hasta</th>
+				<th>Cabecera</th>
+			</tr>
+
+			<tr>
+
+				<td colspan="1"><input type= 'text' name= 'fecha_desde_1{$smarty.section.i.index}' size='10' value="{$teletipos[i].fecha_desde_1}"  onChange="seleccionar({$smarty.section.i.index})"></td>
+				<td colspan="1"><input type= 'text' name= 'fecha_hasta_1{$smarty.section.i.index}' size='10' value="{$teletipos[i].fecha_hasta_1}"  onChange="seleccionar({$smarty.section.i.index})"></td>
+				<td colspan="1"><input type= 'text' name= 'cabecera_1{$smarty.section.i.index}' size='20' value="{$teletipos[i].cabecera_1}"  onChange="seleccionar({$smarty.section.i.index})"></td>
+				<td colspan="1"><input type= 'text' name= 'fecha_desde_2{$smarty.section.i.index}' size='10' value="{$teletipos[i].fecha_desde_2}"  onChange="seleccionar({$smarty.section.i.index})"></td>
+				<td colspan="1"><input type= 'text' name= 'fecha_hasta_2{$smarty.section.i.index}' size='10' value="{$teletipos[i].fecha_hasta_2}"  onChange="seleccionar({$smarty.section.i.index})"></td>
+				<td colspan="1"><input type= 'text' name= 'cabecera_2{$smarty.section.i.index}' size='20' value="{$teletipos[i].cabecera_2}"  onChange="seleccionar({$smarty.section.i.index})"></td>
+				<td colspan="1"><input type= 'text' name= 'fecha_desde_3{$smarty.section.i.index}' size='10' value="{$teletipos[i].fecha_desde_3}"  onChange="seleccionar({$smarty.section.i.index})"></td>
+				<td colspan="1"><input type= 'text' name= 'fecha_hasta_3{$smarty.section.i.index}' size='10' value="{$teletipos[i].fecha_hasta_3}"  onChange="seleccionar({$smarty.section.i.index})"></td>
+				<td colspan="1"><input type= 'text' name= 'cabecera_3{$smarty.section.i.index}' size='20' value="{$teletipos[i].cabecera_3}"  onChange="seleccionar({$smarty.section.i.index})"></td>
+
+			</tr>
+
+
+		</table>
+
+		{/section}
+		<br>
+</div>
+
+
+
+

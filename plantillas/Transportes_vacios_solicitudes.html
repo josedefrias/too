@@ -1,0 +1,616 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 5.0 Transitional//EN">
+<HTML>
+
+ <HEAD>
+  <meta charset="utf-8">
+  <TITLE> Menú </TITLE>
+  <META NAME="Generator" CONTENT="EditPlus">
+  <META NAME="Author" CONTENT="Jose de Frias">
+  <META NAME="Keywords" CONTENT="">
+  <META NAME="Description" CONTENT="">
+
+  <link rel="StyleSheet" href="css/comun.css">
+  <link rel="StyleSheet" href="css/formato_ancho.css">
+  <link rel="StyleSheet" href="css/trayectos_vacios.css">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+  <script type="text/javascript" src="funciones_js/funciones.js"></script>
+  <script type="text/javascript" src="funciones_js_ajax/Buscar_transportes_vacios_solicitudes.js"></script>
+  <link rel="shortcut icon" type="image/x-icon" href="imagenes/favicon_hit.ico">
+
+
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+
+           <script src="funciones_js/jquery.bs.msgbox.min.js"></script>
+
+
+  <link rel="StyleSheet" href="css/calendario/calendar-blue2.css">
+  <script type="text/javascript" src="funciones_js/calendario/calendar.js"></script>
+  <script type="text/javascript" src="funciones_js/calendario/calendar-es.js"></script>
+  <script type="text/javascript" src="funciones_js/calendario/calendar-setup.js"></script>
+
+  	<!--codigo parar evitar hacer submit al pulsar enter-->
+          {literal}
+		<script language=javascript type=text/javascript>
+		function stopRKey(evt) {
+		var evt = (evt) ? evt : ((event) ? event : null);
+		var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
+		if ((evt.keyCode == 13) && (node.type=="text")) {return false;}
+		}
+		document.onkeypress = stopRKey;
+		</script> 
+        {/literal}
+
+
+
+
+ </HEAD>
+
+<body background="imagenes/fondo.jpg" width="">
+
+	{include file="$cabecera"}
+	{include file="$menu"}
+
+	<form name="mantenimiento_tabla" method = "post" action="" enctype="multipart/form-data">
+		
+		<table border = "0" align = "left">
+			<tr height="50">
+				<td>
+					<input type=image src="imagenes/selector_inicio2.jpg" width="25" height="15" onclick="Selector(1);">
+					<input type= "hidden" name= "botonSelector" value="0">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_anterior2.jpg" width="25" height="15" onclick="Selector(2);">	
+				</td>			
+				<td>
+					<select name="filadesde" align="" onchange="submit();"> 
+						{foreach from=$combo item=fila}
+							<!--<option value="{$fila.inicio}">{$fila.inicio} - {$fila.fin}</option>-->
+							
+							{if {$filades} == {$fila.inicio}}
+								<option value="{$fila.inicio}" selected>{$fila.inicio} - {$fila.fin}</option>
+							{else}
+								<option value="{$fila.inicio}">{$fila.inicio} - {$fila.fin}</option>
+							{/if}
+							
+						{/foreach}
+					</select> 
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_siguiente2.jpg" width="25" height="15" onclick="Selector(3);">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_fin2.jpg" width="25" height="15" onclick="Selector(4);">
+				</td>
+			</tr>
+		</table>
+
+
+
+		<table border = "0" align = "left" width="75%">
+			<tr>
+				<td align = "left">
+					<th>Cia</th>
+				</td>
+				<td align = "left" colspan= "4">
+					<select name="buscar_cia" align="" style=" width:305px"> 
+						{foreach from=$comboTransportes item=fila}
+							{if {$buscar_cia} == {$fila.cia}}
+								<option value="{$fila.cia}" selected>{$fila.nombre}</option>
+							{else}
+								<option value="{$fila.cia}">{$fila.nombre}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>
+
+
+				<td align = "left">
+					<th>Fecha</th>
+				</td>
+				<td align = "center">
+
+						<input type= 'text' id= 'buscar_fecha' name= 'buscar_fecha' size='11'  value="{$buscar_fecha}" onkeypress="return CancelSubmit(event)"
+						autocomplete="off">
+						<!--<img id="botonbuscar_fecha{$smarty.section.i.index}" height="20" src="imagenes/cal.gif">-->
+							<script type="text/javascript">
+								Calendar.setup({
+								inputField : 'buscar_fecha',
+								button : "botonbuscar_fecha",
+								ifFormat : "%d-%m-%Y",
+								align : "Br"
+								});
+							</script>
+
+				</td>
+
+			<td align = "left">
+					<th>Hasta</th>
+				</td>
+				<td align = "center">
+
+						<input type= 'text' id= 'buscar_fecha_hasta' name= 'buscar_fecha_hasta' size='12'  value="{$buscar_fecha_hasta}" onkeypress="return CancelSubmit(event)"
+						autocomplete="off">
+						<!--<img id="botonbuscar_fecha{$smarty.section.i.index}" height="20" src="imagenes/cal.gif">-->
+							<script type="text/javascript">
+								Calendar.setup({
+								inputField : 'buscar_fecha_hasta',
+								button : "botonbuscar_fecha_hasta",
+								ifFormat : "%d-%m-%Y",
+								align : "Br"
+								});
+							</script>
+
+				</td>
+
+				<td align = "left">
+					<th>Origen</th>
+				</td>
+				<td align = "left">
+					<input type= 'text' name= 'buscar_origen' size='14' value="{$buscar_origen}">
+				</td>
+				<td align = "left">
+					<th>Destino</th>
+				</td>
+				<td align = "left">
+					<input type= 'text' name= 'buscar_destino' size='14' value="{$buscar_destino}">
+				</td>
+
+			</tr>
+
+			<tr>
+				
+				<td align = "left">
+
+				</td>
+				<td align = "right" colspan="8">
+
+					<input type= "hidden" name= "buscar_tipo" value="{$buscar_tipo}">
+					<input type= 'hidden' name= 'buscar_plazas' size='6' value="{$buscar_plazas}">
+					<input type= 'hidden' name= 'buscar_precio' size='11' value="{$buscar_precio}">
+					<input type= 'hidden' name= 'buscar_estado' size='11' value="{$buscar_estado}">
+					<input type= 'hidden' name= 'buscar_dia_semana' size='11' value="{$buscar_dia_semana}">
+
+				</td>	
+
+
+				<td align = "left" colspan="2"><strong>ID Trayecto</strong></td>
+				<td align = "left">
+					<input type= 'text' name= 'buscar_id' size='12' value="{$buscar_id}">
+				</td>
+
+				<td align = "left" colspan="2"><strong>Localizador Solicitud</strong></td>
+				<td align = "left">
+					<input type= 'text' name= 'buscar_localizador' size='14' value="{$buscar_localizador}">
+				</td>
+				<td align = "left" colspan="2"><strong>Estado Solicitud</strong></td>
+
+				<td align = "right">
+					<select name="buscar_estado_solicitud" align="" style=" width:110px"> 
+						{foreach from=$comboEstado_Solicitud item=fila}
+							{if {$buscar_estado_solicitud} == {$fila.valor}}
+								<option value="{$fila.valor}" selected>{$fila.mostrar}</option>
+							{else}
+								<option value="{$fila.valor}">{$fila.mostrar}</option>
+							{/if}
+						{/foreach}
+					</select> 
+
+				</td>	
+
+			</tr>
+		</table>
+
+		<BR>	
+
+
+		<table width="100%" cellspacing="0" cellpadding="0" border="0" summary="" class="lineatitulo" style="padding:15px 0px 15px 0px;">
+			<tbody>
+				<tr>
+					<td>
+						<img width="20" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+					<td align='left' bgcolor='#333399' width="24%" height="20px" style="color:#000066; font-weight: bold; text-align:center; border-radius: 0px 0px 12px 0px;">
+						<!--<font color='#CCFFFF' size='4'><B><I>Solicitudes de Vacíos</I></B></font>-->
+						<font color='#CCFFFF' size='4'><B><I>Trayectos</I></B></font>
+					</td>
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<input type="button" id="boton_buscar" value="BUSCAR" class="boton"  onClick="Buscar_general()"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					</td>
+					<td>
+						<input type="button" id="boton_grabar" value="GRABAR" class="boton"  onClick="grabar()"/>
+						<input type= "hidden" name= "actuar" value="">
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_volver.jpg" width="70" height="25" onClick="salir('V')">-->
+						<input type="button" id="boton_volver" value="VOLVER" class="boton" onClick="salir_desolicitudes_avacios('V','{$buscar_id}')"/>
+						<input type= "hidden" name= "ir_a" value="">
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_salir.jpg" width="70" height="25" onClick="salir('S')">-->
+					</td>
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		{$mensaje1}
+		{$mensaje2}
+
+
+
+
+		<div id="contenido">
+			<div id="resultado_busqueda_cabecera">
+				<a style="width:20px;">Sel</a>
+				<a style="width:58px;">Id</a>
+				<a style="width:58px;">Id Cia</a>
+				<a style="width:115px;">Cia</a>
+				<a style="width:120px;">Origen</a>
+				<a style="width:120px;">Destino</a>
+				<a style="width:95px;">Fecha</a>
+				<a style="width:28px;">Dia</a>
+				<a style="width:67px;">Hora des</a>
+				<a style="width:65px;">Tipo</a>
+				<a style="width:68px;text-align:right;">Plazas</a>
+				<a style="width:68px;">Precio</a>
+				<a style="width:50px;">Tv</a>
+				<a style="width:58px;">Equ.</a>
+				<a style="width:60px;">Aire</a>
+				<a style="width:55px;">Recl</a>
+				<a style="width:55px;">Minus</a>
+				<a style="width:58px;">Wc</a>
+				<a style="width:100px;">Estado</a>
+				<a style="width:95px;">Alta</a>
+				<a style="width:20px;">Bor</a>	
+			</div>
+
+			{section name=i loop=$transportes_vacios_solicitudes}
+
+
+
+				{if {$transportes_vacios_solicitudes[i].numero_orden_sol} eq 1}
+					<div id="resultado_busqueda" style="background-color:#A7F3D7; padding:1px 0px 1px 0px;">
+
+						
+						<input type= 'text' name= 'solicitudes{$smarty.section.i.index}' value="{$transportes_vacios_solicitudes[i].solicitudes}" disabled
+						{if {$transportes_vacios_solicitudes[i].solicitudes} > 0 or {$transportes_vacios_solicitudes[i].estado} neq 'D'}
+							style="text-align:center; background-color: #010080; color: #ffffff; width:10px; float:left; padding: 3px 2px 4px 3px; display:block;"
+						{else}
+							style="text-align:center; width:10px; float:left; padding: 3px 2px 4px 3px; display:none;"
+						{/if}>
+					
+
+						<input type= 'text' name= 'id{$smarty.section.i.index}' style="width:38px;" value="{$transportes_vacios_solicitudes[i].id}" class="center" disabled>
+
+						
+						<input type= 'text' name= 'id_cia{$smarty.section.i.index}' style="width:38px;" value="{$transportes_vacios_solicitudes[i].id_cia}" class="center" disabled>
+						<input type= 'hidden' name= 'cod_cia{$smarty.section.i.index}' value="{$transportes_vacios_solicitudes[i].cod_cia}" disabled>
+						
+
+						<input type= 'text' name= 'nombre_cia{$smarty.section.i.index}' style="width:100px;" value="{$transportes_vacios_solicitudes[i].nombre_cia}" disabled>
+						
+						<input type= 'text' name= 'origen{$smarty.section.i.index}' style="width:100px;" value="{$transportes_vacios_solicitudes[i].origen}" disabled>
+						<input type= 'hidden' name= 'cod_origen{$smarty.section.i.index}' value="{$transportes_vacios_solicitudes[i].cod_origen}" disabled>
+
+						<input type= 'text' name= 'destino{$smarty.section.i.index}' style="width:100px;" value="{$transportes_vacios_solicitudes[i].destino}" disabled>
+						<input type= 'hidden' name= 'cod_destino{$smarty.section.i.index}' value="{$transportes_vacios_solicitudes[i].cod_destino}" disabled>
+
+
+						<input type= 'text' name= 'fecha{$smarty.section.i.index}' style="width:70px;" value="{$transportes_vacios_solicitudes[i].fecha}" class="center" disabled>
+						<input type= 'text' name= 'dia_semana{$smarty.section.i.index}' style="width:15px;" value="{$transportes_vacios_solicitudes[i].dia_semana}" class="center" disabled>
+						<input type= 'text' name= 'hora{$smarty.section.i.index}' style="width:30px;" value="{$transportes_vacios_solicitudes[i].hora}" class="center"  disabled>
+
+
+						<select name= 'tipo{$smarty.section.i.index}' align="" style="width:90px;" disabled> 
+							{foreach from=$comboTipo item=fila3}
+								{if {$transportes_vacios_solicitudes[i].tipo} == {$fila3.valor}}
+									<option value="{$fila3.valor}" selected>{$fila3.mostrar}</option>
+								{else}
+									<option value="{$fila3.valor}">{$fila3.mostrar}</option>
+								{/if}	
+							{/foreach}
+						</select> 
+
+
+						<input type= 'text' name= 'plazas{$smarty.section.i.index}' style="width:30px;" value="{$transportes_vacios_solicitudes[i].plazas}" class="center"  disabled>
+						<input type= 'text' name= 'precio{$smarty.section.i.index}' style="width:40px;" value="{$transportes_vacios_solicitudes[i].precio}" class="center"  disabled>
+
+						<select name= 'valor_tv{$smarty.section.i.index}' align="" style="width:49px;"  disabled> 
+							{foreach from=$comboSino item=fila3}
+								{if {$transportes_vacios_solicitudes[i].valor_tv} == {$fila3.valor}}
+									<option value="{$fila3.valor}" selected>{$fila3.mostrar}</option>
+								{else}
+									<option value="{$fila3.valor}">{$fila3.mostrar}</option>
+								{/if}	
+							{/foreach}
+						</select> 
+
+						<select name= 'valor_equipaje{$smarty.section.i.index}' align="" style="width:49px;"  disabled> 
+							{foreach from=$comboSino item=fila3}
+								{if {$transportes_vacios_solicitudes[i].valor_equipaje} == {$fila3.valor}}
+									<option value="{$fila3.valor}" selected>{$fila3.mostrar}</option>
+								{else}
+									<option value="{$fila3.valor}">{$fila3.mostrar}</option>
+								{/if}	
+							{/foreach}
+						</select> 
+
+						<select name= 'valor_aire{$smarty.section.i.index}' align="" style="width:49px;"  disabled> 
+							{foreach from=$comboSino item=fila3}
+								{if {$transportes_vacios_solicitudes[i].valor_aire} == {$fila3.valor}}
+									<option value="{$fila3.valor}" selected>{$fila3.mostrar}</option>
+								{else}
+									<option value="{$fila3.valor}">{$fila3.mostrar}</option>
+								{/if}	
+							{/foreach}
+						</select> 
+
+						<select name= 'valor_reclinables{$smarty.section.i.index}' align="" style="width:49px;"  disabled> 
+							{foreach from=$comboSino item=fila3}
+								{if {$transportes_vacios_solicitudes[i].valor_reclinables} == {$fila3.valor}}
+									<option value="{$fila3.valor}" selected>{$fila3.mostrar}</option>
+								{else}
+									<option value="{$fila3.valor}">{$fila3.mostrar}</option>
+								{/if}	
+							{/foreach}
+						</select> 
+
+						<select name= 'valor_minusvalidos{$smarty.section.i.index}' align="" style="width:49px;"  disabled> 
+							{foreach from=$comboSino item=fila3}
+								{if {$transportes_vacios_solicitudes[i].valor_minusvalidos} == {$fila3.valor}}
+									<option value="{$fila3.valor}" selected>{$fila3.mostrar}</option>
+								{else}
+									<option value="{$fila3.valor}">{$fila3.mostrar}</option>
+								{/if}	
+							{/foreach}
+						</select> 
+
+						<select name= 'valor_wc{$smarty.section.i.index}' align="" style="width:49px;"  disabled> 
+							{foreach from=$comboSino item=fila3}
+								{if {$transportes_vacios_solicitudes[i].valor_wc} == {$fila3.valor}}
+									<option value="{$fila3.valor}" selected>{$fila3.mostrar}</option>
+								{else}
+									<option value="{$fila3.valor}">{$fila3.mostrar}</option>
+								{/if}	
+							{/foreach}
+						</select> 
+
+						<select name= 'estado{$smarty.section.i.index}' align="" style="width:95px;"  disabled> 
+							{foreach from=$comboEstado_linea item=fila3}
+								{if {$transportes_vacios_solicitudes[i].estado} == {$fila3.valor}}
+									<option value="{$fila3.valor}" selected>{$fila3.mostrar}</option>
+								{else}
+									<option value="{$fila3.valor}">{$fila3.mostrar}</option>
+								{/if}	
+							{/foreach}
+						</select> 
+
+						<input type= 'text' name= 'fecha_alta{$smarty.section.i.index}' style="text-align:center; width:70px;" value="{$transportes_vacios_solicitudes[i].fecha_alta}" disabled>
+
+
+						<input type= 'text' name= 'solicitudes{$smarty.section.i.index}' value="{$transportes_vacios_solicitudes[i].solicitudes}" align="center" disabled
+						{if {$transportes_vacios_solicitudes[i].solicitudes} > 0 or {$transportes_vacios_solicitudes[i].estado} neq 'D'}
+							style="text-align:center; background-color: #010080; color: #ffffff; width:10px; float:right; padding: 3px 2px 4px 3px; display:block;"
+						{else}
+							style="text-align:center; width:10px; float:right; padding: 3px 2px 4px 3px; display:none;"
+						{/if}>
+
+
+					</div>
+
+
+					<!--LINEA SOLICITUD-->
+					<div id="resultado_busqueda" style="margin:0px 0px 0px 0px; padding:15px 0px 15px 0px;">
+						
+
+
+							<input type= 'checkbox' name= 'seleccion{$smarty.section.i.index}' value=""  onChange="desmarcarBorrar({$smarty.section.i.index})"
+								style="margin:8px 5px 0px 122px; text-align:center; width:15px; float:left; display:block;">
+							<input type= 'hidden' name= 'selec{$smarty.section.i.index}' value="N">
+				
+							<input type= 'text' name= 'numero_orden_sol{$smarty.section.i.index}' style="width:25px;" value="{$transportes_vacios_solicitudes[i].numero_orden_sol}" class="center" readonly>
+
+							<input type= 'text' name= 'sol_id_solicitud{$smarty.section.i.index}' style="width:53px;" value="{$transportes_vacios_solicitudes[i].sol_id_solicitud}" class="center" readonly>
+
+							<input type= 'text' name= 'sol_tipo_cliente{$smarty.section.i.index}' style="width:50px;" value="{$transportes_vacios_solicitudes[i].sol_tipo_cliente}" class="text" readonly>
+
+							<input type= 'text' name= 'sol_cliente{$smarty.section.i.index}' style="width:40px;" value="{$transportes_vacios_solicitudes[i].sol_cliente}" class="center" readonly>
+
+							<input type= 'text' name= 'sol_nombre{$smarty.section.i.index}' style="width:370px;" value="{$transportes_vacios_solicitudes[i].sol_nombre}" class="text" readonly>
+
+							<input type= 'text' name= 'sol_telefono{$smarty.section.i.index}' style="width:95px;" value="{$transportes_vacios_solicitudes[i].sol_telefono}" class="center" readonly>
+
+							<input type= 'text' name= 'sol_email{$smarty.section.i.index}' style="width:272px;" value="{$transportes_vacios_solicitudes[i].sol_email}" class="text" readonly>
+
+							<select name= 'sol_estado_solicitud{$smarty.section.i.index}' align="" style="width:155px;" onChange="seleccionar({$smarty.section.i.index})"> 
+								{foreach from=$comboEstado_Solicitud_linea item=fila3}
+									{if {$transportes_vacios_solicitudes[i].sol_estado_solicitud} == {$fila3.valor}}
+										<option value="{$fila3.valor}" selected>{$fila3.mostrar}</option>
+									{else}
+										<option value="{$fila3.valor}">{$fila3.mostrar}</option>
+									{/if}	
+								{/foreach}
+							</select> 
+
+							<input type= 'text' name= 'sol_fecha_alta_solicitud{$smarty.section.i.index}' style="width:70px;" value="{$transportes_vacios_solicitudes[i].sol_fecha_alta_solicitud}" class="center" readonly>
+
+
+
+							<input type= 'checkbox' name= 'borrar{$smarty.section.i.index}' value="" onChange="desmarcarSeleccion_solicitud_vacio({$smarty.section.i.index})" 
+															{if {$transportes_vacios_solicitudes[i].sol_estado_solicitud} == 'PE'}
+																style="text-align:center; width:15px; float:right; display:block;"
+															{else}
+																style="text-align:center; width:15px; float:right; display:none;"
+															{/if}	
+															>
+
+							<input type= 'hidden' name= 'borra{$smarty.section.i.index}' value="N">
+
+					</div>
+
+
+				{else}
+
+					<!--LINEA SOLICITUD-->
+					<div id="resultado_busqueda" style="margin:0px 0px 0px 0px; padding:15px 0px 15px 0px;">
+						
+
+
+							<input type= 'checkbox' name= 'seleccion{$smarty.section.i.index}' value=""  onChange="desmarcarBorrar({$smarty.section.i.index})"
+								style="margin:8px 5px 0px 122px; text-align:center; width:15px; float:left; display:block;">
+							<input type= 'hidden' name= 'selec{$smarty.section.i.index}' value="N">
+				
+							<input type= 'text' name= 'numero_orden_sol{$smarty.section.i.index}' style="width:25px;" value="{$transportes_vacios_solicitudes[i].numero_orden_sol}" class="center" readonly>
+
+							<input type= 'text' name= 'sol_id_solicitud{$smarty.section.i.index}' style="width:53px;" value="{$transportes_vacios_solicitudes[i].sol_id_solicitud}" class="center" readonly>
+
+							<input type= 'text' name= 'sol_tipo_cliente{$smarty.section.i.index}' style="width:50px;" value="{$transportes_vacios_solicitudes[i].sol_tipo_cliente}" class="text" readonly>
+
+							<input type= 'text' name= 'sol_cliente{$smarty.section.i.index}' style="width:40px;" value="{$transportes_vacios_solicitudes[i].sol_cliente}" class="center" readonly>
+
+							<input type= 'text' name= 'sol_nombre{$smarty.section.i.index}' style="width:370px;" value="{$transportes_vacios_solicitudes[i].sol_nombre}" class="text" readonly>
+
+							<input type= 'text' name= 'sol_telefono{$smarty.section.i.index}' style="width:95px;" value="{$transportes_vacios_solicitudes[i].sol_telefono}" class="center" readonly>
+
+							<input type= 'text' name= 'sol_email{$smarty.section.i.index}' style="width:272px;" value="{$transportes_vacios_solicitudes[i].sol_email}" class="text" readonly>
+
+							<select name= 'sol_estado_solicitud{$smarty.section.i.index}' align="" style="width:155px;" onChange="seleccionar({$smarty.section.i.index})"> 
+								{foreach from=$comboEstado_Solicitud_linea item=fila3}
+									{if {$transportes_vacios_solicitudes[i].sol_estado_solicitud} == {$fila3.valor}}
+										<option value="{$fila3.valor}" selected>{$fila3.mostrar}</option>
+									{else}
+										<option value="{$fila3.valor}">{$fila3.mostrar}</option>
+									{/if}	
+								{/foreach}
+							</select> 
+
+							<input type= 'text' name= 'sol_fecha_alta_solicitud{$smarty.section.i.index}' style="width:70px;" value="{$transportes_vacios_solicitudes[i].sol_fecha_alta_solicitud}" class="center" readonly>
+
+
+
+							<input type= 'checkbox' name= 'borrar{$smarty.section.i.index}' value="" onChange="desmarcarSeleccion_solicitud_vacio({$smarty.section.i.index})" 
+															{if {$transportes_vacios_solicitudes[i].sol_estado_solicitud} == 'PE'}
+																style="text-align:center; width:15px; float:right; display:block;"
+															{else}
+																style="text-align:center; width:15px; float:right; display:none;"
+															{/if}	
+															>
+
+							<input type= 'hidden' name= 'borra{$smarty.section.i.index}' value="N">
+
+					</div>
+
+
+				{/if}
+				
+
+
+
+
+
+			{/section}
+
+
+		</div>
+
+
+
+
+        <script>
+                  $(document).ready(function (){
+
+                                $(function(){
+                                   $('body').click(function(event){
+
+                                      $("[id*=resultado_origen]").hide();
+                                     $("[id*=resultado_destino]").hide();
+
+                                    });
+                                });
+
+
+
+                            });
+
+
+
+
+
+
+
+
+           </script>
+
+
+
+
+
+		<table width="100%" cellspacing="0" cellpadding="0" border="0" summary="" class="lineatitulo" style="padding:15px 0px 15px 0px;">
+			<tbody>
+				<tr>
+					<td>
+						<img width="20" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<input type="button" id="boton_buscar" value="BUSCAR" class="boton" onClick="Buscar_general()"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					</td>
+					<td>
+						<input type="button" id="boton_grabar" value="GRABAR" class="boton" onClick="grabar()"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_volver.jpg" width="70" height="25" onClick="salir('V')">-->
+						<input type="button" id="boton_volver" value="VOLVER" class="boton" onClick="salir('V')"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_salir.jpg" width="70" height="25" onClick="salir('S')">-->
+					</td>
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		{include file="$pie"}
+	</form>
+
+
+ </BODY>
+</HTML>
+
+
+
+

@@ -1,0 +1,382 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 5.0 Transitional//EN">
+<HTML>
+
+ <HEAD>
+  <meta charset="utf-8">
+  <TITLE> Menú </TITLE>
+  <META NAME="Generator" CONTENT="EditPlus">
+  <META NAME="Author" CONTENT="Jose de Frias">
+  <META NAME="Keywords" CONTENT="">
+  <META NAME="Description" CONTENT="">
+  <link rel="StyleSheet" href="css/comun.css">
+  <script type="text/javascript" src="funciones_js/funciones.js"></script>
+  <link rel="shortcut icon" type="image/x-icon" href="imagenes/favicon_hit.ico">
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+  <link rel="StyleSheet" href="css/calendario/calendar-blue2.css">
+  <script type="text/javascript" src="funciones_js/calendario/calendar.js"></script>
+  <script type="text/javascript" src="funciones_js/calendario/calendar-es.js"></script>
+  <script type="text/javascript" src="funciones_js/calendario/calendar-setup.js"></script>
+ </HEAD>
+
+<body background="imagenes/fondo.jpg">
+
+	{include file="$cabecera"}
+	{include file="$menu"}
+
+	<form name="mantenimiento_tabla" method = "post" action="">
+		
+		<table width="95%" border = "0" align = "left">
+
+			<tr>
+
+				<th rowspan="4" style="padding: 5px 10px;">Interfaz:</th>
+
+				<td rowspan="4">
+					<select name="buscar_interfaz" align=""> 
+						{foreach from=$comboInterfaces item=fila}
+							{if {$buscar_interfaz} == {$fila.codigo}}
+								<option value="{$fila.codigo}" selected>{$fila.nombre}</option>
+							{else}
+								<option value="{$fila.codigo}">{$fila.nombre}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>
+				<!--<th>&nbsp;&nbsp;&nbsp;</th>-->
+
+				<th style="padding: 5px 0px;">Pais:</th>
+				
+				<td>
+					<select name="buscar_pais" align=""> 
+						{foreach from=$comboPaises item=fila}
+							{if {$buscar_pais} == {$fila.codigo}}
+								<option value="{$fila.codigo}" selected>{$fila.nombre}</option>
+							{else}
+								<option value="{$fila.codigo}">{$fila.nombre}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>
+
+				<th align='left' style="padding: 5px 10px;">Latitud:</th>
+
+				<td>
+					<input type= 'text' name= 'buscar_latitud' size='15' value="{$buscar_latitud}" class="campocenter">
+				</td>
+
+				<th style="padding: 5px 5px;">Longitud:</th>
+
+				<td>
+					<input type= 'text' name= 'buscar_longitud' size='15' value="{$buscar_longitud}" class="campocenter">
+				</td>
+
+				<th align='left' style="padding: 5px 10px;">Radio (Kms):</th>
+
+				<td>
+					<input type= 'text' name= 'buscar_radio_km' size='10' value="{$buscar_radio_km}" class="campocenter">
+				</td>
+
+
+
+
+			</tr>
+
+
+
+			<tr>
+
+				
+				<th style="padding: 5px 10px;">Provincia:</th>
+				
+				<td>
+					<select name="buscar_provincia" align=""> 
+						{foreach from=$comboProvincias item=fila}
+							{if {$buscar_provincia} == {$fila.codigo}}
+								<option value="{$fila.codigo}" selected>{$fila.nombre}</option>
+							{else}
+								<option value="{$fila.codigo}">{$fila.nombre}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>
+
+				<th align='left' style="padding: 5px 10px;">Entrada:</th>
+				<td><input type= 'text' id= 'buscar_fecha_entrada' name= 'buscar_fecha_entrada' value="{$buscar_fecha_entrada}" size='10'>
+						<img id="botonbuscar_fecha_entrada" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'buscar_fecha_entrada',
+							button : "botonbuscar_fecha_entrada",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>					
+				</td>
+				
+				
+				<th align='left' style="padding: 5px 10px;">Categoria:</th>
+				
+
+				<td>
+					<input type= 'text' name= 'buscar_categoria' size='10' value="{$buscar_categoria}" class="campocenter">
+				</td>
+
+				
+				<th align='left' style="padding: 5px 10px;">Hotel:</th>
+				
+
+				<td>
+					<input type= 'text' name= 'buscar_hotel' size='38' value="{$buscar_hotel}">
+				</td>
+
+
+			</tr>
+
+
+
+			<tr>
+
+				<!--<th></th>
+				<td></td>-->
+
+				<th style="padding: 5px 10px;">Poblacion:</th>
+				
+				<td>
+					<input type= 'text' name= 'buscar_poblacion' size='38' value="{$buscar_poblacion}">
+				</td>
+
+
+				<th align='left' style="padding: 5px 10px;">Salida:</th>
+				
+				<td><input type= 'text' id= 'buscar_fecha_salida' name= 'buscar_fecha_salida' value="{$buscar_fecha_salida}" size='10'>
+						<img id="botonbuscar_fecha_salida" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'buscar_fecha_salida',
+							button : "botonbuscar_fecha_salida",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>					
+				</td>				
+
+
+				<th style="padding: 5px 10px;">Resultados:</th>
+				
+				<td>
+					<input type= 'text' name= 'cantidad_hoteles' size='10' value="{$cantidad_hoteles}" class="campocenter" disabled>
+				</td>
+			
+
+				<th align='left'  style="padding: 5px 10px;">Aloj. de Hits:</th>
+				
+				<td>
+					<select name="alojamientos_sistema" align="" style="width:240px;"> 
+						{foreach from=$comboAlojamientos_Provincia item=fila}
+							{if {$alojamientos_sistema} == {$fila.id}}
+								<option value="{$fila.id}" selected>{$fila.nombre}</option>
+							{else}
+								<option value="{$fila.id}">{$fila.nombre}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>
+
+			</tr>
+
+			<tr>
+
+				<!--<th></th>
+				<td></td>-->
+
+				<th colspan="2" align="right"style="padding: 5px 10px;">Distribucion</th>
+				
+				<th style="padding: 5px 5px;">Habitaciones:</th>
+
+				<td>
+					<input type= 'text' name= 'buscar_habitaciones' size='10' value="{$buscar_habitaciones}" class="campocenter">
+				</td>
+
+				<th align='left' style="padding: 5px 10px;">Adultos:</th>
+
+				<td>
+					<input type= 'text' name= 'buscar_adultos' size='10' value="{$buscar_adultos}" class="campocenter">
+				</td>
+
+				<th align='left' style="padding: 5px 10px;">Niños:</th>
+
+				<td>
+					<input type= 'text' name= 'buscar_ninos' size='10' value="{$buscar_ninos}" class="campocenter">
+				</td>
+
+
+
+
+			</tr>
+
+
+		</table>
+
+		<BR>	
+
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" class="lineatitulo" style="padding:15px 0px 15px 0px;">
+			<tbody>
+				<tr>
+					<td>
+						<img width="20" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_buscar.jpg" width="70" height="25">-->
+						<input type="button" id="boton_buscar" value="BUSCAR" class="boton" onClick="Buscar_Interfaz_Disponibilidad_Geo()"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+
+					<td>
+						<!--<input type="image" src="imagenes/boton_salir.jpg" width="70" height="25" onClick="salir('S')">-->
+						<input type= "hidden" name= "ir_a" value="">
+					</td>
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		{$mensaje1}
+		{$mensaje2}
+
+		<table border = "0" align = "left" class="fondotabla" style="clear:both">
+			<tr class="cabeceratabla">
+				<!--<th>Sel</th>-->
+				<th>Num</th>
+				<th>Codigo</th>
+				<th>Afili.</th>
+				<th>Nombre</th>
+				<th>Prov.</th>
+				<th>Poblacion</th>
+				<th>Cat</th>
+				<th>Entrada</th>
+				<th>Salida</th>
+				<th>P.Dir</th>
+				<th>Cal</th>
+				<th>Marca</th>
+				<th>Niños</th>
+				<th>Hab</th>
+				<th>Hab. Nombre</th>
+				<th>Rég.</th>
+				<th>Coste Hab</th>
+				<th>Divisa</th>
+				<th>Estado</th>
+				<th>Pvp Mín.</th>
+				<th>Gastos</th>
+			</tr>
+
+			{section name=i loop=$interfaz_disponibilidad}
+
+			{if {$interfaz_disponibilidad[i].codigo} neq '' and {$interfaz_disponibilidad[i].numero} neq 1}
+				<tr>
+					<td colspan ="20" height="30">
+						<HR width=100% align="left" color="#000066">
+					</td>
+				</tr>			
+			{/if}
+
+
+			<tr>
+				<!--<td align = "center">
+					<input type= 'checkbox' name= 'seleccion{$smarty.section.i.index}' value="" onChange="Seleccionar_Hotal_Interfaz({$smarty.section.i.index})"  {$interfaz_disponibilidad[i].habilitado}>
+					<input type= 'hidden' name= 'selec{$smarty.section.i.index}' value="N">
+				</td>-->
+
+
+				{if {$interfaz_disponibilidad[i].codigo} == ''}
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				{else}
+					<td><input type= 'text' name= 'numero{$smarty.section.i.index}' size='2' class="campocenter" value="{$interfaz_disponibilidad[i].numero}" readonly></td>
+
+					<td><input type= 'text' name= 'codigo{$smarty.section.i.index}' size='6' class="campocenter" value="{$interfaz_disponibilidad[i].codigo}" readonly></td>
+
+					<td><input type= 'text' name= 'afiliacion{$smarty.section.i.index}' size='3' class="campocenter" value="{$interfaz_disponibilidad[i].afiliacion}" readonly></td>
+					<td><input type= 'text' name= 'nombre{$smarty.section.i.index}' size='30' value="{$interfaz_disponibilidad[i].nombre}" readonly></td>
+
+					<td><input type= 'text' name= 'provincia {$smarty.section.i.index}' size='15' value="{$interfaz_disponibilidad[i].provincia}" readonly></td>
+
+					<td><input type= 'text' name= 'poblacion{$smarty.section.i.index}' size='15' value="{$interfaz_disponibilidad[i].poblacion}" readonly></td>
+
+					<td><input type= 'text' name= 'categoria{$smarty.section.i.index}' size='2' class="campocenter" value="{$interfaz_disponibilidad[i].categoria}" readonly></td>
+
+					<td><input type= 'text' name= 'entrada{$smarty.section.i.index}' size='10' class="campocenter" value="{$interfaz_disponibilidad[i].entrada}" readonly></td>
+
+					<td><input type= 'text' name= 'salida{$smarty.section.i.index}' size='10' class="campocenter" value="{$interfaz_disponibilidad[i].salida}" readonly></td>
+
+					<td><input type= 'text' name= 'pdr{$smarty.section.i.index}' size='2' class="campocenter" value="{$interfaz_disponibilidad[i].pdr}" readonly></td>
+
+					<td><input type= 'text' name= 'calidad{$smarty.section.i.index}' size='2' class="campocenter" value="{$interfaz_disponibilidad[i].calidad}" readonly></td>
+
+					<td><input type= 'text' name= 'marca{$smarty.section.i.index}' size='10' value="{$interfaz_disponibilidad[i].marca}" readonly></td>
+
+					<td><input type= 'text' name= 'edad_ninos_desde{$smarty.section.i.index}' size='5' class="campocenter" value="{$interfaz_disponibilidad[i].edad_ninos_desde}-{$interfaz_disponibilidad[i].edad_ninos_hasta}" readonly></td>
+				{/if}
+
+				{if {$interfaz_disponibilidad[i].hab_tipo} == ''}
+					<td></td>
+					<td></td>
+				{else}
+
+					<td><input type= 'text' name= 'hab_tipo{$smarty.section.i.index}' size='3' class="campocenter" value="{$interfaz_disponibilidad[i].hab_tipo}" readonly></td>
+
+					<td><input type= 'text' name= 'hab_descripcion{$smarty.section.i.index}' size='30' value="{$interfaz_disponibilidad[i].hab_descripcion}" readonly></td>
+
+				{/if}
+
+				<td><input type= 'text' name= 'regimen{$smarty.section.i.index}' size='2' class="campocenter" value="{$interfaz_disponibilidad[i].regimen}" readonly></td>
+
+				<td><input type= 'text' name= 'precio{$smarty.section.i.index}' size='8' class="camponumber" value="{$interfaz_disponibilidad[i].precio}" readonly></td>
+
+				<td><input type= 'text' name= 'divisa{$smarty.section.i.index}' size='2' class="campocenter" value="{$interfaz_disponibilidad[i].divisa}" readonly></td>
+
+				<td><input type= 'text' name= 'estado{$smarty.section.i.index}' size='2' class="campocenter" value="{$interfaz_disponibilidad[i].estado}" readonly></td>
+
+				<td><input type= 'text' name= 'pvp_min{$smarty.section.i.index}' size='8' class="camponumber" value="{$interfaz_disponibilidad[i].pvp_min}" readonly></td>
+
+				<td><input type= 'text' name= 'gastos{$smarty.section.i.index}' size='25' value="{$interfaz_disponibilidad[i].gastos}" readonly></td>
+
+
+
+
+			</tr>
+			{/section}
+
+
+		</table>
+
+
+		{include file="$pie"}
+	</form>
+
+
+ </BODY>
+</HTML>
+
+
+
+

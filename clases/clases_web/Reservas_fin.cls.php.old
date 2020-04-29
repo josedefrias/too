@@ -1,0 +1,457 @@
+<?php
+
+	header('Content-type: text/html; charset=utf-8');
+
+class clsReservas_fin{
+
+
+	function Cargar_aereos(){
+
+		$conexion = $this ->Conexion;
+
+		//ESPECIFICO: Cargamos las lineas solicitadas para esta pantalla
+		$localizador = $this ->localizador;
+
+		//echo($localizador)
+		$resultado =$conexion->query("select 
+												DATE_FORMAT(pa.FECHA, '%d-%m-%Y') AS v_fecha, 
+												case 
+													WHEN pa.FECHA = p.FECHA_SALIDA then 'Ida'
+													WHEN pa.FECHA <> p.FECHA_SALIDA then 'Vuelta'
+												end v_ida_vuelta,
+												pa.ORIGEN v_origen, pa.DESTINO v_destino, 
+												tr.NOMBRE v_cia, pa.CIA v_codigo_cia,
+												pa.VUELO v_vuelo, 
+												time_format(pa.HORA_SALIDA, '%H:%i') AS v_salida,
+												time_format(pa.HORA_LLEGADA, '%H:%i') AS v_llegada,
+												pp.PLAZAS v_pax,
+												case pa.SITUACION
+												 when 'OK' then 'Confirmado'
+												 else 'Pendiente'
+												 end v_disponibilidad
+
+
+										from
+											hit_reservas_aereos_trayectos pa,
+											hit_reservas_aereos pp,
+											hit_reservas p,
+											hit_transportes tr
+										where
+											pa.LOCALIZADOR = pp.LOCALIZADOR
+											and pa.ORDEN = pp.ORDEN
+											and pa.LOCALIZADOR = p.LOCALIZADOR
+											and pa.CIA = tr.CIA
+											and pa.LOCALIZADOR = '".$localizador."' ORDER BY pa.FECHA, pa.HORA_SALIDA");
+
+
+		if ($resultado == FALSE){
+			echo('Error en la consulta: '.$resultado);
+			//$resultado->close();
+			//$conexion->close();
+			//exit;
+		}
+		//----------------------------------------------------------------
+
+		//Guardamos el resultado en una matriz 	
+
+		$aereos = array();
+		for ($i = 0; $i < $resultado->num_rows; $i++) {
+			$resultado->data_seek($i);
+			$fila = $resultado->fetch_assoc();
+			array_push($aereos,$fila);
+		}
+
+		//Liberar Memoria usada por la consulta
+		$resultado->close();
+
+		return $aereos;											
+	}
+
+
+	function Cargar_nombre_hotel(){
+
+		$conexion = $this ->Conexion;
+
+		//ESPECIFICO: Cargamos las lineas solicitadas para esta pantalla
+		$localizador = $this ->localizador;
+
+		//echo($localizador)
+		$resultado =$conexion->query("select distinct concat(t.NOMBRE,' ',a.NOMBRE) h_nombre
+												from hit_reservas_alojamientos pal,
+														hit_alojamientos a,
+														hit_tipos_alojamiento t
+											where
+												pal.ALOJAMIENTO = a.ID
+												and a.TIPO = t.CODIGO
+												and pal.LOCALIZADOR = '".$localizador."'");
+
+
+		if ($resultado == FALSE){
+			echo('Error en la consulta: '.$resultado);
+			//$resultado->close();
+			//$conexion->close();
+			//exit;
+		}
+		//----------------------------------------------------------------
+
+		//Guardamos el resultado en una matriz 	
+
+		$nombre_hotel = array();
+		for ($i = 0; $i < $resultado->num_rows; $i++) {
+			$resultado->data_seek($i);
+			$fila = $resultado->fetch_assoc();
+			array_push($nombre_hotel,$fila);
+		}
+
+		//Liberar Memoria usada por la consulta
+		$resultado->close();
+
+		return $nombre_hotel;											
+	}
+
+	function Cargar_periodo_hotel(){
+
+		$conexion = $this ->Conexion;
+
+		//ESPECIFICO: Cargamos las lineas solicitadas para esta pantalla
+		$localizador = $this ->localizador;
+
+		//echo($localizador)
+		$resultado =$conexion->query("select distinct concat('Fecha entrada: ',DATE_FORMAT(pal.FECHA_ENTRADA, '%d-%m-%Y'),',   
+										Fecha salida: ',DATE_FORMAT(DATE_ADD(pal.FECHA_ENTRADA,INTERVAL pal.NOCHES DAY), '%d-%m-%Y')) h_periodo
+											from hit_reservas_alojamientos pal
+											where pal.LOCALIZADOR = '".$localizador."'");
+
+
+		if ($resultado == FALSE){
+			echo('Error en la consulta: '.$resultado);
+			//$resultado->close();
+			//$conexion->close();
+			//exit;
+		}
+		//----------------------------------------------------------------
+
+		//Guardamos el resultado en una matriz 	
+
+		$periodo_hotel = array();
+		for ($i = 0; $i < $resultado->num_rows; $i++) {
+			$resultado->data_seek($i);
+			$fila = $resultado->fetch_assoc();
+			array_push($periodo_hotel,$fila);
+		}
+
+		//Liberar Memoria usada por la consulta
+		$resultado->close();
+
+		return $periodo_hotel;											
+	}
+
+	function Cargar_hoteles(){
+
+		$conexion = $this ->Conexion;
+
+		//ESPECIFICO: Cargamos las lineas solicitadas para esta pantalla
+		$localizador = $this ->localizador;
+
+		//echo($localizador)
+		$resultado =$conexion->query("select
+										concat(
+										case hcar.TIPO_ALOJAMIENTO
+											when 'HOT' then 'Habitacion'
+											else talo.NOMBRE
+										end, ' ',pal.ORDEN
+										,' ',
+										hcar.NOMBRE
+										) h_caracteristica,
+										 concat(pal.USO,' pasajeros') h_pax,
+										 concat(
+										 '(',
+										 concat(pal.ADULTOS,' adultos'),
+										 case
+										 when pal.NINOS1 > 0 then concat(' + ',pal.NINOS1, ' niños')
+										 else ''
+										 end,
+										 case
+										 when pal.BEBES > 0 then concat(' + ',pal.BEBES, ' bebes')
+										 else ''
+										 end,
+										 ')') h_desglose_pax,	 
+										 'en regimen de ' h_texto_regimen,
+										 case pal.REGIMEN
+										 when 'SA' then 'Solo alojamiento'
+										 when 'AD' then 'Alojamiento y desayuno'
+										 when 'MP' then 'Media Pension'
+										 when 'PC' then 'Pension completa'
+										 when 'TI' then 'Todo incluido'	 
+										 end h_regimen,
+										 case pal.SITUACION
+										when 'OK' then 'Confirmado'
+										else 'Pendiente'
+										end h_estado
+									from
+										hit_reservas_alojamientos pal,
+										hit_habitaciones_car hcar,
+										hit_tipos_alojamiento talo
+									where
+										pal.CARACTERISTICA = hcar.CODIGO
+										and hcar.TIPO_ALOJAMIENTO = talo.CODIGO
+										and pal.LOCALIZADOR = '".$localizador."'");
+
+
+		if ($resultado == FALSE){
+			echo('Error en la consulta: '.$resultado);
+			//$resultado->close();
+			//$conexion->close();
+			//exit;
+		}
+		//----------------------------------------------------------------
+
+		//Guardamos el resultado en una matriz 	
+
+		$hoteles = array();
+		for ($i = 0; $i < $resultado->num_rows; $i++) {
+			$resultado->data_seek($i);
+			$fila = $resultado->fetch_assoc();
+			array_push($hoteles,$fila);
+		}
+
+		//Liberar Memoria usada por la consulta
+		$resultado->close();
+
+		return $hoteles;											
+	}
+
+	function Cargar_servicios(){
+
+		$conexion = $this ->Conexion;
+
+		//ESPECIFICO: Cargamos las lineas solicitadas para esta pantalla
+		$localizador = $this ->localizador;
+
+		//echo($localizador)
+		$resultado =$conexion->query("select s.nombre s_nombre, 
+												 DATE_FORMAT(r.FECHA, '%d-%m-%Y') AS s_fecha,
+												r.PAX s_pax,
+												case r.SITUACION
+												 when 'OK' then 'Confirmado'
+												 else 'Pendiente'
+												 end s_estado
+										from hit_reservas_servicios r, hit_servicios s
+										where
+											r.ID_PROVEEDOR = s.ID_PROVEEDOR
+											and r.CODIGO = s.CODIGO
+											and r.LOCALIZADOR = '".$localizador."'
+										ORDER BY r.FECHA");
+
+
+		if ($resultado == FALSE){
+			echo('Error en la consulta: '.$resultado);
+			//$resultado->close();
+			//$conexion->close();
+			//exit;
+		}
+		//----------------------------------------------------------------
+
+		//Guardamos el resultado en una matriz 	
+
+		$servicios = array();
+		for ($i = 0; $i < $resultado->num_rows; $i++) {
+			$resultado->data_seek($i);
+			$fila = $resultado->fetch_assoc();
+			array_push($servicios,$fila);
+		}
+
+		//Liberar Memoria usada por la consulta
+		$resultado->close();
+
+		return $servicios;											
+	}
+
+
+	function Cargar_desglose(){
+
+		$conexion = $this ->Conexion;
+
+		//ESPECIFICO: Cargamos las lineas solicitadas para esta pantalla
+		$localizador = $this ->localizador;
+
+		//echo($localizador)
+		$resultado =$conexion->query("select detalle p_detalle, cond.PRECIO_PAX p_precio_pax, cond.PAX p_pax, cond.PRECIO_TOTAL p_total
+										from
+											hit_reservas_condiciones cond
+										where
+											cond.LOCALIZADOR = '".$localizador."'
+										order by habitacion");
+
+
+		if ($resultado == FALSE){
+			echo('Error en la consulta: '.$resultado);
+			//$resultado->close();
+			//$conexion->close();
+			//exit;
+		}
+		//----------------------------------------------------------------
+
+		//Guardamos el resultado en una matriz 	
+
+		$desglose = array();
+		for ($i = 0; $i < $resultado->num_rows; $i++) {
+			$resultado->data_seek($i);
+			$fila = $resultado->fetch_assoc();
+			array_push($desglose,$fila);
+		}
+
+		//Liberar Memoria usada por la consulta
+		$resultado->close();
+
+		return $desglose;											
+	}
+
+
+	function Cargar_pvp(){
+
+		$conexion = $this ->Conexion;
+
+		//ESPECIFICO: Cargamos las lineas solicitadas para esta pantalla
+		$localizador = $this ->localizador;
+
+		//echo($localizador)
+		$resultado =$conexion->query("select ps.PVP_COMISIONABLE pvp_comis, ps.PVP_NO_COMISIONABLE pvp_tasas, 
+											 ps.PVP_COMISIONABLE + ps.PVP_NO_COMISIONABLE pvp_total
+											from
+												hit_reservas ps
+											where
+												ps.LOCALIZADOR = '".$localizador."'");
+
+
+		if ($resultado == FALSE){
+			echo('Error en la consulta: '.$resultado);
+			//$resultado->close();
+			//$conexion->close();
+			//exit;
+		}
+		//----------------------------------------------------------------
+
+		//Guardamos el resultado en una matriz 	
+
+		$pvp = array();
+		for ($i = 0; $i < $resultado->num_rows; $i++) {
+			$resultado->data_seek($i);
+			$fila = $resultado->fetch_assoc();
+			array_push($pvp,$fila);
+		}
+
+		//Liberar Memoria usada por la consulta
+		$resultado->close();
+
+		return $pvp;											
+	}
+
+
+	function Cargar_datos_agencia($localizador){
+
+		$conexion = $this ->Conexion;
+
+
+		//echo($localizador)
+		$resultado =$conexion->query("select m.nombre a_nombre, o.direccion a_direccion, o.codigo_postal a_c_postal, 
+												 o.localidad a_localidad, o.telefono a_telefono, o.MAIL a_email,
+												 r.agente a_agente, r.referencia a_referencia_agencia, r.observaciones a_observaciones
+										from hit_reservas r, hit_oficinas o, hit_minoristas m
+										where
+											r.MINORISTA = o.ID
+											and r.OFICINA = o.OFICINA
+											and o.ID = m.ID
+											and r.LOCALIZADOR = '".$localizador."'");
+
+
+
+
+
+		if ($resultado == FALSE){
+			echo('Error en la consulta: '.$resultado);
+			//$resultado->close();
+			//$conexion->close();
+			//exit;
+		}
+		//----------------------------------------------------------------
+
+		//Guardamos el resultado en una matriz 	
+
+		$datos_agencia = array();
+		for ($i = 0; $i < $resultado->num_rows; $i++) {
+			$resultado->data_seek($i);
+			$fila = $resultado->fetch_assoc();
+			array_push($datos_agencia,$fila);
+		}
+
+		//Liberar Memoria usada por la consulta
+		$resultado->close();
+
+		return $datos_agencia;											
+	}
+
+
+	function Cargar_pasajeros(){
+
+		$conexion = $this ->Conexion;
+
+		//ESPECIFICO: Cargamos las lineas solicitadas para esta pantalla
+		$localizador = $this ->localizador;
+
+		//echo($localizador)
+		$resultado =$conexion->query("select 	pax.NUMERO pax_numero,
+												 case pax.SEXO 
+													when 'H' then 'Mr.'
+													when 'M' then 'Ms.'
+												 end  pax_titulo,
+												 pax.APELLIDO pax_apellidos,
+												 pax.NOMBRE pax_nombre,
+												 case pax.TIPO
+													when 'A' then 'Adulto'
+													when 'N' then 'Niño'
+													when 'b' then 'Bebe'
+												 end pax_tipo,
+												 pax.EDAD pax_edad,
+												 pax.TIPO pax_tipo_cod
+												 
+										from 
+											hit_reservas_pasajeros pax
+										where
+											pax.LOCALIZADOR = '".$localizador."' order by pax.NUMERO");
+
+
+		if ($resultado == FALSE){
+			echo('Error en la consulta: '.$resultado);
+			//$resultado->close();
+			//$conexion->close();
+			//exit;
+		}
+		//----------------------------------------------------------------
+
+		//Guardamos el resultado en una matriz 	
+
+		$pasajeros = array();
+		for ($i = 0; $i < $resultado->num_rows; $i++) {
+			$resultado->data_seek($i);
+			$fila = $resultado->fetch_assoc();
+			array_push($pasajeros,$fila);
+		}
+
+		//Liberar Memoria usada por la consulta
+		$resultado->close();
+
+		return $pasajeros;											
+	}
+
+
+	//Metodo Constructor (Debe llamarse igual que la clase. Sirve para indicar parametros
+	//o argumentos que se indicarán a la hora de crear la clase en el código.)
+
+	function clsReservas_fin($conexion,$localizador){
+		$this->Conexion = $conexion;
+		$this->localizador = $localizador;
+	}
+}
+
+?>

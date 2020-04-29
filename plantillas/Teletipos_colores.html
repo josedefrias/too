@@ -1,0 +1,513 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 5.0 Transitional//EN">
+<HTML>
+
+ <HEAD>
+  <meta charset="utf-8">
+  <TITLE> Menú </TITLE>
+  <META NAME="Generator" CONTENT="EditPlus">
+  <META NAME="Author" CONTENT="Jose de Frias">
+  <META NAME="Keywords" CONTENT="">
+  <META NAME="Description" CONTENT="">
+  <link rel="StyleSheet" href="css/comun.css">
+  <script type="text/javascript" src="funciones_js/funciones.js"></script>
+  <link rel="shortcut icon" type="image/x-icon" href="imagenes/favicon_hit.ico">
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+ </HEAD>
+
+<body background="imagenes/fondo.jpg">
+
+	{include file="$cabecera"}
+	{include file="$menu"}
+
+	<form name="mantenimiento_tabla" method = "post" action="">
+		
+		<table border = "0" align = "left">
+			<tr>
+				<td>
+					<input type=image src="imagenes/selector_inicio2.jpg" width="25" height="15" onclick="Selector(1);">
+					<input type= "hidden" name= "botonSelector" value="0">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_anterior2.jpg" width="25" height="15" onclick="Selector(2);">	
+				</td>
+				<td>
+					<select name="filadesde" align="" onchange="submit();"> 
+						{foreach from=$combo item=fila}
+							<!--<option value="{$fila.inicio}">{$fila.inicio} - {$fila.fin}</option>-->
+							
+							{if {$filades} == {$fila.inicio}}
+								<option value="{$fila.inicio}" selected>{$fila.inicio} - {$fila.fin}</option>
+							{else}
+								<option value="{$fila.inicio}">{$fila.inicio} - {$fila.fin}</option>
+							{/if}
+							
+						{/foreach}
+					</select> 
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_siguiente2.jpg" width="25" height="15" onclick="Selector(3);">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_fin2.jpg" width="25" height="15" onclick="Selector(4);">
+				</td>
+				<td>
+					<th>&nbsp;&nbsp;&nbsp;</th>
+				</td>
+				<td>
+					<th>Combinacion:</th>
+				</td>
+				<td>
+					<select name="buscar_id" align="" onchange="submit();"> 
+						{foreach from=$comboTeletipos_colores item=fila}
+							{if {$buscar_id} == {$fila.id}}
+								<option value="{$fila.id}" selected>{$fila.nombre}</option>
+							{else}
+								<option value="{$fila.id}">{$fila.nombre}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>
+
+				<td>
+					<th>Teletipo Ejemplo:</th>
+				</td>
+				<td>
+					<select name="buscar_teletipo" align="" onchange="submit();"> 
+						{foreach from=$comboTeletipos item=fila}
+							{if {$buscar_teletipo} == {$fila.id}}
+								<option value="{$fila.id}" selected>{$fila.nombre}</option>
+							{else}
+								<option value="{$fila.id}">{$fila.nombre}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>
+
+				<td>
+					<th>Formato:</th>
+				</td>
+				<td>
+					<select name="buscar_formato" align="" onchange="submit();"> 
+						{foreach from=$comboFormato item=fila}
+							{if {$buscar_formato} == {$fila.valor}}
+								<option value="{$fila.valor}" selected>{$fila.mostrar}</option>
+							{else}
+								<option value="{$fila.valor}">{$fila.mostrar}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>
+
+			</tr>
+		</table>
+
+		<BR>	
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" class="lineatitulo" style="padding:5px 0px 15px 0px;">
+			<tbody>
+				<tr>
+					<td>
+						<img width="20" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_buscar.jpg" width="70" height="25" onClick="Buscar()">-->
+						<input type="button" id="boton_buscar" value="BUSCAR" class="boton" onClick="Buscar_general()"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_grabar.jpg" width="70" height="25" onClick="grabar_Tipo_Registro()">-->
+						<input type="button" id="boton_grabar" value="GRABAR" class="boton" onClick="grabar_Tipo_Registro()"/>
+						<input type= "hidden" name= "actuar" value="">
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_nuevo.jpg" width="70" height="25" onClick="NuevoRegistro()">-->
+						<input type="button" id="boton_buscar" value="NUEVO" class="boton" onClick="NuevoRegistro_Teletipos_Colores()"/>
+						<input type= "hidden" name= "nuevo_registro" value="{$nuevo_registro}">
+						<input type= "hidden" name= "grabar_registro" value="">
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_salir.jpg" width="70" height="25" onClick="salir('S')">-->
+						<input type= "hidden" name= "ir_a" value="">
+					</td>
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		{$mensaje1}
+		{$mensaje2}
+
+
+	<table width="95%"  BORDER = "1">
+		<tr>
+			<td width = "75%" valign="top">
+				{$html_oferta}
+			</td>
+
+			<td width = "25%" valign="top">
+
+			{section name=i loop=$teletipos_colores}
+				<table width="100%" border = "0" align = "left" height="40">
+					<tr>
+						<th>Modificar</th>
+						<td align = "left">
+							<input type= 'checkbox' name= 'seleccion{$smarty.section.i.index}' value="" onChange="desmarcarBorrar({$smarty.section.i.index})">
+							<input type= 'hidden' name= 'selec{$smarty.section.i.index}' value="N">
+						</td>
+						<th>Borrar</th>
+						<td align = "left">
+							<input type= 'checkbox' name= 'borrar{$smarty.section.i.index}' value="" onChange="desmarcarSeleccion({$smarty.section.i.index})">
+							<input type= 'hidden' name= 'borra{$smarty.section.i.index}' value="N">
+						</td>
+						<th>Id</th><td><input type= 'text' name= 'id{$smarty.section.i.index}' size='5' value="{$teletipos_colores[i].id}" readonly></td>
+					</tr>
+				</table>
+
+				<table width="100%" border = "0" align = "left" height="40" class="fondotabla" style="clear:both; padding:10px 10px 5px 10px;">
+
+					<tr height="30">
+						<th align = "left">Nombre</th>
+						<td>
+						<input type= 'text' name= 'nombre{$smarty.section.i.index}' size='30' value="{$teletipos_colores[i].nombre}" onChange="seleccionar({$smarty.section.i.index})" style="color:#000066; font-weight: bold;">
+						</td>
+					</tr>
+				</table>
+
+				<table width="100%" border = "0" align = "left" height="20" class="fondotabla" style="clear:both; padding:10px 10px 10px 10px;">
+
+						<tr>
+							<td align='left' bgcolor='#333399' width="100%" height="20px" style="color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+								<font color='#CCFFFF' size='4'><B><I>Cabecera</I></B></font>
+							</td>
+						</tr>
+				</table>
+
+
+				<table width="100%" border = "0" align = "left" height="40" class="fondotabla" style="clear:both; padding:5px 10px 5px 10px;">
+
+
+					<tr height="30">
+						<th align = "left">Borde Logo</th>
+						<td align="center"><input type= 'color' name= 'color_borde_logo{$smarty.section.i.index}' style="width:100px;" value="{$teletipos_colores[i].color_borde_logo}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					</tr>
+
+					<tr height="30">
+						<th align = "left">Fondo Logo</th>
+						<td align="center"><input type= 'color' name= 'color_fondo_logo{$smarty.section.i.index}' style="width:100px;" value="{$teletipos_colores[i].color_fondo_logo}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					</tr>
+
+					<tr height="30">
+						<th align = "left">Fondo Logo Izda.</th>
+						<td align="center"><input type= 'color' name= 'color_cabecera_fondo_logo_izquierda{$smarty.section.i.index}' style="width:100px;" value="{$teletipos_colores[i].color_cabecera_fondo_logo_izquierda}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					</tr>
+
+					<tr height="30">
+						<th align = "left">Fondo Destino</th>
+						<td align="center"><input type= 'color' name= 'color_cabecera_fondo_destino{$smarty.section.i.index}' style="width:100px;" value="{$teletipos_colores[i].color_cabecera_fondo_destino}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					</tr>
+
+					<tr height="30">
+						<th align = "left">Fondo Logo Drcha.</th>
+						<td align="center"><input type= 'color' name= 'color_cabecera_fondo_logo_derecha{$smarty.section.i.index}' style="width:100px;" value="{$teletipos_colores[i].color_cabecera_fondo_logo_derecha}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					</tr>
+
+					<tr height="30">
+						<th align = "left">Fuente Destino</th>
+						<td align="center"><input type= 'color' name= 'color_cabecera_fuente_destino{$smarty.section.i.index}' style="width:100px;" value="{$teletipos_colores[i].color_cabecera_fuente_destino}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					</tr>
+
+				</table>
+
+
+
+
+				<table width="100%" border = "0" align = "left" height="20" class="fondotabla" style="clear:both; padding:10px 10px 10px 10px;">
+
+						<tr>
+							<td align='left' bgcolor='#333399' width="100%" height="20px" style="color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+								<font color='#CCFFFF' size='4'><B><I>Imagen Principal (Solo Pdf)</I></B></font>
+							</td>
+						</tr>
+				</table>
+
+
+				<table width="100%" border = "0" align = "left" height="40" class="fondotabla" style="clear:both; padding:5px 10px 5px 10px;">
+
+
+					<tr height="30">
+						<th align = "left">Imagen Principal Fondo</th>
+						<td align="center"><input type= 'color' name= 'color_cabecera_imagen_fondo{$smarty.section.i.index}' style="width:100px;" value="{$teletipos_colores[i].color_cabecera_imagen_fondo}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					</tr>
+
+				</table>
+
+
+
+
+
+				<table width="100%" border = "0" align = "left" height="20" class="fondotabla" style="clear:both; padding:10px 10px 10px 10px;">
+
+						<tr>
+							<td align='left' bgcolor='#333399' width="100%" height="20px" style="color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+								<font color='#CCFFFF' size='4'><B><I>Bloque Principal</I></B></font>
+							</td>
+						</tr>
+				</table>
+
+
+				<table width="100%" border = "0" align = "left" height="40" class="fondotabla" style="clear:both; padding:5px 10px 5px 10px;">
+
+
+					<tr height="30">
+						<th align = "left">Fondo Formato Tabla</th>
+						<td align="center"><input type= 'color' name= 'color_tabla_fondo{$smarty.section.i.index}' style="width:100px;" value="{$teletipos_colores[i].color_tabla_fondo}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					</tr>
+
+					<tr height="30">
+						<th align = "left">Fondo Formato Bloques</th>
+						<td align="center"><input type= 'color' name= 'color_cabecera_contenido_fondo{$smarty.section.i.index}' style="width:100px;" value="{$teletipos_colores[i].color_cabecera_contenido_fondo}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					</tr>
+
+					<tr height="30">
+						<th align = "left">Título</th>
+						<td align="center"><input type= 'color' name= 'color_titulo{$smarty.section.i.index}' style="width:100px;" value="{$teletipos_colores[i].color_titulo}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					</tr>
+
+					<tr height="30">
+						<th align = "left">Ciudad de Salida</th>
+						<td align="center"><input type= 'color' name= 'color_ciudad_salida{$smarty.section.i.index}' style="width:100px;" value="{$teletipos_colores[i].color_ciudad_salida}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					</tr>
+
+					<tr height="30">
+						<th align = "left">Texto Vuelos</th>
+						<td align="center"><input type= 'color' name= 'color_texto_vuelos{$smarty.section.i.index}' style="width:100px;" value="{$teletipos_colores[i].color_texto_vuelos}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					</tr>
+
+				</table>
+
+				<table width="100%" border = "0" align = "left" height="40" class="fondotabla" style="clear:both; padding:5px 10px 5px 10px;">
+
+					<tr height="30">
+						<td>
+							<input type="button" id="boton_grabar" value="GRABAR"  style="height:22px; color:#FFFFFF; background:#0066CC; font-family:Arial; font-weight: bold; font-size:10px; text-align:center; border-radius: 10px 10px 10px 10px;" onClick="grabar_Tipo_Registro()"/>
+
+						</td>
+					</tr>
+
+				</table>
+
+				<table width="100%" border = "0" align = "left" height="20" class="fondotabla" style="clear:both; padding:10px 10px 10px 10px;">
+
+						<tr>
+							<td align='left' bgcolor='#333399' width="100%" height="20px" style="color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+								<font color='#CCFFFF' size='4'><B><I>Fondo Formato Bloques</I></B></font>
+							</td>
+						</tr>
+				</table>
+
+
+				<table width="100%" border = "0" align = "left" height="40" class="fondotabla" style="clear:both; padding:5px 10px 5px 10px;">
+
+					<tr height="30">
+						<th align = "left">Fondo Cabecera Bloque</th>
+						<td align="center"><input type= 'color' name= 'color_bloque_fondo_cabecera{$smarty.section.i.index}' style="width:100px;" value="{$teletipos_colores[i].color_bloque_fondo_cabecera}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					</tr>
+
+					<tr height="30">
+						<th align = "left">Fondo Imagen Bloque</th>
+						<td align="center"><input type= 'color' name= 'color_bloque_fondo_imagen{$smarty.section.i.index}' style="width:100px;" value="{$teletipos_colores[i].color_bloque_fondo_imagen}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					</tr>
+
+					<tr height="30">
+						<th align = "left">Fondo Precios Bloque</th>
+						<td align="center"><input type= 'color' name= 'color_bloque_fondo_precios{$smarty.section.i.index}' style="width:100px;" value="{$teletipos_colores[i].color_bloque_fondo_precios}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					</tr>
+
+
+				</table>
+
+				<table width="100%" border = "0" align = "left" height="20" class="fondotabla" style="clear:both; padding:10px 10px 10px 10px;">
+
+						<tr>
+							<td align='left' bgcolor='#333399' width="100%" height="20px" style="color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+								<font color='#CCFFFF' size='4'><B><I>Hoteles Cabecera</I></B></font>
+							</td>
+						</tr>
+				</table>
+
+
+				<table width="100%" border = "0" align = "left" height="40" class="fondotabla" style="clear:both; padding:5px 10px 5px 10px;">
+
+
+					<tr height="30">
+						<th align = "left">Nombre Hotel</th>
+						<td align="center"><input type= 'color' name= 'color_cabecera_precios_nombre_hotel{$smarty.section.i.index}' style="width:100px;" value="{$teletipos_colores[i].color_cabecera_precios_nombre_hotel}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					</tr>
+
+					<tr height="30">
+						<th align = "left">Categoria</th>
+						<td align="center"><input type= 'color' name= 'color_cabecera_precios_categoria_hotel{$smarty.section.i.index}' style="width:100px;" value="{$teletipos_colores[i].color_cabecera_precios_categoria_hotel}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					</tr>
+
+					<tr height="30">
+						<th align = "left">Régimen</th>
+						<td align="center"><input type= 'color' name= 'color_cabecera_precios_regimen_hotel{$smarty.section.i.index}' style="width:100px;" value="{$teletipos_colores[i].color_cabecera_precios_regimen_hotel}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					</tr>
+
+					<tr height="30">
+						<th align = "left">Columna 1</th>
+						<td align="center"><input type= 'color' name= 'color_cabecera_precios_precio1_hotel{$smarty.section.i.index}' style="width:100px;" value="{$teletipos_colores[i].color_cabecera_precios_precio1_hotel}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					</tr>
+
+					<tr height="30">
+						<th align = "left">Columna 2</th>
+						<td align="center"><input type= 'color' name= 'color_cabecera_precios_precio2_hotel{$smarty.section.i.index}' style="width:100px;" value="{$teletipos_colores[i].color_cabecera_precios_precio2_hotel}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					</tr>
+
+					<tr height="30">
+						<th align = "left">Columna 2</th>
+						<td align="center"><input type= 'color' name= 'color_cabecera_precios_precio3_hotel{$smarty.section.i.index}' style="width:100px;" value="{$teletipos_colores[i].color_cabecera_precios_precio3_hotel}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					</tr>
+
+				</table>
+
+				<table width="100%" border = "0" align = "left" height="40" class="fondotabla" style="clear:both; padding:5px 10px 5px 10px;">
+
+					<tr height="30">
+						<td>
+							<input type="button" id="boton_grabar" value="GRABAR"  style="height:22px; color:#FFFFFF; background:#0066CC; font-family:Arial; font-weight: bold; font-size:10px; text-align:center; border-radius: 10px 10px 10px 10px;" onClick="grabar_Tipo_Registro()"/>
+
+						</td>
+					</tr>
+
+				</table>
+
+				<table width="100%" border = "0" align = "left" height="20" class="fondotabla" style="clear:both; padding:10px 10px 10px 10px;">
+
+						<tr>
+							<td align='left' bgcolor='#333399' width="100%" height="20px" style="color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+								<font color='#CCFFFF' size='4'><B><I>Hoteles Precios</I></B></font>
+							</td>
+						</tr>
+				</table>
+
+
+				<table width="100%" border = "0" align = "left" height="40" class="fondotabla" style="clear:both; padding:5px 10px 5px 10px;">
+
+
+					<tr height="30">
+						<th align = "left">Nombre Hotel</th>
+						<td align="center"><input type= 'color' name= 'color_precios_nombre_hotel{$smarty.section.i.index}' style="width:100px;" value="{$teletipos_colores[i].color_precios_nombre_hotel}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					</tr>
+
+					<tr height="30">
+						<th align = "left">Categoria</th>
+						<td align="center"><input type= 'color' name= 'color_precios_categoria_hotel{$smarty.section.i.index}' style="width:100px;" value="{$teletipos_colores[i].color_precios_categoria_hotel}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					</tr>
+
+					<tr height="30">
+						<th align = "left">Localidad</th>
+						<td align="center"><input type= 'color' name= 'color_precios_localidad_hotel{$smarty.section.i.index}' style="width:100px;" value="{$teletipos_colores[i].color_precios_localidad_hotel}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					</tr>
+
+					<tr height="30">
+						<th align = "left">Régimen Tabla</th>
+						<td align="center"><input type= 'color' name= 'color_precios_regimen_hotel_tabla{$smarty.section.i.index}' style="width:100px;" value="{$teletipos_colores[i].color_precios_regimen_hotel_tabla}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					</tr>
+
+					<tr height="30">
+						<th align = "left">Régimen Bloques</th>
+						<td align="center"><input type= 'color' name= 'color_precios_regimen_hotel_bloques{$smarty.section.i.index}' style="width:100px;" value="{$teletipos_colores[i].color_precios_regimen_hotel_bloques}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					</tr>
+
+					<tr height="30">
+						<th align = "left">Columna 1</th>
+						<td align="center"><input type= 'color' name= 'color_precios_precio1_hotel{$smarty.section.i.index}' style="width:100px;" value="{$teletipos_colores[i].color_precios_precio1_hotel}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					</tr>
+
+					<tr height="30">
+						<th align = "left">Columna 2</th>
+						<td align="center"><input type= 'color' name= 'color_precios_precio2_hotel{$smarty.section.i.index}' style="width:100px;" value="{$teletipos_colores[i].color_precios_precio2_hotel}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					</tr>
+
+					<tr height="30">
+						<th align = "left">Columna 2</th>
+						<td align="center"><input type= 'color' name= 'color_precios_precio3_hotel{$smarty.section.i.index}' style="width:100px;" value="{$teletipos_colores[i].color_precios_precio3_hotel}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					</tr>
+
+				</table>
+
+
+				<table width="100%" border = "0" align = "left" height="20" class="fondotabla" style="clear:both; padding:10px 10px 10px 10px;">
+
+						<tr>
+							<td align='left' bgcolor='#333399' width="100%" height="20px" style="color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+								<font color='#CCFFFF' size='4'><B><I>Pie de Oferta</I></B></font>
+							</td>
+						</tr>
+				</table>
+
+
+				<table width="100%" border = "0" align = "left" height="40" class="fondotabla" style="clear:both; padding:5px 10px 5px 10px;">
+
+
+					<tr height="30">
+						<th align = "left">Fondo</th>
+						<td align="center"><input type= 'color' name= 'color_pie_fondo{$smarty.section.i.index}' style="width:100px;" value="{$teletipos_colores[i].color_pie_fondo}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					</tr>
+
+					<tr height="30">
+						<th align = "left">Borde</th>
+						<td align="center"><input type= 'color' name= 'color_pie_borde{$smarty.section.i.index}' style="width:100px;" value="{$teletipos_colores[i].color_pie_borde}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					</tr>
+
+					<tr height="30">
+						<th align = "left">Texto</th>
+						<td align="center"><input type= 'color' name= 'color_pie_texto{$smarty.section.i.index}' style="width:100px;" value="{$teletipos_colores[i].color_pie_texto}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					</tr>
+
+				</table>
+
+
+				<table width="100%" border = "0" align = "left" height="40" class="fondotabla" style="clear:both; padding:5px 10px 5px 10px;">
+
+					<tr height="30">
+						<td>
+							<input type="button" id="boton_grabar" value="GRABAR"  style="height:22px; color:#FFFFFF; background:#0066CC; font-family:Arial; font-weight: bold; font-size:10px; text-align:center; border-radius: 10px 10px 10px 10px;" onClick="grabar_Tipo_Registro()"/>
+
+						</td>
+					</tr>
+
+				</table>
+
+
+			{/section}
+
+			</td>
+		</tr>
+	</table>
+
+		{include file="$pie"}
+	</form>
+
+ </BODY>
+</HTML>
+
+
+
+

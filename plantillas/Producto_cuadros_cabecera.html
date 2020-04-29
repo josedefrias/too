@@ -1,0 +1,420 @@
+
+
+		<table border = "0" align = "left">
+			<tr>
+				<td>
+					<input type=image src="imagenes/selector_inicio2.jpg" width="25" height="15" onclick="Selector(1);">
+					<input type= "hidden" name= "botonSelector" value="0">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_anterior2.jpg" width="25" height="15" onclick="Selector(2);">	
+				</td>
+				<td>
+					<select name="filadesde" align="" onchange="submit();"> 
+						{foreach from=$combo item=fila}
+							<!--<option value="{$fila.inicio}">{$fila.inicio} - {$fila.fin}</option>-->
+							
+							{if {$filades} == {$fila.inicio}}
+								<option value="{$fila.inicio}" selected>{$fila.inicio} - {$fila.fin}</option>
+							{else}
+								<option value="{$fila.inicio}">{$fila.inicio} - {$fila.fin}</option>
+							{/if}
+							
+						{/foreach}
+					</select> 
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_siguiente2.jpg" width="25" height="15" onclick="Selector(3);">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_fin2.jpg" width="25" height="15" onclick="Selector(4);">
+				</td>
+				<td>
+					<th>&nbsp;&nbsp;&nbsp;</th>
+				</td>
+				<td>
+					<th>Buscar Folleto:</th>
+				</td>
+				<td>
+					<select name="buscar_codigo" style=" width:250px" align="" onchange="submit()"> 
+						{foreach from=$comboFolletos item=fila}
+							{if {$buscar_codigo} == {$fila.codigo}}
+								<option value="{$fila.codigo}" selected>{$fila.nombre}</option>
+							{else}
+								<option value="{$fila.codigo}">{$fila.nombre}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>
+				<td>
+					<th>Buscar Cuadro:</th>
+				</td>
+				<td>
+					<select name="buscar_cuadro" style=" width:350px" align="" onchange="submit()"> 
+						{foreach from=$comboCuadros item=fila}
+							{if {$buscar_cuadro} == {$fila.clave}}
+								<option value="{$fila.clave}" selected>{$fila.nombre}</option>
+							{else}
+								<option value="{$fila.clave}">{$fila.nombre}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>				
+			</tr>
+		</table>
+
+		<BR>	
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" style="padding:15px 0px 15px 0px;">
+			<tbody>
+				<tr height="20"></tr>
+				<tr>
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+
+					<td align='center' bgcolor='#333399' width="30%" height="20px" style="color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+						<!--<input type="image" src="imagenes/datos_generales.jpg" width="150" height="20">-->
+						<font color='#CCFFFF' size='4'><B><I>Datos Generales</I></B></font>
+					</td>
+
+
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_buscar.jpg" width="70" height="25" onClick="Buscar_Producto()">-->
+						<input type="button" id="boton_buscar" value="BUSCAR" class="boton" onClick="Buscar_Producto()"/>
+
+
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_grabar.jpg" width="70" height="25" onClick="grabar_Tipo_Registro()">-->
+						<input type="button" id="boton_grabar" value="GRABAR" class="boton" onClick="grabar_Tipo_Registro()"/>
+						<input type= "hidden" name= "actuar" value="">
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_nuevo.jpg" width="70" height="25" onClick="NuevoRegistro_Folletos()">-->
+						<input type="button" id="boton_nuevo" value="NUEVO" class="boton" onClick="NuevoRegistro_Cuadros()"/>
+
+						<input type= "hidden" name= "nuevo_registro" value="{$nuevo_registro}">
+						<input type= "hidden" name= "grabar_registro" value="">
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+
+ 					<td>
+						<input type="button" id="boton_ocultar_cuadro" value="Ocultar/Mostrar" class="boton" onClick="mostrarOcultar('seccion_cabecera_cuadro')"/>
+					</td>
+
+
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<input type= "hidden" name= "ir_a" value="">
+					</td>
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		{$mensaje1}
+		{$mensaje2}
+
+		{section name=i loop=$cuadros}
+			<table width="85%" border = "0" align = "left" height="40" style="clear:both">
+				<tr>
+					<th>Modificar</th>
+					<td align = "left">
+						<input type= 'checkbox' name= 'seleccion{$smarty.section.i.index}' value="" onChange="desmarcarBorrar({$smarty.section.i.index})">
+						<input type= 'hidden' name= 'selec{$smarty.section.i.index}' value="N">
+					</td>
+					<th>Borrar</th>
+					<td align = "left">
+						<input type= 'checkbox' name= 'borrar{$smarty.section.i.index}' value="" onChange="desmarcarSeleccion({$smarty.section.i.index})">
+						<input type= 'hidden' name= 'borra{$smarty.section.i.index}' value="N">
+					</td>
+					<th>Clave</th><td><input type= 'text' name= 'clave{$smarty.section.i.index}' size='5' value="{$cuadros[i].clave}" class="camposololecturanumber"></td>
+
+					<td colspan="3"><input type= 'text' name= 'nombre_cuadro_mostrar{$smarty.section.i.index}' size='60' value="{$cuadros[i].nombre_cuadro}" style="color:#000066; font-weight: bold; text-align:center;" onChange="seleccionar({$smarty.section.i.index})" disabled>
+
+					<input type= 'text' name= 'folleto_mostrar{$smarty.section.i.index}' size='7' value="{$cuadros[i].folleto}" style="color:#000066; font-weight: bold; text-align:center;" onChange="seleccionar({$smarty.section.i.index})" disabled>
+
+					<input type= 'text' name= 'cuadro_mostrar{$smarty.section.i.index}' size='7' value="{$cuadros[i].cuadro}" style="color:#000066; font-weight: bold; text-align:center;" onChange="seleccionar({$smarty.section.i.index})" disabled></td>
+
+				</tr>
+			</table>
+
+		<div id='seccion_cabecera_cuadro' style="display: {$seccion_cabecera_cuadro_display}">
+			<input type= 'hidden' name= 'seccion_cabecera_cuadro_display' value="{$seccion_cabecera_cuadro_display}">
+
+			<table width="95%" border = "0" align = "left" height="40" class="fondotabla" style="clear:both; padding:15px 0px 0px 0px;">
+
+				<tr height="40">
+
+					<th align="left">Nombre</th>
+					<td colspan="3"><input type= 'text' name= 'nombre_cuadro{$smarty.section.i.index}' size='50' value="{$cuadros[i].nombre_cuadro}" style="color:#000066; font-weight: bold;" onChange="seleccionar({$smarty.section.i.index})"></td>
+
+					<th align="left">Destino</th>
+					<td>
+						<select name='destino_cuadro{$smarty.section.i.index}' style=" width:160px" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboDestinos item=fila}
+								{if {$cuadros[i].destino_cuadro} == {$fila.codigo}}
+									<option value="{$fila.codigo}" selected>{$fila.nombre}</option>
+								{else}
+									<option value="{$fila.codigo}">{$fila.nombre}</option>
+								{/if}
+							{/foreach}
+						</select> 
+					</td>
+
+					<th align="left">Dest.2</th>
+					<td>
+						<select name='destino_cuadro2{$smarty.section.i.index}' style=" width:160px" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboDestinos item=fila}
+								{if {$cuadros[i].destino_cuadro2} == {$fila.codigo}}
+									<option value="{$fila.codigo}" selected>{$fila.nombre}</option>
+								{else}
+									<option value="{$fila.codigo}">{$fila.nombre}</option>
+								{/if}
+							{/foreach}
+						</select> 
+					</td>
+
+					<th align="left">Situacion</th>
+					<td>
+						<select name='situacion{$smarty.section.i.index}' style=" width:140px" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSituacionCuadros item=fila}
+								{if {$cuadros[i].situacion} == {$fila.valor}}
+									<option value="{$fila.valor}" selected>{$fila.mostrar}</option>
+								{else}
+									<option value="{$fila.valor}">{$fila.mostrar}</option>
+								{/if}
+							{/foreach}
+						</select> 
+					</td>
+
+					<th align="left">Tipo</th>
+					<td>
+						<select name='tipo_cuadro{$smarty.section.i.index}' style=" width:160px" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboTipoCuadros item=fila}
+								{if {$cuadros[i].tipo_cuadro} == {$fila.valor}}
+									<option value="{$fila.valor}" selected>{$fila.mostrar}</option>
+								{else}
+									<option value="{$fila.valor}">{$fila.mostrar}</option>
+								{/if}
+							{/foreach}
+						</select> 
+					</td>
+
+				</tr>
+
+
+				<tr height="40">
+
+					<th align="left">Folleto</th>
+					<td>
+						<select name='folleto{$smarty.section.i.index}' style=" width:160px" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboFolletos item=fila}
+								{if {$cuadros[i].folleto} == {$fila.codigo}}
+									<option value="{$fila.codigo}" selected>{$fila.nombre}</option>
+								{else}
+									<option value="{$fila.codigo}">{$fila.nombre}</option>
+								{/if}
+							{/foreach}
+						</select> 
+					</td>
+
+					<th align="left">Cuadro</th><td><input type= 'text' name= 'cuadro{$smarty.section.i.index}' size='6' value="{$cuadros[i].cuadro}" style="color:#000066; font-weight: bold;" onChange="seleccionar({$smarty.section.i.index})"></td>
+
+					<th align="left">Producto</th>
+					<td>
+						<select name='producto{$smarty.section.i.index}' style=" width:140px" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboProductos item=fila}
+								{if {$cuadros[i].producto} == {$fila.codigo}}
+									<option value="{$fila.codigo}" selected>{$fila.nombre}</option>
+								{else}
+									<option value="{$fila.codigo}">{$fila.nombre}</option>
+								{/if}
+							{/foreach}
+						</select> 
+					</td>
+
+					<th align="left">Divisa</th>
+					<td>
+						<select name= 'divisa{$smarty.section.i.index}' align="" style=" width:160px" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboDivisas item=fila3}
+								{if {$cuadros[i].divisa} == {$fila3.codigo}}
+									<option value="{$fila3.codigo}" selected>{$fila3.nombre}</option>
+								{else}
+									<option value="{$fila3.codigo}">{$fila3.nombre}</option>
+								{/if}	
+							{/foreach}
+						</select> 
+					</td>	
+					<th align="left">Duracion</th><td><input type= 'text' name= 'duracion{$smarty.section.i.index}' size='1' value="{$cuadros[i].duracion}" style="color:#000066; font-weight: bold;" onChange="seleccionar({$smarty.section.i.index})"></td>
+				</tr>
+
+			</table>
+
+			<table width="95%" border = "0" align = "left" height="40" class="fondotabla" style="clear:both">
+
+				<tr height="40">
+					<th align="left">Dias Operacion</th><td><input type= 'text' name= 'dias_operacion{$smarty.section.i.index}' size='9' value="{$cuadros[i].dias_operacion}" style="color:#000066; font-weight: bold;" onChange="seleccionar({$smarty.section.i.index})"></td>
+
+					<th align="left">Frecuencia</th>
+					<td>
+						<select name='frecuencia{$smarty.section.i.index}' style=" width:100px" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboFrecuenciaSalidas item=fila}
+								{if {$cuadros[i].frecuencia} == {$fila.valor}}
+									<option value="{$fila.valor}" selected>{$fila.mostrar}</option>
+								{else}
+									<option value="{$fila.valor}">{$fila.mostrar}</option>
+								{/if}
+							{/foreach}
+						</select> 
+					</td>
+
+					<th align="left">Primera salida</th><td><input type= 'text' id= 'primera_salida{$smarty.section.i.index}' name= 'primera_salida{$smarty.section.i.index}' size='10' value="{$cuadros[i].primera_salida}" style="color:#000066; font-weight: bold;" onChange="seleccionar({$smarty.section.i.index})">
+					
+						<img id="botonprimera_salida{$smarty.section.i.index}" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'primera_salida{$smarty.section.i.index}',
+							button : "botonprimera_salida{$smarty.section.i.index}",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>	
+					
+					</td>
+
+					<th align="left">Ultima</th><td><input type= 'text' id= 'ultima_salida{$smarty.section.i.index}' name= 'ultima_salida{$smarty.section.i.index}' size='10' value="{$cuadros[i].ultima_salida}" style="color:#000066; font-weight: bold;" onChange="seleccionar({$smarty.section.i.index})">
+
+						<img id="botonultima_salida{$smarty.section.i.index}" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'ultima_salida{$smarty.section.i.index}',
+							button : "botonultima_salida{$smarty.section.i.index}",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>	
+
+					
+					</td>
+					
+					<th align="left">Redondeo</th><td><input type= 'text' name= 'redondeo{$smarty.section.i.index}' size='1' value="{$cuadros[i].redondeo}" style="color:#000066; font-weight: bold;" onChange="seleccionar({$smarty.section.i.index})"></td>
+
+					<th align="left">Cod. Adm.</th><td><input type= 'text' name= 'codigo_administrativo{$smarty.section.i.index}' size='4' value="{$cuadros[i].codigo_administrativo}" style="color:#000066; font-weight: bold;" onChange="seleccionar({$smarty.section.i.index})"></td>
+
+				</tr>
+
+			</table>
+
+
+			<table width="100%" border = "0" align = "left" class="fondotabla" style="clear:both; padding:0px 0px 10px 0px;">
+			<tr>
+				<td width="15%">
+
+					<table border = "0" align = "left" height="40" class="fondotabla" style="clear:both">
+
+						<tr height="30">
+
+							<th align="left">Venta</th>
+							<td colspan="1">
+
+								<select name='venta{$smarty.section.i.index}' style=" width:160px" onChange="seleccionar({$smarty.section.i.index})"> 
+									{foreach from=$comboVenta item=fila}
+										{if {$cuadros[i].venta} == {$fila.valor}}
+											<option value="{$fila.valor}" selected>{$fila.mostrar}</option>
+										{else}
+											<option value="{$fila.valor}">{$fila.mostrar}</option>
+										{/if}
+									{/foreach}
+								</select> 
+							</td>
+
+						</tr>
+
+					</table>
+
+				</td>
+
+				<td width="85%">
+			
+					<table width="94%" border = "0" align = "left" height="40" class="fondotabla_borde" style="clear:both; margin:0px 0px 0px 10px;">
+
+						<tr height="30">
+
+							<td colspan="1"><input type= 'text'  size='8' value="Mayorista" style="color:#ffffff; background:#333399; font-weight: bold; text-align:center;" disabled></td>
+							
+							<th align="left">Margen Transportes</th>
+							<td colspan="1"><input type= 'text' name= 'margen_transportes{$smarty.section.i.index}' size='5' value="{$cuadros[i].margen_transportes}" style="color:#000066; font-weight: bold; text-align:center;" onChange="seleccionar({$smarty.section.i.index})"></td>
+
+							<th align="left">% Ocupacion</th>
+							<td colspan="1"><input type= 'text' name= 'ocupacion_transportes{$smarty.section.i.index}' size='5' value="{$cuadros[i].ocupacion_transportes}" style="color:#000066; font-weight: bold; text-align:center;" onChange="seleccionar({$smarty.section.i.index})"></td>
+
+							<th align="left">Margen Alojamientos directos</th>
+							<td colspan="1"><input type= 'text' name= 'margen_alojamientos{$smarty.section.i.index}' size='5' value="{$cuadros[i].margen_alojamientos}" style="color:#000066; font-weight: bold; text-align:center;" onChange="seleccionar({$smarty.section.i.index})"></td>
+
+							<th align="left">Interfaz</th>
+							<td colspan="1"><input type= 'text' name= 'margen_alojamientos_interfaz_1{$smarty.section.i.index}' size='5' value="{$cuadros[i].margen_alojamientos_interfaz_1}" style="color:#000066; font-weight: bold; text-align:center;" onChange="seleccionar({$smarty.section.i.index})"></td>
+
+							<th align="left">Margen Servicios</th>
+							<td colspan="1"><input type= 'text' name= 'margen_servicios{$smarty.section.i.index}' size='5' value="{$cuadros[i].margen_servicios}" style="color:#000066; font-weight: bold; text-align:center;" onChange="seleccionar({$smarty.section.i.index})"></td>
+
+						</tr>
+
+
+					</table>			
+
+					<table width="94%" border = "0" align = "left" height="40" class="fondotabla_borde" style="clear:both; margin:0px 0px 0px 10px;">
+
+						<tr height="30">
+
+							<td colspan="1"><input type= 'text'  size='8' value="Minorista" style="color:#ffffff; background:#333399; font-weight: bold; text-align:center;" disabled></td>
+
+							<th align="left">Margen Transportes</th>
+							<td colspan="1"><input type= 'text' name= 'minorista_margen_transportes{$smarty.section.i.index}' size='5' value="{$cuadros[i].minorista_margen_transportes}" style="color:#000066; font-weight: bold; text-align:center;" onChange="seleccionar({$smarty.section.i.index})"></td>
+
+							<th align="left">% Ocupacion</th>
+							<td colspan="1"><input type= 'text' name= 'minorista_ocupacion_transportes{$smarty.section.i.index}' size='5' value="{$cuadros[i].minorista_ocupacion_transportes}" style="color:#000066; font-weight: bold; text-align:center;" onChange="seleccionar({$smarty.section.i.index})"></td>
+
+							<th align="left">Margen Alojamientos directos</th>
+							<td colspan="1"><input type= 'text' name= 'minorista_margen_alojamientos{$smarty.section.i.index}' size='5' value="{$cuadros[i].minorista_margen_alojamientos}" style="color:#000066; font-weight: bold; text-align:center;" onChange="seleccionar({$smarty.section.i.index})"></td>
+
+							<th align="left">Interfaz</th>
+							<td colspan="1"><input type= 'text' name= 'minorista_margen_alojamientos_interfaz_1{$smarty.section.i.index}' size='5' value="{$cuadros[i].minorista_margen_alojamientos_interfaz_1}" style="color:#000066; font-weight: bold; text-align:center;" onChange="seleccionar({$smarty.section.i.index})"></td>
+
+							<th align="left">Margen Servicios</th>
+							<td colspan="1"><input type= 'text' name= 'minorista_margen_servicios{$smarty.section.i.index}' size='5' value="{$cuadros[i].minorista_margen_servicios}" style="color:#000066; font-weight: bold; text-align:center;" onChange="seleccionar({$smarty.section.i.index})"></td>
+
+						</tr>
+
+
+					</table>
+
+				</td>
+			</tr>
+		</table>
+			
+			
+		{/section}
+
+</div>
+
+
+
+

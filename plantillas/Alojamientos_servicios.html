@@ -1,0 +1,970 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 5.0 Transitional//EN">
+<HTML>
+
+ <HEAD>
+  <meta charset="utf-8">
+  <TITLE> Menú </TITLE>
+  <META NAME="Generator" CONTENT="EditPlus">
+  <META NAME="Author" CONTENT="Jose de Frias">
+  <META NAME="Keywords" CONTENT="">
+  <META NAME="Description" CONTENT="">
+  <link rel="StyleSheet" href="css/comun.css">
+  <script type="text/javascript" src="funciones_js/funciones.js"></script>
+  <link rel="shortcut icon" type="image/x-icon" href="imagenes/favicon_hit.ico">
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+ </HEAD>
+
+<body background="restaurantes/fondo.jpg">
+
+	{include file="$cabecera"}
+	{include file="$menu"}
+
+	<form name="mantenimiento_tabla" method = "post" action="" enctype="multipart/form-data">
+		
+		<table border = "0" align = "left">
+			<tr>
+				<td>
+					<input type=image src="imagenes/selector_inicio2.jpg" width="25" height="15" onclick="Selector(1);">
+					<input type= "hidden" name= "botonSelector" value="0">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_anterior2.jpg" width="25" height="15" onclick="Selector(2);">	
+				</td>			
+				<td>
+					<select name="filadesde" align="" onchange="submit();"> 
+						{foreach from=$combo item=fila}
+							<!--<option value="{$fila.inicio}">{$fila.inicio} - {$fila.fin}</option>-->
+							
+							{if {$filades} == {$fila.inicio}}
+								<option value="{$fila.inicio}" selected>{$fila.inicio} - {$fila.fin}</option>
+							{else}
+								<option value="{$fila.inicio}">{$fila.inicio} - {$fila.fin}</option>
+							{/if}
+							
+						{/foreach}
+					</select> 
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_siguiente2.jpg" width="25" height="15" onclick="Selector(3);">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_fin2.jpg" width="25" height="15" onclick="Selector(4);">
+				</td>
+				<td>
+					<th align="left">&nbsp;&nbsp;&nbsp;</th>
+				</td>
+				<td>
+					<th align="left">Alojamiento</th>
+				</td>
+				<td>
+					<select name="buscar_alojamiento" align="" onChange="submit();"> 
+						{foreach from=$comboAlojamientos item=fila}
+							{if {$buscar_alojamiento} == {$fila.id}}
+								<option value="{$fila.id}" selected>{$fila.nombre}</option>
+							{else}
+								<option value="{$fila.id}">{$fila.nombre}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>
+
+			</tr>
+		</table>
+
+		<BR>	
+
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" class="lineatitulo" style="padding:15px 0px 15px 0px;">
+			<tbody>
+				<tr>
+					<td>
+						<img width="20" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<input type="button" id="boton_buscar" value="BUSCAR" class="boton" onClick="Buscar_general()"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					</td>
+					<td>
+						<input type="button" id="boton_buscar" value="GRABAR" class="boton" onClick="grabar()"/>
+						<input type= "hidden" name= "actuar" value="">
+					</td>
+
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="restaurantes/boton_volver.jpg" width="70" height="25" onClick="salir('V')">-->
+						<input type="button" id="boton_volver" value="VOLVER" class="boton" onClick="salir('V')"/>
+						<input type= "hidden" name= "ir_a" value="">
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="restaurantes/boton_salir.jpg" width="70" height="25" onClick="salir('S')">-->
+					</td>
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		{$mensaje1}
+		{$mensaje2}
+
+
+
+		{section name=i loop=$alojamientos_servicios}
+
+
+			<table width="25%" border = "0" align = "left" height="40">
+				<tr>
+					<th align="left">Modificar</th>
+					<td align = "left">
+						<input type= 'checkbox' name= 'seleccion{$smarty.section.i.index}' value="" onChange="desmarcarBorrar({$smarty.section.i.index})">
+						<input type= 'hidden' name= 'selec{$smarty.section.i.index}' value="N">
+					</td>
+
+					<th align="left">Id</th>
+					<td><input type= 'text' name= 'id_alojamiento{$smarty.section.i.index}' size='4' value="{$alojamientos_servicios[i].id_alojamiento}" readonly></td>
+					<!--<th align="left">Borrar</th>
+					<td align = "left">
+						<input type= 'checkbox' name= 'borrar{$smarty.section.i.index}' value="" onChange="desmarcarSeleccion({$smarty.section.i.index})">
+						<input type= 'hidden' name= 'borra{$smarty.section.i.index}' value="N">
+					</td>
+
+					<td>
+						<select name="id_alojamiento{$smarty.section.i.index}" align=""> 
+							{foreach from=$comboAlojamientos item=fila}
+								{if {$alojamientos_servicios[i].id_alojamiento} == {$fila.id}}
+									<option value="{$fila.id}" selected>{$fila.nombre}</option>
+								{else}
+									<option value="{$fila.id}">{$fila.nombre}</option>
+								{/if}
+							{/foreach}
+						</select> 
+					</td>-->
+
+				</tr>
+			</table>
+
+
+
+		<table width="70%" border = "0" align = "left" class="fondotabla" style="clear:both" style="padding:15px 0px 15px 0px;">
+
+			<tr height="35px">
+
+						<th align = "left">Aparcamiento</th>
+
+					<td>
+						<select name= 'aparcamiento{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].aparcamiento} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+						<th align = "left">Acceso Internet</th>
+
+					<td>
+						<select name= 'acceso_internet{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].acceso_internet} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+						<th align = "left">Aire Acond. Z.Comunes</th>
+
+					<td>
+						<select name= 'aire_acondicionado_comunes{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].aire_acondicionado_comunes} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+										
+			</tr>
+
+
+
+
+			<tr height="35px">
+
+						<th align="left">Bares</th>
+
+					<td>
+						<select name= 'bares{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].bares} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+						<th align="left">Area de Juegos</th>
+
+					<td>
+						<select name= 'area_juegos{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].area_juegos} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+						<th align="left">Ascensor</th>
+
+					<td>
+						<select name= 'ascensores{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].ascensores} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+			</tr>
+
+
+
+
+			<tr height="35px">
+
+						<th align="left">Miniclub</th>
+
+					<td>
+						<select name= 'miniclub{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].miniclub} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+						<th align="left">Cambio Moneda</th>
+
+					<td>
+						<select name= 'cambio_moneda{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].cambio_moneda} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+						<th align="left">Cobertura Moviles</th>
+
+					<td>
+						<select name= 'cobertura_moviles{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].cobertura_moviles} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+			</tr>
+
+
+
+
+			<tr height="35px">
+
+						<th align="left">Piscina Exterior</th>
+
+					<td>
+						<select name= 'piscina_aire_libre{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].piscina_aire_libre} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+						<th align="left">Piscinas</th>
+
+						<td><input type= 'text' name= 'piscinas_numero{$smarty.section.i.index}' size='2' value="{$alojamientos_servicios[i].piscinas_numero}" onChange="seleccionar({$smarty.section.i.index})"></td>
+
+						<th align="left">Peluqueria</th>
+
+					<td>
+						<select name= 'peluqueria{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].peluqueria} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+			</tr>
+
+			<tr height="35px">
+
+						<th align="left">Resturantes</th>
+
+					<td>
+						<select name= 'restaurantes{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].restaurantes} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+						<th align="left">Piscina Agua Dulce</th>
+
+					<td>
+						<select name= 'piscina_agua_dulce{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].piscina_agua_dulce} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+						<th align="left">Piscina Niños</th>
+
+					<td>
+						<select name= 'piscina_ninos{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].piscina_ninos} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+			</tr>
+
+										
+			<tr height="35px">
+
+						<th align="left">Facturacion 24h</th>
+
+					<td>
+						<select name= 'servicio_facturacion_24{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].servicio_facturacion_24} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+						<th align="left">Restaurante Climatizado</th>
+
+					<td>
+						<select name= 'restaurante_climatizado{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].restaurante_climatizado} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+						<th align="left">Sala Conferencias</th>
+
+					<td>
+						<select name= 'sala_conferencias{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].sala_conferencias} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+			</tr>
+
+			<tr height="35px">
+
+						<th align="left">Terraza Solarium</th>
+
+					<td>
+						<select name= 'terraza_solarium{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].terraza_solarium} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+						<th align="left">Recepcion 24h</th>
+
+					<td>
+						<select name= 'servicio_recepcion_24{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].servicio_recepcion_24} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+						<th align="left">Sombrillas</th>
+
+					<td>
+						<select name= 'sombrillas{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].sombrillas} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+			</tr>									
+
+			<tr height="35px">
+
+						<th align="left">Tumbonas</th>
+
+					<td>
+						<select name= 'tumbonas{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].tumbonas} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+						<th align="left">Tiendas</th>
+
+					<td>
+						<select name= 'tiendas{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].tiendas} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+						<th align="left">Tronas</th>
+
+					<td>
+						<select name= 'tronas{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].tronas} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+			</tr>
+
+
+			<tr height="35px">
+
+						<th align="left">Balcon</th>
+
+					<td>
+						<select name= 'balcon{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].balcon} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+						<th align="left">Vestibulo Recepcion</th>
+
+					<td>
+						<select name= 'vestibulo_recepcion{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].vestibulo_recepcion} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+						<th align="left">Aire Acond. Central</th>
+
+					<td>
+						<select name= 'aire_acondicionado_central{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].aire_acondicionado_central} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+			</tr>
+
+
+			<tr height="35px">
+
+						<th align="left">Minibar</th>
+
+					<td>
+						<select name= 'minibar{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].minibar} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+						<th align="left">Baño</th>
+
+					<td>
+						<select name= 'bano{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].bano} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+						<th align="left">Caja Seguridad</th>
+
+					<td>
+						<select name= 'caja_seguridad{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].caja_seguridad} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+			</tr>
+
+			<tr height="35px">
+
+						<th align="left">Tv Cable/Sat</th>
+
+					<td>
+						<select name= 'tv_satelite_cable{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].tv_satelite_cable} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+						<th align="left">Secador</th>
+
+					<td>
+						<select name= 'secador{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].secador} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+						<th align="left">Telef. Linea Directa</th>
+
+					<td>
+						<select name= 'telefono_linea_directa{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].telefono_linea_directa} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+			</tr>
+
+
+		</table>
+		{/section}
+
+
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" class="lineatitulo" style="padding:15px 0px 15px 0px;">
+			<tbody>
+				<tr>
+					<td>
+						<img width="20" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+					<td align='left' bgcolor='#333399' width="30%" height="20px" style="color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+						<font color='#CCFFFF' size='4'><B><I>Iconos Web</I></B></font>
+					</td>
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+
+		{section name=i loop=$alojamientos_servicios}
+
+
+
+		<table width="72%" border = "0" align = "left" class="fondotabla" style="clear:both">
+
+			<tr height="35px">
+
+						<th align = "left">Niños Gratis</th>
+
+					<td>
+						<select name= 'ninos_gratis{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].ninos_gratis} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+						<th align = "left">Menú Celiacos</th>
+
+					<td>
+						<select name= 'celiacos{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].celiacos} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+						<th align = "left">Acceso Discapacitados</th>
+
+					<td>
+						<select name= 'discapacitados{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].discapacitados} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+										
+			</tr>
+
+
+
+
+			<tr height="35px">
+
+						<th align="left">Golf</th>
+
+					<td>
+						<select name= 'golf{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].golf} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+						<th align="left">Gimnasio</th>
+
+					<td>
+						<select name= 'gimnasio{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].gimnasio} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+						<th align="left">Solo Adultos</th>
+
+					<td>
+						<select name= 'solo_adultos{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].solo_adultos} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+			</tr>
+
+
+
+
+			<tr height="35px">
+
+						<th align="left">Spa</th>
+
+					<td>
+						<select name= 'spa{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].spa} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+						<th align="left">Todo Incluido</th>
+
+					<td>
+						<select name= 'todo_incluido{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].todo_incluido} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+						<th align="left">Primera Linea</th>
+
+					<td>
+						<select name= 'vista_mar{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].vista_mar} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+			</tr>
+
+
+
+
+			<tr height="35px">
+
+						<th align="left">Wifi</th>
+
+					<td>
+						<select name= 'wifi{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$alojamientos_servicios[i].wifi} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+			</tr>
+
+		</table>
+		{/section}
+
+
+		<BR>	
+
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" class="lineatitulo" style="padding:15px 0px 15px 0px;">
+			<tbody>
+				<tr>
+					<td>
+						<img width="20" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<input type="button" id="boton_buscar" value="BUSCAR"  class="boton" onClick="Buscar_general()"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					</td>
+					<td>
+						<input type="button" id="boton_buscar" value="GRABAR" class="boton" onClick="grabar()"/>
+					</td>
+
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="restaurantes/boton_volver.jpg" width="70" height="25" onClick="salir('V')">-->
+						<input type="button" id="boton_volver" value="VOLVER" class="boton" onClick="salir('V')"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="restaurantes/boton_salir.jpg" width="70" height="25" onClick="salir('S')">-->
+					</td>
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+
+
+
+
+		{include file="$pie"}
+	</form>
+
+
+ </BODY>
+</HTML>
+
+
+

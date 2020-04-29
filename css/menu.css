@@ -1,0 +1,161 @@
+
+#menu {
+
+	width:1320px;
+	height:35px;
+	clear:both;
+	display:block;
+	background:#0C2E8A;
+	border-bottom:solid 2px #e6e6e6;
+	border-top:solid 2px #e6e6e6;
+	margin: 0px auto;
+	text-align: center;
+	z-index:1;
+
+}
+#menu ul {
+    list-style-type: none;
+    height:35px;
+}
+
+#menu ul li{
+    width: 131px;
+    height:35px;
+    z-index:1;
+
+}
+
+#menu ul li.nivel1 {
+    float: left;
+    margin-right: 1px;
+    margin-bottom: 1px;
+    height:35px;
+    z-index:1;
+
+}
+#menu ul li.nivel1:first-child {
+	background:#010080;
+}
+#menu ul li.nivel1:nth-child(2) {
+	background:#1450A9;
+         /*background:#1450A9;*/
+}
+#menu ul li.nivel1:nth-child(3) {
+	background:#0A73B0;
+         /*background:#1450A9;*/
+}
+#menu ul li.nivel1:nth-child(4) {
+	background:#118FD8;
+         /*background:#1450A9;*/
+}
+#menu ul li.nivel1:nth-child(5) {
+	background:#30A1C7;
+         /*background:#1450A9;*/
+}
+#menu ul li.nivel1:nth-child(6) {
+	background:#027767;
+         /*background:#1450A9;*/
+}
+#menu ul li.nivel1:nth-child(7) {
+	background:#00AF50;
+}
+#menu ul li.nivel1:nth-child(8) {
+            background:#347135;
+}
+#menu ul li.nivel1:nth-child(9) {
+            background:#4C4C4C;
+}
+#menu ul li.nivel1:nth-child(10) {
+            background:#010080;
+}
+
+#menu ul li a {
+
+	display:block;
+	overflow:hidden;
+	width: 131px;
+	border: 1px solid #fff;
+	color:#ffffff;
+	font-size:1.05em;
+	font-weight:bold;
+	padding:10px 0px 10px;
+	text-align:center;
+	margin:0 auto;
+}
+
+#menu ul li a.nivel2 {
+    color: #fff;
+    width: 131px;
+    z-index:1;
+}
+
+#menu ul li a.nivel1, #menu ul li a.nivel2 {
+    display: block !important;
+    position: relative;
+    z-index:1;
+}
+
+
+#menu ul li:hover {
+    position: relative;
+    z-index:1;
+}
+
+#menu ul li a:hover, #menu ul li:hover a.nivel1 {
+    background-color: #2eafef;
+    color: #fff;
+    position: relative;
+    z-index:1;
+}
+
+#menu ul li a:hover, #menu ul li:hover a.nivel2:hover {
+    background-color: #0C2E8A;
+}
+
+#menu ul li ul {
+    display: none;
+    z-index:1;
+
+}
+#menu ul li:hover ul.nivel2, #menu ul li a:hover ul.nivel2 {
+    display: block;
+    left: 0;
+    position: absolute;
+    z-index:1;
+
+}
+#menu ul li ul li a:hover ul.nivel3, #menu ul li ul li:hover ul.nivel3 {
+    display: block;
+    left: 131px; !important;
+    padding:0px 0px 0px 10px; 
+    position: absolute;
+    top: 0 !important;
+    z-index:1;
+}
+
+#menu ul li ul li ul li a:hover ul.nivel4, #menu ul li ul li ul li:hover ul.nivel4 {
+    display: block;
+    left: 131px; !important;
+    padding:0px 0px 0px 10px; 
+    position: absolute;
+    top: 0 !important;
+    z-index:1;
+}
+
+#menu ul li ul li a{
+    border-top-color: #fff;
+    width: 131;
+    z-index:1;
+    background:#118FD8; 
+     text-align:left;
+    padding:10px 0px 10px 10px;    
+}
+
+#menu ul li ul li a:hover {
+    border-top-color: #fff;
+    position: relative;
+    z-index:1;
+}
+
+
+

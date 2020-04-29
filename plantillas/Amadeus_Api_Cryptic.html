@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 5.0 Transitional//EN">
+<HTML>
+
+ <HEAD>
+  <meta charset="utf-8">
+  <TITLE> Menú </TITLE>
+  <META NAME="Author" CONTENT="Jose de Frias">
+  <META NAME="Keywords" CONTENT="">
+  <META NAME="Description" CONTENT="">
+  <link rel="StyleSheet" href="css/comun.css">
+  <script type="text/javascript" src="funciones_js/funciones.js"></script>
+  <link rel="shortcut icon" type="image/x-icon" href="imagenes/favicon_hit.ico">
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+  <link rel="StyleSheet" href="css/calendario/calendar-blue2.css">
+  <script type="text/javascript" src="funciones_js/calendario/calendar.js"></script>
+  <script type="text/javascript" src="funciones_js/calendario/calendar-es.js"></script>
+  <script type="text/javascript" src="funciones_js/calendario/calendar-setup.js"></script>
+ </HEAD>
+
+<body background="imagenes/fondo.jpg">
+
+	{include file="$cabecera"}
+	{include file="$menu"}
+
+	<form name="mantenimiento_tabla" method = "post" action="">
+		
+
+		<table border = "0" align = "left">
+			<tr>
+
+				<tr class="cabeceratabla">
+					<th>Comando (SOLO PARAR VER DISPONIBILIDAD)</th>
+				</tr>
+				<td>
+					<input type= 'text' name= 'comando' size='93' value="{$comando}" style="background-color:#0F03FD; color:#FFFFFF; font-weight: bold;">
+					<!--<input type="image" src="imagenes/boton_grabar.jpg" width="70" height="25" onClick="grabar()">-->
+						<input type="button" id="boton_grabar" value="CONSULTAR" class="boton" onClick="Consultar_Api_Cryptic()"/>
+						<input type= "hidden" name= "actuar" value="">
+						<input type= "hidden" name= "ir_a" value="">
+				</td>
+
+			</tr>
+		</table>
+
+		<BR>	
+
+
+		<!--<table width="70%" cellspacing="0" cellpadding="0" border="0" summary="" class="lineatitulo">
+			<tbody>
+				<tr>
+					<td>
+						<img width="20" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+
+					<td align='left' bgcolor='#333399' width="30%" height="20px" style="color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+						<font color='#CCFFFF' size='4'><B><I>Consultas Amadeus Cryptic</I></B></font>
+					</td>
+
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+
+					<td>
+						<input type="button" id="boton_grabar" value="CONSULTAR"  style="height:22px; color:#FFFFFF; background:#0066CC; font-family:Arial; font-weight: bold; font-size:10px; text-align:center; border-radius: 10px 10px 10px 10px;" onClick="Consultar_Api_Cryptic()"/>
+						<input type= "hidden" name= "actuar" value="">
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<input type= "hidden" name= "ir_a" value="">
+					</td>
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>-->
+
+		{$mensaje1}
+		{$mensaje2}
+
+		<table border = "0" align = "left" class="fondotabla" style="clear:both">
+			<tr class="cabeceratabla">
+				<th>Respuesta</th>
+			</tr>
+
+			<tr>
+				<td rowspan="1"><textarea name='ubicacion{$smarty.section.i.index}' cols="90" rows="25" value="{$respuesta}" style="background-color:#0F03FD; color:#FFFFFF; font-weight: bold;">{$respuesta}</textarea></td>
+			</tr>
+
+		</table>
+
+		{include file="$pie"}
+	</form>
+
+ </BODY>
+</HTML>
+
+
+
+

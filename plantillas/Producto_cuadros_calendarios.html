@@ -1,0 +1,869 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 5.0 Transitional//EN">
+<HTML>
+
+ <HEAD>
+  <meta charset="utf-8">
+  <TITLE> Menú </TITLE>
+  <META NAME="Generator" CONTENT="EditPlus">
+  <META NAME="Author" CONTENT="Jose de Frias">
+  <META NAME="Keywords" CONTENT="">
+  <META NAME="Description" CONTENT="">
+  <link rel="StyleSheet" href="css/comun.css">
+  <script type="text/javascript" src="funciones_js/funciones.js"></script>
+  <link rel="shortcut icon" type="image/x-icon" href="imagenes/favicon_hit.ico">
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+  <link rel="StyleSheet" href="css/calendario/calendar-blue2.css">
+  <script type="text/javascript" src="funciones_js/calendario/calendar.js"></script>
+  <script type="text/javascript" src="funciones_js/calendario/calendar-es.js"></script>
+  <script type="text/javascript" src="funciones_js/calendario/calendar-setup.js"></script>
+ </HEAD>
+
+<body background="imagenes/fondo.jpg">
+
+	{include file="$cabecera"}
+	{include file="$menu"}
+
+	<form name="mantenimiento_tabla" method = "post" action="">
+
+	{include file="$cabecera_cuadro"}
+<!-------------------------------------------------------------->
+<!-------------------------------------------------------------->
+<!-------------------------CALENDARIOS---------------------------->
+<!-------------------------------------------------------------->
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" style="padding:5px 0px 15px 0px;">
+			<tbody>
+				<tr height="10"></tr>
+				<tr>
+
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+					<td>
+						<input type="button" id="boton_calendario" value="CALENDARIO" class="botones_cuadro_seleccionado" onClick="salir_cuadros('CA')"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td align='center'>
+						<input type="button" id="boton_condiciones" value="CONDICIONES" class="botones_cuadro" onClick="salir_cuadros('CO')"/>
+
+					</td>
+		
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<input type="button" id="boton_aereos" value="AEREOS" class="botones_cuadro" onClick="salir_cuadros('AE')"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+
+					<td>
+						<input type="button" id="boton_alojamientos" value="ALOJAMIENTOS" class="botones_cuadro" onClick="salir_cuadros('AL')"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<input type="button" id="boton_alojamientos_condiciones" value="ALOJ / CONDIC" class="botones_cuadro" onClick="salir_cuadros('AC')"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<input type="button" id="boton_servicios" value="SERVICIOS" class="botones_cuadro" onClick="salir_cuadros('SE')"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<input type="button" id="boton_imagenes" value="PRECIOS" class="botones_cuadro" onClick="salir_cuadros('PR')"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<input type="button" id="boton_textos" value="TEXTOS" class="botones_cuadro" onClick="salir_cuadros('TE')"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<input type="button" id="boton_imagenes" value="IMAGENES" class="botones_cuadro" onClick="salir_cuadros('IM')"/>
+					</td>
+
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+
+
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+
+		<BR>
+
+
+
+<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="">
+	<tr>
+		<td valign="top" width="35%">
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" style="padding:0px 0px 10px 0px;">
+			<tbody>
+				<tr>
+					<td>
+						<img width="10px" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+
+					<td align='center' bgcolor='#333399' width="100px" height="23px" style="color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+						<font color='#CCFFFF' size='3'><B><I>&nbsp;&nbsp;&nbsp;&nbsp;Calendarios&nbsp;&nbsp;&nbsp;&nbsp;</I></B></font>
+					</td>
+
+
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+
+
+					<td>
+						<img width="20px" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<table border = "0" align = "left">
+			<tr>
+				<td>
+					<input type=image src="imagenes/selector_inicio2.jpg" width="25" height="15" onclick="Selector_2nivel(1);">
+					<input type= "hidden" name= "botonSelector_2nivel" value="0">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_anterior2.jpg" width="25" height="15" onclick="Selector_2nivel(2);">	
+				</td>			
+				<td>
+					<select name="filadesde_calendarios" align="" onchange="submit();"> 
+						{foreach from=$combo_calendarios item=fila}
+							
+							{if {$filades_calendarios} == {$fila.inicio}}
+								<option value="{$fila.inicio}" selected>{$fila.inicio} - {$fila.fin}</option>
+							{else}
+								<option value="{$fila.inicio}">{$fila.inicio} - {$fila.fin}</option>
+							{/if}
+							
+						{/foreach}
+					</select> 
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_siguiente2.jpg" width="25" height="15" onclick="Selector_2nivel(3);">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_fin2.jpg" width="25" height="15" onclick="Selector_2nivel(4);">
+				</td>
+				<td>
+					<th>&nbsp;</th>
+				</td>
+				<td>
+					<th>Fecha</th>
+				</td>
+
+				<td>
+					<input type= 'text' id= 'buscar_fecha' name= 'buscar_fecha' size='8' value="{$buscar_fecha}">
+
+						<img id="botonbuscar_fecha{$smarty.section.i.index}" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'buscar_fecha{$smarty.section.i.index}',
+							button : "botonbuscar_fecha{$smarty.section.i.index}",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>				
+				</td>
+
+
+			</tr>
+		</table>
+
+		<BR>	
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="">
+			<tbody>
+				<tr>
+					<td>
+						<img width="140px" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+
+					<td>
+						<input type="button" id="boton_buscar" value="BUSCAR"  class="boton" onClick="Buscar_Producto()"/>
+
+					</td>
+					<td>
+						<img width="20px" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<input type="button" id="boton_nuevo" value="ACTUALIZAR" class="boton" onClick="Actualizar_calendario_cuadro()"/>
+
+					</td>
+					<td>
+						<img width="20px" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_grabar.jpg" width="70" height="25" onClick="grabar_2nivel()">-->
+						<input type="button" id="boton_nuevo" value="GRABAR" class="boton" onClick="grabar_2nivel_cuadros()"/>
+
+						<input type= "hidden" name= "actuar_2nivel" value="">
+					</td>
+					<td>
+						<img width="10px" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		{$mensaje1_calendarios}
+		{$mensaje2_calendarios}
+
+		<table border = "0" align = "left" class="fondotabla" style="margin:5px;">
+			<tr class="cabeceratabla">
+				<th>Sel</th>
+				<th>Fecha desde</th>
+				<th>Fecha hasta</th>
+				<th>Tipo</th>
+				{section name=i loop=$calendarios}
+				{/section}
+				<th><a href="javascript:void(0)" onclick="Borrar_Todos_2nivel({$smarty.section.i.loop});">Borrar</a></th>
+			</tr>
+
+			{section name=i loop=$calendarios}
+			
+			<tr>
+				<td align = "center">
+					<input type= 'checkbox' name= 'seleccion_2nivel{$smarty.section.i.index}' value="" onChange="desmarcarBorrar_2nivel({$smarty.section.i.index})">
+					<input type= 'hidden' name= 'selec_2nivel{$smarty.section.i.index}' value="N">
+				</td>
+
+				<td><input type= 'text' id= 'fecha_desde{$smarty.section.i.index}' name= 'fecha_desde{$smarty.section.i.index}' size='10' value="{$calendarios[i].fecha_desde}" onChange="seleccionar_2nivel({$smarty.section.i.index})">
+				<input type= 'hidden' name= 'fecha_desde_old{$smarty.section.i.index}' value="{$calendarios[i].fecha_desde}">	
+
+						<img id="botonfecha_desde{$smarty.section.i.index}" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'fecha_desde{$smarty.section.i.index}',
+							button : "botonfecha_desde{$smarty.section.i.index}",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>				
+				</td>
+
+				<td><input type= 'text' id= 'fecha_hasta{$smarty.section.i.index}' name= 'fecha_hasta{$smarty.section.i.index}' size='10' value="{$calendarios[i].fecha_hasta}" onChange="seleccionar_2nivel({$smarty.section.i.index})">
+
+						<img id="botonfecha_hasta{$smarty.section.i.index}" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'fecha_hasta{$smarty.section.i.index}',
+							button : "botonfecha_hasta{$smarty.section.i.index}",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>				
+				</td>
+
+				<td>
+					<select name= 'tipo{$smarty.section.i.index}' align="" onChange="seleccionar_2nivel({$smarty.section.i.index})" style="width:100px;"> 
+						{foreach from=$comboTiposCalendario item=fila10}
+							{if {$calendarios[i].tipo} == {$fila10.valor}}
+								<option value="{$fila10.valor}" selected>{$fila10.mostrar}</option>
+							{else}
+								<option value="{$fila10.valor}">{$fila10.mostrar}</option>
+							{/if}	
+						{/foreach}
+					</select>
+				</td>
+
+				<!--<td><input type= 'text' name= 'nombre{$smarty.section.i.index}' size='30' class="campotext" value="{$calendarios[i].nombre}" onChange="seleccionar_2nivel({$smarty.section.i.index})">
+				</td>-->
+
+				<!--<td><input type= 'color' name= 'color{$smarty.section.i.index}' size='7' class="campotext" value="{$calendarios[i].color}" onChange="seleccionar_2nivel({$smarty.section.i.index})">
+				</td>-->
+
+				<td align = "center">
+					<input type= 'checkbox' name= 'borrar_2nivel{$smarty.section.i.index}' value="" onChange="desmarcarSeleccion_2nivel({$smarty.section.i.index})">
+					<input type= 'hidden' name= 'borra_2nivel{$smarty.section.i.index}' value="N">
+				</td>
+
+			</tr>
+			{/section}
+
+
+			{section name=j loop=$calendariosnuevos}
+			<tr>
+				<td align = "center">
+					<input type= 'checkbox' name= 'Nuevoseleccion_2nivel{$smarty.section.j.index}' value="">
+					<input type= 'hidden' name= 'Nuevoselec_2nivel{$smarty.section.j.index}' value="N">
+				</td>
+
+
+				<td><input type= 'text' id= 'Nuevofecha_desde{$smarty.section.j.index}' name= 'Nuevofecha_desde{$smarty.section.j.index}' size='10' 
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperafecha_desde}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar_2nivel({$smarty.section.j.index})">
+						<img id="botonNuevofecha_desde{$smarty.section.j.index}" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'Nuevofecha_desde{$smarty.section.j.index}',
+							button : "botonNuevofecha_desde{$smarty.section.j.index}",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>	
+				</td>
+
+				<td><input type= 'text' id= 'Nuevofecha_hasta{$smarty.section.j.index}' name= 'Nuevofecha_hasta{$smarty.section.j.index}' size='10' 
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperafecha_hasta}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar_2nivel({$smarty.section.j.index})">
+						<img id="botonNuevofecha_hasta{$smarty.section.j.index}" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'Nuevofecha_hasta{$smarty.section.j.index}',
+							button : "botonNuevofecha_hasta{$smarty.section.j.index}",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>	
+				</td>
+
+
+				<td>
+					<select name= 'Nuevotipo{$smarty.section.j.index}' align="" onchange="Nuevosseleccionar_2nivel({$smarty.section.j.index})" style="width:100px;"> 
+						{foreach from=$comboTiposCalendario item=fila7}
+							{if {$recuperatipo} == {$fila7.valor} and {$smarty.section.j.index} == 0}
+								<option value="{$recuperatipo}" selected>{$fila7.mostrar}</option>
+							{else}
+								<option value="{$fila7.valor}">{$fila7.mostrar}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>
+
+				<!--<td><input type= 'text' name= 'Nuevonombre{$smarty.section.j.index}' size='30' class="campotext" 
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperanombre}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar_2nivel({$smarty.section.j.index})"></td>-->
+
+				<!--<td><input type= 'text' name= 'Nuevocolor{$smarty.section.j.index}' size='7' class="campotext" 
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperacolor}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar_2nivel({$smarty.section.j.index})"></td>-->
+
+
+
+			</tr>
+			{/section}
+
+		</table>
+		</td>
+
+
+
+
+<!-------------------------------------------------------------->
+<!-------------------------SALIDAS------------------------------>
+<!-------------------------------------------------------------->
+		<td valign="top" width="25%">
+
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" style="padding:0px 0px 10px 0px;">
+			<tbody>
+				<tr>
+					<td>
+						<img width="10px" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+
+					<td align='center' bgcolor='#333399' width="100px" height="23px" style="color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+						<font color='#CCFFFF' size='3'><B><I>&nbsp;&nbsp;&nbsp;&nbsp;Salidas&nbsp;&nbsp;&nbsp;&nbsp;</I></B></font>
+					</td>
+
+
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+
+
+					<td>
+						<img width="20px" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+
+		<table border = "0" align = "left">
+			<tr>
+				<td>
+					<input type=image src="imagenes/selector_inicio2.jpg" width="25" height="15" onclick="Selector_3nivel(1);">
+					<input type= "hidden" name= "botonSelector_3nivel" value="0">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_anterior2.jpg" width="25" height="15" onclick="Selector_3nivel(2);">	
+				</td>			
+				<td>
+					<select name="filadesde_salidas" align="" onchange="submit();"> 
+						{foreach from=$combo_salidas item=fila}
+							
+							{if {$filades_salidas} == {$fila.inicio}}
+								<option value="{$fila.inicio}" selected>{$fila.inicio} - {$fila.fin}</option>
+							{else}
+								<option value="{$fila.inicio}">{$fila.inicio} - {$fila.fin}</option>
+							{/if}
+							
+						{/foreach}
+					</select> 
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_siguiente2.jpg" width="25" height="15" onclick="Selector_3nivel(3);">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_fin2.jpg" width="25" height="15" onclick="Selector_3nivel(4);">
+				</td>
+
+			</tr>
+		</table>
+
+		<BR>	
+
+		<table width="95%"  cellspacing="0" cellpadding="0" border="0" summary="">
+			<tbody>
+				<tr>
+
+					<td>
+						<img width="100px" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<input type="button" id="boton_nuevo" value="ACTUALIZAR" class="boton" onClick="Actualizar_fechas_cuadro()"/>
+
+					</td>
+					<td>
+						<img width="20px" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_grabar.jpg" width="70" height="25" onClick="grabar_2nivel()">-->
+						<input type="button" id="boton_nuevo" value="GRABAR" class="boton" onClick="grabar_3nivel_cuadros()"/>
+
+						<input type= "hidden" name= "actuar_3nivel" value="">
+					</td>
+					<td>
+						<img width="20px" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		{$mensaje1_salidas}
+		{$mensaje2_salidas}
+
+		<table border = "0" align = "left" class="fondotabla">
+			<tr class="cabeceratabla">
+				<th>Sel</th>
+				<th>Fecha</th>
+				<th>Estado</th>
+				<!--<th>Borrar</th>-->
+				{section name=i loop=$salidas}
+				{/section}
+				<th><a href="javascript:void(0)" onclick="Borrar_Todos_3nivel({$smarty.section.i.loop});">Borrar</a></th>
+			</tr>
+
+			{section name=i loop=$salidas}
+			<tr>
+				<td align = "center">
+					<input type= 'checkbox' name= 'seleccion_3nivel{$smarty.section.i.index}' value="" onChange="desmarcarBorrar_3nivel({$smarty.section.i.index})">
+					<input type= 'hidden' name= 'selec_3nivel{$smarty.section.i.index}' value="N">
+				</td>
+
+				<td><input type= 'text' id= 'fecha{$smarty.section.i.index}' name= 'fecha{$smarty.section.i.index}' size='10' value="{$salidas[i].fecha}" onChange="seleccionar_3nivel({$smarty.section.i.index})">
+
+						<img id="botonfecha{$smarty.section.i.index}" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'fecha{$smarty.section.i.index}',
+							button : "botonfecha{$smarty.section.i.index}",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>				
+				</td>
+
+				<td>
+					<select name= 'estado{$smarty.section.i.index}' align="" onChange="seleccionar_3nivel({$smarty.section.i.index})" style="width:100;"> 
+						{foreach from=$comboEstado_salidas item=fila10}
+							{if {$salidas[i].estado} == {$fila10.valor}}
+								<option value="{$fila10.valor}" selected>{$fila10.mostrar}</option>
+							{else}
+								<option value="{$fila10.valor}">{$fila10.mostrar}</option>
+							{/if}	
+						{/foreach}
+					</select>
+				</td>
+
+				<td align = "center">
+					<input type= 'checkbox' name= 'borrar_3nivel{$smarty.section.i.index}' value="" onChange="desmarcarSeleccion_3nivel({$smarty.section.i.index})">
+					<input type= 'hidden' name= 'borra_3nivel{$smarty.section.i.index}' value="N">
+				</td>
+
+			</tr>
+			{/section}
+
+
+
+			{section name=j loop=$salidasnuevos}
+			<tr>
+				<td align = "center">
+					<input type= 'checkbox' name= 'Nuevoseleccion_3nivel{$smarty.section.j.index}' value="">
+					<input type= 'hidden' name= 'Nuevoselec_3nivel{$smarty.section.j.index}' value="N">
+				</td>
+
+
+				<td><input type= 'text' id= 'Nuevofecha{$smarty.section.j.index}' name= 'Nuevofecha{$smarty.section.j.index}' size='10' 
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperafecha}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar_3nivel({$smarty.section.j.index})">
+						<img id="botonNuevofecha{$smarty.section.j.index}" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'Nuevofecha{$smarty.section.j.index}',
+							button : "botonNuevofecha{$smarty.section.j.index}",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>	
+				</td>
+
+				<td>
+					<select name= 'Nuevoestado{$smarty.section.j.index}' align="" onchange="Nuevosseleccionar_3nivel({$smarty.section.j.index})" style="width:100;"> 
+						{foreach from=$comboEstado_salidas item=fila7}
+							{if {$recuperaestado} == {$fila7.valor} and {$smarty.section.j.index} == 0}
+								<option value="{$recuperaestado}" selected>{$fila7.mostrar}</option>
+							{else}
+								<option value="{$fila7.valor}">{$fila7.mostrar}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>
+
+			</tr>
+			{/section}
+
+		</table>
+
+		</td>
+
+
+<!-------------------------------------------------------------->
+<!-------------------------CALENDARIOS_ CIUDADES---------------->
+<!-------------------------------------------------------------->
+		<td valign="top" width="40%">
+
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" style="padding:0px 0px 10px 0px;">
+			<tbody>
+				<tr>
+					<td>
+						<img width="10px" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+
+					<td align='center' bgcolor='#333399' width="100px" height="23px" style="color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+						<font color='#CCFFFF' size='3'><B><I>&nbsp;&nbsp;&nbsp;&nbsp;Calendarios/Ciudades&nbsp;&nbsp;&nbsp;&nbsp;</I></B></font>
+					</td>
+
+
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+
+
+					<td>
+						<img width="20px" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+
+		<table border = "0" align = "left">
+
+
+			<tr>
+				<td>
+					<input type=image src="imagenes/selector_inicio2.jpg" width="25" height="15" onclick="Selector_4nivel(1);">
+					<input type= "hidden" name= "botonSelector_4nivel" value="0">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_anterior2.jpg" width="25" height="15" onclick="Selector_4nivel(2);">	
+				</td>			
+				<td>
+					<select name="filadesde_calendarios_ciudades" align="" onchange="submit();"> 
+						{foreach from=$combo_calendarios_ciudades item=fila}
+							
+							{if {$filades_calendarios_ciudades} == {$fila.inicio}}
+								<option value="{$fila.inicio}" selected>{$fila.inicio} - {$fila.fin}</option>
+							{else}
+								<option value="{$fila.inicio}">{$fila.inicio} - {$fila.fin}</option>
+							{/if}
+							
+						{/foreach}
+					</select> 
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_siguiente2.jpg" width="25" height="15" onclick="Selector_4nivel(3);">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_fin2.jpg" width="25" height="15" onclick="Selector_4nivel(4);">
+				</td>
+
+				<td>
+					<th>&nbsp;</th>
+				</td>
+				<td>
+					<th>Ciudad</th>
+				</td>
+
+				<td>
+					<input type= 'text' name= 'buscar_ciudad' size='5' value="{$buscar_ciudad}">
+		
+				</td>
+
+			</tr>
+		</table>
+
+		<BR>	
+
+		<table width="100%" cellspacing="0" cellpadding="0" border="0" summary="">
+			<tbody>
+				<tr>
+					<td>
+						<img width="10px" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+
+
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+
+					<td>
+						<!--<input type="image" src="imagenes/boton_buscar.jpg" width="70" height="25">-->
+						<input type="button" id="boton_buscar_ciudad" value="BUSCAR"  class="boton" onClick="Buscar_Producto()"/>
+
+					</td>
+					<td width="100%">
+						<img width="30px" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+
+					<td>
+						<!--<input type="image" src="imagenes/boton_grabar.jpg" width="70" height="25" onClick="grabar_2nivel()">-->
+						<input type="button" id="boton_nuevo" value="GRABAR" class="boton" onClick="grabar_4nivel_cuadros()"/>
+
+						<input type= "hidden" name= "actuar_4nivel" value="">
+					</td>
+					<td>
+						<img width="20px" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		{$mensaje1_calendarios_ciudades}
+		{$mensaje2_calendarios_ciudades}
+
+		<table border = "0" align = "left" class="fondotabla">
+			<tr class="cabeceratabla">
+				<th>Sel</th>
+				<th>Ciud</th>
+				<th>Desde</th>
+				<th>Hasta</th>
+				<th>Dias Sem.</th>
+				<th>Estancia</th>
+				<!--<th>Borrar</th>-->
+				{section name=i loop=$calendarios_ciudades}
+				{/section}
+				<th><a href="javascript:void(0)" onclick="Borrar_Todos_4nivel({$smarty.section.i.loop});">Borrar</a></th>
+			</tr>
+
+			{section name=i loop=$calendarios_ciudades}
+			<tr>
+				<td align = "center">
+					<input type= 'checkbox' name= 'seleccion_4nivel{$smarty.section.i.index}' value="" onChange="desmarcarBorrar_4nivel({$smarty.section.i.index})">
+					<input type= 'hidden' name= 'selec_4nivel{$smarty.section.i.index}' value="N">
+				</td>
+
+				<td><input type= 'text' name= 'ciudad{$smarty.section.i.index}' size='2' class="campocenter" value="{$calendarios_ciudades[i].ciudad}" onChange="seleccionar_4nivel({$smarty.section.i.index})">
+				<input type= 'hidden' name= 'ciudad_old{$smarty.section.i.index}' value="{$calendarios_ciudades[i].ciudad}">
+				</td>
+
+				<td><input type= 'text' id= 'fecha_desde_calendarios_ciudades{$smarty.section.i.index}' name= 'fecha_desde_calendarios_ciudades{$smarty.section.i.index}' size='7' value="{$calendarios_ciudades[i].fecha_desde_calendarios_ciudades}" onChange="seleccionar_4nivel({$smarty.section.i.index})">
+				<input type= 'hidden' name= 'fecha_desde_calendarios_ciudades_old{$smarty.section.i.index}' value="{$calendarios_ciudades[i].fecha_desde_calendarios_ciudades}">
+
+						<img id="botonfecha_desde_calendarios_ciudades{$smarty.section.i.index}" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'fecha_desde_calendarios_ciudades{$smarty.section.i.index}',
+							button : "botonfecha_desde_calendarios_ciudades{$smarty.section.i.index}",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>				
+				</td>
+
+				<td><input type= 'text' id= 'fecha_hasta_calendarios_ciudades{$smarty.section.i.index}' name= 'fecha_hasta_calendarios_ciudades{$smarty.section.i.index}' size='7' value="{$calendarios_ciudades[i].fecha_hasta_calendarios_ciudades}" onChange="seleccionar_4nivel({$smarty.section.i.index})">
+
+						<img id="botonfecha_hasta_calendarios_ciudades{$smarty.section.i.index}" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'fecha_hasta_calendarios_ciudades{$smarty.section.i.index}',
+							button : "botonfecha_hasta_calendarios_ciudades{$smarty.section.i.index}",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>				
+				</td>
+
+				<td align="center"><input type= 'text' name= 'dias_semana{$smarty.section.i.index}' size='6' class="campotext" value="{$calendarios_ciudades[i].dias_semana}" onChange="seleccionar_4nivel({$smarty.section.i.index})">
+				</td>
+
+				<td align="center"><input type= 'text' name= 'duraciones{$smarty.section.i.index}' size='14' class="campotext" value="{$calendarios_ciudades[i].duraciones}" onChange="seleccionar_4nivel({$smarty.section.i.index})">
+				</td>
+
+				<td align = "center">
+					<input type= 'checkbox' name= 'borrar_4nivel{$smarty.section.i.index}' value="" onChange="desmarcarSeleccion_4nivel({$smarty.section.i.index})">
+					<input type= 'hidden' name= 'borra_4nivel{$smarty.section.i.index}' value="N">
+				</td>
+
+			</tr>
+			{/section}
+
+
+			{section name=j loop=$calendarios_ciudadesnuevos}
+			<tr>
+				<td align = "center">
+					<input type= 'checkbox' name= 'Nuevoseleccion_4nivel{$smarty.section.j.index}' value="">
+					<input type= 'hidden' name= 'Nuevoselec_4nivel{$smarty.section.j.index}' value="N">
+				</td>
+
+				<td><input type= 'text' name= 'Nuevociudad{$smarty.section.j.index}' size='2' class="campotext" 
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperaciudad}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar_4nivel({$smarty.section.j.index})"></td>
+
+
+				<td><input type= 'text' id= 'Nuevofecha_desde_calendarios_ciudades{$smarty.section.j.index}' name= 'Nuevofecha_desde_calendarios_ciudades{$smarty.section.j.index}' size='7' 
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperafecha_desde_calendarios_ciudades}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar_4nivel({$smarty.section.j.index})">
+						<img id="botonNuevofecha_desde_calendarios_ciudades{$smarty.section.j.index}" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'Nuevofecha_desde_calendarios_ciudades{$smarty.section.j.index}',
+							button : "botonNuevofecha_desde_calendarios_ciudades{$smarty.section.j.index}",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>	
+				</td>
+
+				<td><input type= 'text' id= 'Nuevofecha_hasta_calendarios_ciudades{$smarty.section.j.index}' name= 'Nuevofecha_hasta_calendarios_ciudades{$smarty.section.j.index}' size='7' 
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperafecha_hasta_calendarios_ciudades}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar_4nivel({$smarty.section.j.index})">
+						<img id="botonNuevofecha_hasta_calendarios_ciudades{$smarty.section.j.index}" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'Nuevofecha_hasta_calendarios_ciudades{$smarty.section.j.index}',
+							button : "botonNuevofecha_hasta_calendarios_ciudades{$smarty.section.j.index}",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>	
+				</td>
+
+				<td align="center"><input type= 'text' name= 'Nuevodias_semana{$smarty.section.j.index}' size='6' class="campotext" 
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperadias_semana}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar_4nivel({$smarty.section.j.index})"></td>
+
+				<td align="center"><input type= 'text' name= 'Nuevoduraciones{$smarty.section.j.index}' size='14' class="campocenter" 
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperaduraciones}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar_4nivel({$smarty.section.j.index})"></td>
+
+
+			</tr>
+			{/section}
+
+		</table>
+
+		</td>
+
+
+	</tr>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		{include file="$pie"}
+	</form>
+
+ </BODY>
+</HTML>
+
+
+
+

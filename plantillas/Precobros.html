@@ -1,0 +1,309 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 5.0 Transitional//EN">
+<HTML>
+
+ <HEAD>
+  <meta charset="utf-8">
+  <TITLE> Menú </TITLE>
+  <META NAME="Author" CONTENT="Jose de Frias">
+  <META NAME="Keywords" CONTENT="">
+  <META NAME="Description" CONTENT="">
+  <link rel="StyleSheet" href="css/comun.css">
+  <script type="text/javascript" src="funciones_js/funciones.js"></script>
+  <link rel="shortcut icon" type="image/x-icon" href="imagenes/favicon_hit.ico">
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+  <link rel="StyleSheet" href="css/calendario/calendar-blue2.css">
+  <script type="text/javascript" src="funciones_js/calendario/calendar.js"></script>
+  <script type="text/javascript" src="funciones_js/calendario/calendar-es.js"></script>
+  <script type="text/javascript" src="funciones_js/calendario/calendar-setup.js"></script>
+ </HEAD>
+
+<body background="imagenes/fondo.jpg">
+
+	{include file="$cabecera"}
+	{include file="$menu"}
+
+	<form name="mantenimiento_tabla" method = "post" action="">
+		
+		<table width="200px" border = "0" align = "left">
+			<tr>
+				<td>
+					<input type=image src="imagenes/selector_inicio2.jpg" width="25" height="15" onclick="Selector(1);">
+					<input type= "hidden" name= "botonSelector" value="0">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_anterior2.jpg" width="25" height="15" onclick="Selector(2);">	
+				</td>			
+				<td>
+					<select name="filadesde" align="" onchange="submit();"> 
+						{foreach from=$combo item=fila}
+							<!--<option value="{$fila.inicio}">{$fila.inicio} - {$fila.fin}</option>-->
+							
+							{if {$filades} == {$fila.inicio}}
+								<option value="{$fila.inicio}" selected>{$fila.inicio} - {$fila.fin}</option>
+							{else}
+								<option value="{$fila.inicio}">{$fila.inicio} - {$fila.fin}</option>
+							{/if}
+							
+						{/foreach}
+					</select> 
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_siguiente2.jpg" width="25" height="15" onclick="Selector(3);">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_fin2.jpg" width="25" height="15" onclick="Selector(4);">
+				</td>
+				<td>
+					&nbsp;&nbsp;&nbsp;
+				</td>
+			</tr>
+		</table>			
+			
+		<table width="900px" border = "0" align = "left">
+			<tr>				
+				<td>
+					<th align='left'>Salida desde:</th>
+				</td>
+
+				<td><input type= 'text' id= 'buscar_salida_desde' name= 'buscar_salida_desde' value="{$buscar_salida_desde}" size='9'>
+						<img id="botonbuscar_salida_desde" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'buscar_salida_desde',
+							button : "botonbuscar_salida_desde",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>					
+				</td>
+
+				<td>
+					&nbsp;&nbsp;&nbsp;
+				</td>
+				<td>
+					<th align='left'>Hasta:</th>
+				</td>
+				
+				<td><input type= 'text' id= 'buscar_salida_hasta' name= 'buscar_salida_hasta' value="{$buscar_salida_hasta}" size='9'>
+						<img id="botonbuscar_salida_hasta" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'buscar_salida_hasta',
+							button : "botonbuscar_salida_hasta",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>					
+				</td>				
+				<td>
+					&nbsp;&nbsp;&nbsp;
+				</td>				
+				<td>
+					<th align='left'>Agencia:</th>
+				</td>
+				<td>
+					<input type= 'text' id= 'buscar_agencia' name= 'buscar_agencia' size='25' value="{$buscar_agencia}">
+				</td>
+				<td>
+					<th align='left'>Importe total</th>
+				</td>
+			</tr>	
+			<tr>	
+				<td>
+					<th align='left'>Estado:</th>
+				</td>
+				<td>
+					<select id="buscar_estado" name="buscar_estado"> 
+						{foreach from=$comboBuscarPrecobros item=fila11}
+							{if {$buscar_estado} == {$fila11.valor}}
+								<option value="{$fila11.valor}" selected>{$fila11.mostrar}</option>
+							{else}
+								<option value="{$fila11.valor}">{$fila11.mostrar}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>
+				<td>
+					&nbsp;&nbsp;&nbsp;
+				</td>				
+				<td>
+					<th align='left'>Localizador:</th>
+				</td>
+				<td>
+					<input type= 'text' id= 'buscar_localizador' name= 'buscar_localizador' size='8' value="{$buscar_localizador}">
+				</td>
+				<td>
+					&nbsp;&nbsp;&nbsp;
+				</td>
+				<td>
+					<th>Grupo:</th>
+				</td>
+				<td>
+					<select id="buscar_grupo" name="buscar_grupo"> 
+						{foreach from=$comboBuscarGrupos item=fila11}
+							{if {$buscar_grupo} == {$fila11.id}}
+								<option value="{$fila11.id}" selected>{$fila11.nombre}</option>
+							{else}
+								<option value="{$fila11.id}">{$fila11.nombre}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>				
+				
+				
+				
+				<td>
+					&nbsp;&nbsp;&nbsp;
+				</td>					
+
+				<td>
+					<input type= 'text' name= 'importe_total' size='14' value="{$importetotal}" class="camposololecturacenter" readonly>
+				</td>				
+			</tr>
+		</table>
+
+		<BR>	
+
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" class="lineatitulo" style="padding:15px 0px 15px 0px;">
+			<tbody>
+				<tr>
+					<td>
+						<img width="20" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_buscar.jpg" width="70" height="25">-->
+						<input type="button" id="boton_buscar" value="BUSCAR" class="boton"  onClick="Buscar_general()"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_grabar.jpg" width="70" height="25" onClick="grabar()">-->
+						<input type="button" id="boton_grabar" value="GRABAR" class="boton"  onClick="grabar()"/>
+						<input type= "hidden" name= "actuar" value="">
+					</td>
+					
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_grabar.jpg" width="70" height="25" onClick="grabar()">-->
+						<input type="button" id="boton_grabar" value="ENVIAR MAIL DE AVISO SELECCIONADAS" class="boton"  onClick="Enviar_aviso_seleccionadas()"/>
+					</td>					
+					
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_grabar.jpg" width="70" height="25" onClick="grabar()">-->
+						<input type="button" id="boton_grabar" value="ENVIAR MAIL DE AVISO POR PARAMETROS" class="boton"  onClick="Enviar_aviso_parametros()"/>
+					</td>
+
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					
+					<td>
+						<input type="button" id="boton_excel" value="EXCEL" class="boton"  onClick="javascript: window.location.href='Excel_Informe_Precobros.php?buscar_salida_desde='+document.getElementById('buscar_salida_desde').value+'&buscar_salida_hasta='+document.getElementById('buscar_salida_hasta').value+'&buscar_estado='+document.getElementById('buscar_estado').value+'&buscar_localizador='+document.getElementById('buscar_localizador').value+'&buscar_agencia='+document.getElementById('buscar_agencia').value+'&buscar_grupo='+document.getElementById('buscar_grupo').value;"/>	
+					</td>
+
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_salir.jpg" width="70" height="25" onClick="salir('S')">-->
+						<input type= "hidden" name= "ir_a" value="">
+					</td>
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		{$mensaje1}
+		{$mensaje2}
+
+		<table border = "0" align = "left" class="fondotabla" style="clear:both">
+			<tr class="cabeceratabla">
+				<th>Sel</th>
+				<th>Salida</th>
+				<th>Localizador</th>
+				<th>Agencia</th>
+				<th>Oficina</th>
+				<th>Dirección</th>
+				<th>Importe</th>
+				<th>Moneda</th>
+				<th>Estado</th>
+				<th>Metodo</th>
+				<th>Doc</th>
+				<th>Fecha</th>
+				<th>Operador</th>
+
+
+			</tr>
+
+			{section name=i loop=$precobros}
+			<tr>
+				<td align = "center">
+					<input type= 'checkbox' name= 'seleccion{$smarty.section.i.index}' value="" onChange="Seleccion_precobro({$smarty.section.i.index})">
+					<input type= 'hidden' name= 'selec{$smarty.section.i.index}' value="N">
+				</td>
+				
+				<td><input type= 'text' name= 'fecha_salida{$smarty.section.i.index}' size='9' value="{$precobros[i].fecha_salida}" class="camposololecturacenter" readonly></td>
+				<td><input type= 'text' name= 'localizador{$smarty.section.i.index}' size='6' value="{$precobros[i].localizador}" class="camposololecturacenter" readonly></td>
+				<td><input type= 'text' name= 'agencia{$smarty.section.i.index}' size='25' value="{$precobros[i].agencia}" class="camposololecturatext"  readonly></td>
+				<td><input type= 'text' name= 'oficina{$smarty.section.i.index}' size='5' value="{$precobros[i].oficina}" class="camposololecturacenter"  readonly></td>
+				<td><input type= 'text' name= 'direccion{$smarty.section.i.index}' size='25' value="{$precobros[i].direccion}" class="camposololecturatext" readonly></td>
+				<td><input type= 'text' name= 'importe{$smarty.section.i.index}' size='7' value="{$precobros[i].importe}" class="camposololecturanumber"  readonly></td>
+				<td><input type= 'text' name= 'moneda{$smarty.section.i.index}' size='5' value="{$precobros[i].moneda}" class="camposololecturacenter"  readonly></td>
+				<td>
+					<select name= 'estado{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+						{foreach from=$comboPrecobros item=fila3}
+							{if {$precobros[i].estado} == {$fila3.valor}}
+								<option value="{$fila3.valor}" selected>{$fila3.mostrar}</option>
+							{else}
+								<option value="{$fila3.valor}">{$fila3.mostrar}</option>
+							{/if}	
+						{/foreach}
+					</select> 
+				</td>
+				<td>
+					<input type= 'text' name= 'metodo_nombre{$smarty.section.i.index}' size='12' value="{$precobros[i].metodo_nombre}" class="camposololecturatext" readonly>
+					<input type= 'hidden' name= 'metodo{$smarty.section.i.index}' size='10' value="{$precobros[i].metodo}">
+				</td>
+
+				{if {$precobros[i].metodo} == 'T'}
+				<td>
+                    				<input type="button" name="ver_transferencia" class="boton" value="VER" onClick="window.open('Ver_transferencia.php?localizador={$precobros[i].localizador}', '', 'width=720px,height=470px,toolbar=no,scrollbars=yes')" />
+				</td>
+				{else}
+				<td>
+
+				</td>				
+				{/if}
+				<td><input type= 'text' name= 'fecha{$smarty.section.i.index}' size='18' value="{$precobros[i].fecha}" class="camposololecturacenter" readonly></td>
+				<td><input type= 'text' name= 'operador{$smarty.section.i.index}' size='10' value="{$precobros[i].operador}" class="camposololecturacenter" readonly></td>
+			</tr>
+			{/section}
+
+
+
+		{include file="$pie"}
+	</form>
+
+
+ </BODY>
+</HTML>
+
+
+
+

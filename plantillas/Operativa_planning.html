@@ -1,0 +1,372 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 5.0 Transitional//EN">
+<HTML>
+
+
+ <HEAD>
+  <meta charset="utf-8">
+  <TITLE> Menú </TITLE>
+  <META NAME="Generator" CONTENT="EditPlus">
+  <META NAME="Author" CONTENT="Jose de Frias">
+  <META NAME="Keywords" CONTENT="">
+  <META NAME="Description" CONTENT="">
+  <link rel="StyleSheet" href="css/comun.css">
+  <script type="text/javascript" src="funciones_js/funciones.js"></script>
+  <link rel="shortcut icon" type="image/x-icon" href="imagenes/favicon_hit.ico">
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+ </HEAD>
+
+<body background="imagenes/fondo.jpg">
+
+	{include file="$cabecera"}
+	{include file="$menu"}
+
+	<form name="mantenimiento_tabla" method = "post" action="">
+		
+		<table border = "0" align = "left">
+			<tr>
+
+				<td>
+					<th>&nbsp;&nbsp;&nbsp;</th>
+				</td>
+				
+				<td>
+					<th>Tipo:</th>
+				</td>
+				<td>
+					<select name="buscar_tipo" onChange="submit();"> 
+						{foreach from=$comboTipo_planning item=fila11}
+							{if {$buscar_tipo} == {$fila11.valor}}
+								<option value="{$fila11.valor}" selected>{$fila11.mostrar}</option>
+							{else}
+								<option value="{$fila11.valor}">{$fila11.mostrar}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>				
+				
+				<td>
+					<th>Folleto:</th>
+				</td>
+				<td>
+					<select name="buscar_folleto" onChange="submit();"> 
+						{foreach from=$comboFolletos item=fila11}
+							{if {$buscar_folleto} == {$fila11.codigo}}
+								<option value="{$fila11.codigo}" selected>{$fila11.nombre}</option>
+							{else}
+								<option value="{$fila11.codigo}">{$fila11.nombre}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>	
+
+				<td>
+					<th>Destino:</th>
+				</td>
+				<td>
+					<select name="buscar_destino" onChange="submit();"> 
+						{foreach from=$comboDestinos item=fila11}
+							{if {$buscar_destino} == {$fila11.codigo}}
+								<option value="{$fila11.codigo}" selected>{$fila11.nombre}</option>
+							{else}
+								<option value="{$fila11.codigo}">{$fila11.nombre}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>				
+				
+			</tr>
+			<TR height="20">
+			</TR>
+		</table>
+
+		<BR>	
+
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" class="lineatitulo">
+				<tr height="">
+					<td>
+						<img width="20" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<!--<td>
+						<input type="button" id="boton_buscar" value="BUSCAR"  style="height:22px; color:#FFFFFF; background:#0066CC; font-family:Arial; font-weight: bold; font-size:10px; text-align:center; border-radius: 10px 10px 10px 10px;" onClick="Buscar_general()"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>-->
+
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_salir.jpg" width="70" height="25" onClick="salir('S')">-->
+						<input type= "hidden" name= "ir_a" value="">
+					</td>
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+				<TR height="20">
+				</TR>				
+		</table>
+
+		{$mensaje1}
+		{$mensaje2}
+
+				<table width="{$ancho_tabla}px" border = "1" align = "left" class="fondotabla2">
+					<tr>
+						<th align = "center" colspan="1" width="450px" class="cabeceratabla_precios">AEREOS CONFIRMADOS</th>
+					{section name=i loop=$calendario}
+
+						<th align = "center" colspan="2" width="200px" class="cabeceratabla_precios">{$calendario[i].fecha_formato}</th>
+
+					{/section}
+					</tr>
+					<tr>
+						<th align = "center" colspan="1" width="450px" class="subcabeceratabla_precios"></th>
+					{section name=i loop=$calendario}
+						<th align = "center" colspan="1" width="100px" class="subcabeceratabla_precios">PAX</th>
+						<th align = "center" colspan="1" width="100px" class="subcabeceratabla_precios">OCUP</th>
+					{/section}
+					</tr>
+					
+					{section name=i loop=$trayectos}					
+						<tr>
+							<th align = "center" colspan="1" width="450px" class="subcabeceratabla_precios">{$trayectos[i].trayecto}</th>
+
+							{section name=j loop=$calendario}
+								{$hay='0'}
+								{section name=k loop=$trayectos_ocupacion}
+
+									{if {$trayectos[i].trayecto} == {$trayectos_ocupacion[k].trayecto} && {$calendario[j].fecha} == {$trayectos_ocupacion[k].fecha}}
+
+										<th align = "center" colspan="1" width="100px" 
+											{if {$trayectos[i].trayecto} == '3C - OVD - TFS' OR  {$trayectos[i].trayecto} == '3C - SCQ - TFS' OR  {$trayectos[i].trayecto} == '3C - OVD - ACE' OR  {$trayectos[i].trayecto} == '3C - SCQ - ACE' OR {$trayectos[i].trayecto} == '3C - BIO - TFS'}
+												bgcolor="#B9D305"
+											{/if}
+										>{$trayectos_ocupacion[k].PAX}</th>
+										<th align = "center" colspan="1" width="100px">{$trayectos_ocupacion[k].OCUP}%</th>								
+										{$hay='1'}
+									{/if}
+								{/section}									
+								{if {$hay} == '0'}
+										<th align = "center" colspan="1" width="100px" class="fondocelda2">0</th>
+										<th align = "center" colspan="1" width="100px" class="fondocelda2">0</th>									
+								{/if}
+							{/section}							
+
+						</tr>					
+					{/section}					
+
+
+				</table>
+				
+				<table width="{$ancho_tabla}px" cellspacing="0" cellpadding="0" border="0" summary="">
+					<tbody>
+						<tr height="50">
+							<td>
+								<img width="200" height="4" alt="" src="imagenes/cghes.gif">
+							</td>
+							<td width="100%">
+								<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+							</td>
+							<td>
+								<img width="100" height="4" alt="" src="imagenes/cghee.gif">
+							</td>
+						</tr>
+					</tbody>
+				</table> 
+				
+				<table width="{$ancho_tabla}px" border = "1" align = "left" class="fondotabla2">
+					<tr>
+						<th align = "center" colspan="1" width="450px" class="cabeceratabla_precios">ALOJAMIENTOS CONFIRMADOS</th>
+					{section name=i loop=$calendario}
+
+						<th align = "center" colspan="2" width="200px" class="cabeceratabla_precios">{$calendario[i].fecha_formato}</th>
+
+					{/section}
+					</tr>
+					<tr>
+						<th align = "center" colspan="1" width="450px" class="subcabeceratabla_precios"></th>
+					{section name=i loop=$calendario}
+						<th align = "center" colspan="1" width="100px" class="subcabeceratabla_precios">HAB</th>
+						<th align = "center" colspan="1" width="100px" class="subcabeceratabla_precios">PAX</th>
+					{/section}
+					</tr>
+					
+					{section name=i loop=$alojamientos}					
+						<tr>
+							<th align = "center" colspan="1" width="450px" class="subcabeceratabla_precios">{$alojamientos[i].alojamiento}</th>
+
+							{section name=j loop=$calendario}
+								{$hay='0'}
+								{section name=k loop=$alojamientos_confirmados}
+
+									{if {$alojamientos[i].alojamiento} == {$alojamientos_confirmados[k].alojamiento} && {$calendario[j].fecha} == {$alojamientos_confirmados[k].fecha}}
+
+										<th align = "center" colspan="1" width="100px">{$alojamientos_confirmados[k].hab}</th>
+										<th align = "center" colspan="1" width="100px">{$alojamientos_confirmados[k].pax}</th>								
+										{$hay='1'}
+									{/if}
+								{/section}									
+								{if {$hay} == '0'}
+										<th align = "center" colspan="1" width="100px" class="fondocelda2">0</th>
+										<th align = "center" colspan="1" width="100px" class="fondocelda2">0</th>									
+								{/if}
+							{/section}							
+
+						</tr>					
+					{/section}					
+
+				</table>				
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" class="lineatitulo">
+				<TR height="50">
+				</TR>	
+				<tr height="">
+					<td>
+						<img width="20" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+
+					<td align='left' bgcolor='#333399' width="30%" height="20px" style="color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+						<font color='#CCFFFF' size='4'><B><I>Plazas y Habitaciones Pendientes</I></B></font>
+					</td>
+
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_salir.jpg" width="70" height="25" onClick="salir('S')">-->
+						<input type= "hidden" name= "ir_a" value="">
+					</td>
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+				<TR height="20">
+				</TR>				
+		</table>
+
+				<table width="{$ancho_tabla}px" border = "1" align = "left" class="fondotabla2">
+					<tr>
+						<th align = "center" colspan="1" width="450px" class="cabeceratabla_precios">AEREOS PENDIENTES</th>
+					{section name=i loop=$calendario}
+
+						<th align = "center" colspan="2" width="200px" class="cabeceratabla_precios">{$calendario[i].fecha_formato}</th>
+
+					{/section}
+					</tr>
+					<tr>
+						<th align = "center" colspan="1" width="450px" class="subcabeceratabla_precios"></th>
+					{section name=i loop=$calendario}
+						<th align = "center" colspan="1" width="100px" class="subcabeceratabla_precios">PAX</th>
+						<th align = "center" colspan="1" width="100px" class="subcabeceratabla_precios">OCUP</th>
+					{/section}
+					</tr>
+					
+					{section name=i loop=$trayectos}					
+						<tr>
+							<th align = "center" colspan="1" width="450px" class="subcabeceratabla_precios">{$trayectos[i].trayecto}</th>
+
+							{section name=j loop=$calendario}
+								{$hay='0'}
+								{section name=k loop=$trayectos_no_confirmados}
+
+									{if {$trayectos[i].trayecto} == {$trayectos_no_confirmados[k].trayecto} && {$calendario[j].fecha} == {$trayectos_no_confirmados[k].fecha}}
+
+										<th align = "center" colspan="1" width="100px">{$trayectos_no_confirmados[k].PAX}</th>
+										<th align = "center" colspan="1" width="100px">{$trayectos_no_confirmados[k].OCUP}%</th>								
+										{$hay='1'}
+									{/if}
+								{/section}									
+								{if {$hay} == '0'}
+										<th align = "center" colspan="1" width="100px" class="fondocelda2">0</th>
+										<th align = "center" colspan="1" width="100px" class="fondocelda2">0</th>									
+								{/if}
+							{/section}							
+
+						</tr>					
+					{/section}					
+
+
+				</table>
+				
+				<table width="{$ancho_tabla}px" cellspacing="0" cellpadding="0" border="0" summary="">
+					<tbody>
+						<tr height="50">
+							<td>
+								<img width="200" height="4" alt="" src="imagenes/cghes.gif">
+							</td>
+							<td width="100%">
+								<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+							</td>
+							<td>
+								<img width="100" height="4" alt="" src="imagenes/cghee.gif">
+							</td>
+						</tr>
+					</tbody>
+				</table> 
+				
+				<table width="{$ancho_tabla}px" border = "1" align = "left" class="fondotabla2">
+					<tr>
+						<th align = "center" colspan="1" width="450px" class="cabeceratabla_precios">ALOJAMIENTOS PENDIENTES</th>
+					{section name=i loop=$calendario}
+
+						<th align = "center" colspan="2" width="200px" class="cabeceratabla_precios">{$calendario[i].fecha_formato}</th>
+
+					{/section}
+					</tr>
+					<tr>
+						<th align = "center" colspan="1" width="450px" class="subcabeceratabla_precios"></th>
+					{section name=i loop=$calendario}
+						<th align = "center" colspan="1" width="100px" class="subcabeceratabla_precios">HAB</th>
+						<th align = "center" colspan="1" width="100px" class="subcabeceratabla_precios">PAX</th>
+					{/section}
+					</tr>
+					
+					{section name=i loop=$alojamientos}					
+						<tr>
+							<th align = "center" colspan="1" width="450px" class="subcabeceratabla_precios">{$alojamientos[i].alojamiento}</th>
+
+							{section name=j loop=$calendario}
+								{$hay='0'}
+								{section name=k loop=$alojamientos_no_confirmados}
+
+									{if {$alojamientos[i].alojamiento} == {$alojamientos_no_confirmados[k].alojamiento} && {$calendario[j].fecha} == {$alojamientos_no_confirmados[k].fecha}}
+
+										<th align = "center" colspan="1" width="100px">{$alojamientos_no_confirmados[k].hab}</th>
+										<th align = "center" colspan="1" width="100px">{$alojamientos_no_confirmados[k].pax}</th>								
+										{$hay='1'}
+									{/if}
+								{/section}									
+								{if {$hay} == '0'}
+										<th align = "center" colspan="1" width="100px" class="fondocelda2">0</th>
+										<th align = "center" colspan="1" width="100px" class="fondocelda2">0</th>									
+								{/if}
+							{/section}							
+
+						</tr>					
+					{/section}					
+
+				</table>	
+				
+
+		{include file="$pie"}
+	</form>
+
+
+ </BODY>
+</HTML>
+
+
+
+
+
+

@@ -1,0 +1,826 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 5.0 Transitional//EN">
+<HTML>
+
+ <HEAD>
+  <meta charset="utf-8">
+  <TITLE> Menú </TITLE>
+  <META NAME="Generator" CONTENT="EditPlus">
+  <META NAME="Author" CONTENT="Jose de Frias">
+  <META NAME="Keywords" CONTENT="">
+  <META NAME="Description" CONTENT="">
+  <link rel="StyleSheet" href="css/comun.css">
+  <script type="text/javascript" src="funciones_js/funciones.js"></script>
+  <link rel="shortcut icon" type="image/x-icon" href="imagenes/favicon_hit.ico">
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+  <link rel="StyleSheet" href="css/calendario/calendar-blue2.css">
+  <script type="text/javascript" src="funciones_js/calendario/calendar.js"></script>
+  <script type="text/javascript" src="funciones_js/calendario/calendar-es.js"></script>
+  <script type="text/javascript" src="funciones_js/calendario/calendar-setup.js"></script>
+ </HEAD>
+
+<body background="imagenes/fondo.jpg">
+
+	{include file="$cabecera"}
+	{include file="$menu"}
+
+	<form name="mantenimiento_tabla" method = "post" action="">
+
+	{include file="$cabecera_cuadro"}
+<!-------------------------------------------------------------->
+<!-------------------------------------------------------------->
+<!-------------------------AEREOS------------------------------->
+<!-------------------------------------------------------------->
+
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" style="padding:5px 0px 15px 0px;">
+			<tbody>
+				<tr height="10"></tr>
+				<tr>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+					<td>
+						<input type="button" id="boton_calendario" value="CALENDARIO" class="botones_cuadro" onClick="salir_cuadros('CA')"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td align='center'>
+						<input type="button" id="boton_aereos" value="CONDICIONES" class="botones_cuadro" onClick="salir_cuadros('CO')"/>
+
+					</td>
+		
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<input type="button" id="boton_aereos" value="AEREOS" class="botones_cuadro_seleccionado" onClick="salir_cuadros('AE')"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<input type="button" id="boton_alojamientos" value="ALOJAMIENTOS" class="botones_cuadro"" onClick="salir_cuadros('AL')"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<input type="button" id="boton_alojamientos_condiciones" value="ALOJ / CONDIC" class="botones_cuadro" onClick="salir_cuadros('AC')"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<input type="button" id="boton_servicios" value="SERVICIOS" class="botones_cuadro"" onClick="salir_cuadros('SE')"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<input type="button" id="boton_imagenes" value="PRECIOS" class="botones_cuadro" onClick="salir_cuadros('PR')"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<input type="button" id="boton_textos" value="TEXTOS" class="botones_cuadro" onClick="salir_cuadros('TE')"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<input type="button" id="boton_imagenes" value="IMAGENES" class="botones_cuadro" onClick="salir_cuadros('IM')"/>
+					</td>
+
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+
+
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<table border = "0" align = "left">
+			<tr>
+				<td>
+					<input type=image src="imagenes/selector_inicio2.jpg" width="25" height="15" onclick="Selector_2nivel(1);">
+					<input type= "hidden" name= "botonSelector_2nivel" value="0">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_anterior2.jpg" width="25" height="15" onclick="Selector_2nivel(2);">	
+				</td>			
+				<td>
+					<select name="filadesde_aereos" align="" onchange="submit();"> 
+						{foreach from=$combo_aereos item=fila}
+							
+							{if {$filades_aereos} == {$fila.inicio}}
+								<option value="{$fila.inicio}" selected>{$fila.inicio} - {$fila.fin}</option>
+							{else}
+								<option value="{$fila.inicio}">{$fila.inicio} - {$fila.fin}</option>
+							{/if}
+							
+						{/foreach}
+					</select> 
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_siguiente2.jpg" width="25" height="15" onclick="Selector_2nivel(3);">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_fin2.jpg" width="25" height="15" onclick="Selector_2nivel(4);">
+				</td>
+				<td>
+					<th>&nbsp;&nbsp;&nbsp;</th>
+				</td>
+				<td>
+					<th>Buscar Ciudad</th>
+				</td>
+				<td>
+					<select name="buscar_ciudad" align=""> 
+						{foreach from=$comboCiudades item=fila}
+							{if {$buscar_ciudad} == {$fila.ciudad}}
+								<option value="{$fila.ciudad}" selected>{$fila.nombre}</option>
+							{else}
+								<option value="{$fila.ciudad}">{$fila.nombre}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>
+
+
+				</td>
+
+			</tr>
+		</table>
+
+		<BR>	
+
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" style="padding:15px 0px 15px 0px;">
+			<tbody>
+				<tr>
+					<td>
+						<img width="200" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_buscar.jpg" width="70" height="25">-->
+						<input type="button" id="boton_buscar" value="BUSCAR" class="boton" onClick="Buscar_Producto()"/>
+
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_grabar.jpg" width="70" height="25" onClick="grabar_2nivel()">-->
+						<input type="button" id="boton_nuevo" value="GRABAR" class="boton" onClick="grabar_2nivel_cuadros()"/>
+
+						<input type= "hidden" name= "actuar_2nivel" value="">
+					</td>
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		{$mensaje1_aereos}
+		{$mensaje2_aereos}
+
+		<table width="80%"  border = "0" align = "left" class="fondotabla">
+			<tr class="cabeceratabla">
+				<th>Sel</th>
+				<th>Ciudad</th>
+				<th>Opc.</th>
+				<th>Num.</th>
+				<th>Cia</th>
+				<th>Acuerdo</th>
+				<th>Subac.</th>
+				<th>Origen</th>
+				<th>Destino</th>
+				<th>Vuelo</th>
+				<th>Salida</th>
+				<th>Llegada</th>
+				<th>Dia</th>
+				<th>Tasas</th>
+				<th>Tipo</th>
+				<th>Borrar</th>
+			</tr>
+
+			{section name=i loop=$aereos}
+			<tr>
+				<td align = "center">
+					<input type= 'checkbox' name= 'seleccion_2nivel{$smarty.section.i.index}' value="" onChange="desmarcarBorrar_2nivel({$smarty.section.i.index})">
+					<input type= 'hidden' name= 'selec_2nivel{$smarty.section.i.index}' value="N">
+				</td>
+
+				<!--<td>
+					<select name= 'tipo{$smarty.section.i.index}' align="" style=" width:200px" onChange="seleccionar_2nivel({$smarty.section.i.index})"> 
+						{foreach from=$comboTipo_Aereos item=fila10}
+							{if {$aereos[i].tipo} == {$fila10.valor}}
+								<option value="{$fila10.valor}" selected>{$fila10.mostrar}</option>
+							{else}
+								<option value="{$fila10.valor}">{$fila10.mostrar}</option>
+							{/if}	
+						{/foreach}
+					</select>
+					<input type= 'hidden' name= 'tipo_old{$smarty.section.i.index}' value="{$aereos[i].tipo}">
+				</td>-->
+
+				<td align = "center"><input type= 'text' name= 'ciudad{$smarty.section.i.index}' size='3' class="campocenter" value="{$aereos[i].ciudad}" onChange="seleccionar_2nivel({$smarty.section.i.index})">
+				<input type= 'hidden' name= 'ciudad_old{$smarty.section.i.index}' value="{$aereos[i].ciudad}">
+				</td>
+
+				<td align = "center"><input type= 'text' name= 'opcion{$smarty.section.i.index}' size='1' class="campocenter" value="{$aereos[i].opcion}" onChange="seleccionar_2nivel({$smarty.section.i.index})">
+				<input type= 'hidden' name= 'opcion_old{$smarty.section.i.index}' value="{$aereos[i].opcion}">
+				</td>
+
+				<td align = "center"><input type= 'text' name= 'numero{$smarty.section.i.index}' size='1' class="campocenter" value="{$aereos[i].numero}" onChange="seleccionar_2nivel({$smarty.section.i.index})">
+				<input type= 'hidden' name= 'numero_old{$smarty.section.i.index}' value="{$aereos[i].numero}">
+				</td>
+
+				<td align = "center"><input type= 'text' name= 'cia{$smarty.section.i.index}' size='1' class="campocenter" value="{$aereos[i].cia}" onChange="seleccionar_2nivel({$smarty.section.i.index})">
+				</td>
+
+				<td align = "center"><input type= 'text' name= 'acuerdo{$smarty.section.i.index}' size='5' class="campocenter" value="{$aereos[i].acuerdo}" onChange="seleccionar_2nivel({$smarty.section.i.index})">
+				</td>
+
+				<td align = "center"><input type= 'text' name= 'subacuerdo{$smarty.section.i.index}' size='5' class="campocenter" value="{$aereos[i].subacuerdo}" onChange="seleccionar_2nivel({$smarty.section.i.index})">
+				</td>
+
+				<td align = "center"><input type= 'text' name= 'origen{$smarty.section.i.index}' size='5' class="campocenter" value="{$aereos[i].origen}" onChange="seleccionar_2nivel({$smarty.section.i.index})">
+				</td>
+
+				<td align = "center"><input type= 'text' name= 'destino{$smarty.section.i.index}' size='5' class="campocenter" value="{$aereos[i].destino}" onChange="seleccionar_2nivel({$smarty.section.i.index})">
+				</td>
+
+				<td align = "center"><input type= 'text' name= 'vuelo{$smarty.section.i.index}' size='5' class="camposololecturacenter" value="{$aereos[i].vuelo}" onChange="seleccionar_2nivel({$smarty.section.i.index})" readonly>
+				</td>
+
+				<td align = "center"><input type= 'text' name= 'hora_salida{$smarty.section.i.index}' size='5' class="camposololecturacenter" value="{$aereos[i].hora_salida}" onChange="seleccionar_2nivel({$smarty.section.i.index})" readonly>
+				</td>
+
+				<td align = "center"><input type= 'text' name= 'hora_llegada{$smarty.section.i.index}' size='5' class="camposololecturacenter" value="{$aereos[i].hora_llegada}" onChange="seleccionar_2nivel({$smarty.section.i.index})" readonly>
+				</td>
+
+				<td align = "center"><input type= 'text' name= 'dia{$smarty.section.i.index}' size='1' class="campocenter" value="{$aereos[i].dia}" onChange="seleccionar_2nivel({$smarty.section.i.index})">
+				</td>
+
+				<td align = "center"><input type= 'text' name= 'tasas{$smarty.section.i.index}' size='7' class="camponumber" value="{$aereos[i].tasas}" onChange="seleccionar_2nivel({$smarty.section.i.index})">
+				</td>
+
+				<td align = "center">
+					<select name= 'tipo_trayecto{$smarty.section.i.index}' onChange="seleccionar_2nivel({$smarty.section.i.index})"> 
+						{foreach from=$comboTipos_Trayecto item=fila10}
+							{if {$aereos[i].tipo_trayecto} == {$fila10.valor}}
+								<option value="{$fila10.valor}" selected>{$fila10.mostrar}</option>
+							{else}
+								<option value="{$fila10.valor}">{$fila10.mostrar}</option>
+							{/if}	
+						{/foreach}
+					</select>
+				</td>				
+				
+				<td align = "center">
+					<input type= 'checkbox' name= 'borrar_2nivel{$smarty.section.i.index}' value="" onChange="desmarcarSeleccion_2nivel({$smarty.section.i.index})">
+					<input type= 'hidden' name= 'borra_2nivel{$smarty.section.i.index}' value="N">
+				</td>
+			</tr>
+			{/section}
+
+		<!--</table>
+
+
+		<table width="100%" cellspacing="0" cellpadding="0" border="0" summary="">
+			<tbody>
+				<tr>
+					<td>
+						<img width="200" height="2" alt="" src="imagenes/cghes.gif">
+					</td>
+					<td width="100%">
+						<img width="100%" height="2" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<img width="100" height="2" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+
+		<table width="840px" border = "0" align = "left" class="fondotabla">-->
+
+			{section name=j loop=$aereosnuevos}
+			<tr>
+				<td align = "center">
+					<input type= 'checkbox' name= 'Nuevoseleccion_2nivel{$smarty.section.j.index}' value="">
+					<input type= 'hidden' name= 'Nuevoselec_2nivel{$smarty.section.j.index}' value="N">
+				</td>
+
+				<!--<td>
+					<select name= 'Nuevotipo{$smarty.section.j.index}' align="" style=" width:200px" onchange="Nuevosseleccionar_2nivel({$smarty.section.j.index})"> 
+						{foreach from=$comboTipo_Aereos item=fila7}
+							{if {$recuperatipo} == {$fila7.valor} and {$smarty.section.j.index} == 0}
+								<option value="{$recuperatipo}" selected>{$fila7.mostrar}</option>
+							{else}
+								<option value="{$fila7.valor}">{$fila7.mostrar}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>-->
+
+				<td align = "center"><input type= 'text' name= 'Nuevociudad{$smarty.section.j.index}' size='3' class="campotext" 
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperaciudad}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar_2nivel({$smarty.section.j.index})"></td>
+
+				<td align = "center"><input type= 'text' name= 'Nuevoopcion{$smarty.section.j.index}' size='1' class="camponumber" 
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperaopcion}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar_2nivel({$smarty.section.j.index})"></td>
+
+				<td align = "center"><input type= 'text' name= 'Nuevonumero{$smarty.section.j.index}' size='1' class="camponumber" 
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperanumero}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar_2nivel({$smarty.section.j.index})"></td>				
+
+				<td align = "center"><input type= 'text' name= 'Nuevocia{$smarty.section.j.index}' size='1' class="campotext" 
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperacia}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar_2nivel({$smarty.section.j.index})"></td>
+
+				<td align = "center"><input type= 'text' name= 'Nuevoacuerdo{$smarty.section.j.index}' size='5' class="camponumber" 
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperaacuerdo}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar_2nivel({$smarty.section.j.index})"></td>
+
+				<td align = "center"><input type= 'text' name= 'Nuevosubacuerdo{$smarty.section.j.index}' size='5' class="camponumber" 
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperasubacuerdo}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar_2nivel({$smarty.section.j.index})"></td>
+
+				<td align = "center"><input type= 'text' name= 'Nuevoorigen{$smarty.section.j.index}' size='5' class="campotext" 
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperaorigen}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar_2nivel({$smarty.section.j.index})"></td>
+
+				<td align = "center"><input type= 'text' name= 'Nuevodestino{$smarty.section.j.index}' size='5' class="campotext" 
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperadestino}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar_2nivel({$smarty.section.j.index})"></td>
+
+				<td align = "center"><input type= 'text' name= 'Nuevovuelo{$smarty.section.j.index}' size='5' class="camposololecturatext" readonly></td>
+				<td align = "center"><input type= 'text' name= 'Nuevohora_salida{$smarty.section.j.index}' size='5' class="camposololecturatext" readonly></td>
+				<td align = "center"><input type= 'text' name= 'Nuevohora_llegada{$smarty.section.j.index}' size='5' class="camposololecturatext" readonly></td>
+
+				<td align = "center"><input type= 'text' name= 'Nuevodia{$smarty.section.j.index}' size='1' class="camponumber" 
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperadia}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar_2nivel({$smarty.section.j.index})"></td>
+
+				<td align = "center"><input type= 'text' name= 'Nuevotasas{$smarty.section.j.index}' size='7' class="camponumber" 
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperatasas}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar_2nivel({$smarty.section.j.index})"></td>
+
+				<td align = "center">
+					<select name= 'Nuevotipo_trayecto{$smarty.section.j.index}' align="" onchange="Nuevosseleccionar_2nivel({$smarty.section.j.index})"> 
+						{foreach from=$comboTipos_Trayecto item=fila7}
+							{if {$recuperatipo_trayecto} == {$fila7.valor} and {$smarty.section.j.index} == 0}
+								<option value="{$recuperatipo_trayecto}" selected>{$fila7.mostrar}</option>
+							{else}
+								<option value="{$fila7.valor}">{$fila7.mostrar}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>				
+				
+			</tr>
+			{/section}
+
+		</table>
+
+
+<!-------------------------------------------------------------->
+<!-------------------------------------------------------------->
+<!-------------------------PRECIOS------------------------------>
+<!-------------------------------------------------------------->
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" style="padding:15px 0px 15px 0px;">
+			<tbody>
+				<tr>
+					<td>
+						<img width="10px" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+
+					<td align='center' bgcolor='#333399' width="15%" height="23px" style="color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+						<font color='#CCFFFF' size='3'><B><I>&nbsp;&nbsp;&nbsp;&nbsp;Precios&nbsp;&nbsp;&nbsp;&nbsp;</I></B></font>
+					</td>
+
+
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+
+
+					<td>
+						<img width="20px" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<table border = "0" align = "left">
+			<tr>
+				<td>
+					<input type=image src="imagenes/selector_inicio2.jpg" width="25" height="15" onclick="Selector_3nivel(1);">
+					<input type= "hidden" name= "botonSelector_3nivel" value="0">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_anterior2.jpg" width="25" height="15" onclick="Selector_3nivel(2);">	
+				</td>			
+				<td>
+					<select name="filadesde_aereos_precios" align="" onchange="submit();"> 
+						{foreach from=$combo_aereos_precios item=fila}
+							
+							{if {$filades_aereos_precios} == {$fila.inicio}}
+								<option value="{$fila.inicio}" selected>{$fila.inicio} - {$fila.fin}</option>
+							{else}
+								<option value="{$fila.inicio}">{$fila.inicio} - {$fila.fin}</option>
+							{/if}
+							
+						{/foreach}
+					</select> 
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_siguiente2.jpg" width="25" height="15" onclick="Selector_3nivel(3);">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_fin2.jpg" width="25" height="15" onclick="Selector_3nivel(4);">
+				</td>
+				<td>
+					<th>&nbsp;&nbsp;&nbsp;</th>
+				</td>
+				<td>
+					<th>Buscar Trayecto</th>
+				</td>
+				<td>
+					<select name="buscar_aereo" align=""> 
+						{foreach from=$comboAereos item=fila}
+							{if {$buscar_aereo} == {$fila.clave}}
+								<option value="{$fila.clave}" selected>{$fila.nombre}</option>
+							{else}
+								<option value="{$fila.clave}">{$fila.nombre}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>
+				<td>
+					<th>Buscar Fecha</th>
+				</td>
+				<td>
+					<input type= 'text' id= 'buscar_fecha' name= 'buscar_fecha' size='8' value="{$buscar_fecha}">
+
+						<img id="botonbuscar_fecha" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'buscar_fecha',
+							button : "botonbuscar_fecha",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>				
+				</td>
+
+			</tr>
+		</table>
+
+		<BR>	
+
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" style="padding:15px 0px 15px 0px;">
+			<tbody>
+				<tr>
+					<td>
+						<img width="200" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_buscar.jpg" width="70" height="25">-->
+						<input type="button" id="boton_buscar_precios" value="BUSCAR" class="boton" onClick="Buscar_Producto()"/>
+
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_grabar.jpg" width="70" height="25" onClick="grabar_2nivel()">-->
+						<input type="button" id="boton_nuevo_precios" value="GRABAR" class="boton" onClick="grabar_3nivel_cuadros()"/>
+
+						<input type= "hidden" name= "actuar_3nivel" value="">
+					</td>
+					
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+
+						<input type="button" id="boton_nuevo_precios" value="CALCULAR PVP" class="boton" onClick="Cuadros_transportes_calcula_pvp()"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+
+						<input type="button" id="boton_nuevo_precios" value="RECALCULAR PVP" class="boton" onClick="Cuadros_transportes_recalcula_pvp()"/>
+					</td>					
+					
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		{$mensaje1_aereos_precios}
+		{$mensaje2_aereos_precios}
+
+		<table width="90%" border = "0" align = "left" class="fondotabla">
+			<tr class="cabeceratabla">
+				<th>Sel</th>
+				<th>Trayecto</th>
+				<th>Periodo</th>
+				<th>Precio 1</th>
+				<th>Clase 1</th>
+				<th>Spto 2</th>
+				<th>Clase 2</th>
+				<th>Spto 3</th>
+				<th>Clase 3</th>
+				<th>Spto 4</th>
+				<th>Clase 4</th>
+				<th>Spto 5</th>
+				<th>Clase 5</th>
+				<th>Borrar</th>
+			</tr>
+
+			{section name=i loop=$aereos_precios}
+			<tr>
+				<td align = "center">
+					<input type= 'checkbox' name= 'seleccion_3nivel{$smarty.section.i.index}' value="" onChange="desmarcarBorrar_3nivel({$smarty.section.i.index})">
+					<input type= 'hidden' name= 'selec_3nivel{$smarty.section.i.index}' value="N">
+				</td>
+
+				<td align = "center">
+					<select name= 'clave_aereo{$smarty.section.i.index}' align="" style=" width:210px" onChange="seleccionar_3nivel({$smarty.section.i.index})"> 
+						{foreach from=$comboAereos item=fila10}
+							{if {$aereos_precios[i].clave_aereo} == {$fila10.clave}}
+								<option value="{$fila10.clave}" selected>{$fila10.nombre}</option>
+							{else}
+								<option value="{$fila10.clave}">{$fila10.nombre}</option>
+							{/if}	
+						{/foreach}
+					</select>
+					<input type= 'hidden' name= 'clave_aereo_old{$smarty.section.i.index}' value="{$aereos_precios[i].clave_aereo}">
+				</td>
+
+				<td align = "center">
+					<select name= 'clave_calendario{$smarty.section.i.index}' align="" style=" width:180px" onChange="seleccionar_3nivel({$smarty.section.i.index})"> 
+						{foreach from=$comboCalendarios item=fila10}
+							{if {$aereos_precios[i].clave_calendario} == {$fila10.clave}}
+								<option value="{$fila10.clave}" selected>{$fila10.nombre}</option>
+							{else}
+								<option value="{$fila10.clave}">{$fila10.nombre}</option>
+							{/if}	
+						{/foreach}
+					</select>
+					<input type= 'hidden' name= 'clave_calendario_old{$smarty.section.i.index}' value="{$aereos_precios[i].clave_calendario}">
+				</td>
+
+				<td align = "center"><input type= 'text' name= 'precio_1{$smarty.section.i.index}' size='7' class="campocenter" value="{$aereos_precios[i].precio_1}" onChange="seleccionar_3nivel({$smarty.section.i.index})">
+				</td>
+
+				<td align = "center"><input type= 'text' name= 'clase_1{$smarty.section.i.index}' size='4' class="campocenter" value="{$aereos_precios[i].clase_1}" onChange="seleccionar_3nivel({$smarty.section.i.index})">
+				</td>
+
+				<td align = "center"><input type= 'text' name= 'precio_2{$smarty.section.i.index}' size='7' class="campocenter" value="{$aereos_precios[i].precio_2}" onChange="seleccionar_3nivel({$smarty.section.i.index})">
+				</td>
+
+				<td align = "center"><input type= 'text' name= 'clase_2{$smarty.section.i.index}' size='4' class="campocenter" value="{$aereos_precios[i].clase_2}" onChange="seleccionar_3nivel({$smarty.section.i.index})">
+				</td>
+
+				<td align = "center"><input type= 'text' name= 'suplemento_3{$smarty.section.i.index}' size='7' class="campocenter" value="{$aereos_precios[i].suplemento_3}" onChange="seleccionar_3nivel({$smarty.section.i.index})">
+				</td>
+
+				<td align = "center"><input type= 'text' name= 'clase_3{$smarty.section.i.index}' size='4' class="campocenter" value="{$aereos_precios[i].clase_3}" onChange="seleccionar_3nivel({$smarty.section.i.index})">
+				</td>
+
+				<td align = "center"><input type= 'text' name= 'suplemento_4{$smarty.section.i.index}' size='7' class="campocenter" value="{$aereos_precios[i].suplemento_4}" onChange="seleccionar_3nivel({$smarty.section.i.index})">
+				</td>
+
+				<td align = "center"><input type= 'text' name= 'clase_4{$smarty.section.i.index}' size='4' class="campocenter" value="{$aereos_precios[i].clase_4}" onChange="seleccionar_3nivel({$smarty.section.i.index})">
+				</td>
+
+				<td align = "center"><input type= 'text' name= 'suplemento_5{$smarty.section.i.index}' size='7' class="campocenter" value="{$aereos_precios[i].suplemento_5}" onChange="seleccionar_3nivel({$smarty.section.i.index})">
+				</td>
+
+				<td align = "center"><input type= 'text' name= 'clase_5{$smarty.section.i.index}' size='4' class="campocenter" value="{$aereos_precios[i].clase_5}" onChange="seleccionar_3nivel({$smarty.section.i.index})">
+				</td>
+
+				<td align = "center">
+					<input type= 'checkbox' name= 'borrar_3nivel{$smarty.section.i.index}' value="" onChange="desmarcarSeleccion_3nivel({$smarty.section.i.index})">
+					<input type= 'hidden' name= 'borra_3nivel{$smarty.section.i.index}' value="N">
+				</td>
+			</tr>
+			{/section}
+
+		<!--</table>
+
+
+		<table width="100%" cellspacing="0" cellpadding="0" border="0" summary="">
+			<tbody>
+				<tr>
+					<td>
+						<img width="200" height="2" alt="" src="imagenes/cghes.gif">
+					</td>
+					<td width="100%">
+						<img width="100%" height="2" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<img width="100" height="2" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+
+		<table width="745px" border = "0" align = "left" class="fondotabla">-->
+
+			{section name=j loop=$aereosnuevos_precios}
+			<tr>
+				<td align = "center">
+					<input type= 'checkbox' name= 'Nuevoseleccion_3nivel{$smarty.section.j.index}' value="">
+					<input type= 'hidden' name= 'Nuevoselec_3nivel{$smarty.section.j.index}' value="N">
+				</td>
+
+				<td align = "center">
+					<select name= 'Nuevoclave_aereo{$smarty.section.j.index}' align="" style=" width:210px" onchange="Nuevosseleccionar_3nivel({$smarty.section.j.index})"> 
+						{foreach from=$comboAereos item=fila7}
+							{if {$recuperaclave_aereo} == {$fila7.clave} and {$smarty.section.j.index} == 0}
+								<option value="{$recuperaclave_aereo}" selected>{$fila7.nombre}</option>
+							{else}
+								<option value="{$fila7.clave}">{$fila7.nombre}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>
+
+				<td align = "center">
+					<select name= 'Nuevoclave_calendario{$smarty.section.j.index}' align="" style=" width:180px" onchange="Nuevosseleccionar_3nivel({$smarty.section.j.index})"> 
+						{foreach from=$comboCalendarios item=fila7}
+							{if {$recuperaclave_calendario} == {$fila7.clave} and {$smarty.section.j.index} == 0}
+								<option value="{$recuperaclave_calendario}" selected>{$fila7.nombre}</option>
+							{else}
+								<option value="{$fila7.clave}">{$fila7.nombre}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>
+
+				<td align = "center"><input type= 'text' name= 'Nuevoprecio_1{$smarty.section.j.index}' size='7' class="camponumber" 
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperaprecio_1}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar_3nivel({$smarty.section.j.index})"></td>
+
+				<td align = "center"><input type= 'text' name= 'Nuevoclase_1{$smarty.section.j.index}' size='4' class="camponumber" 
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperaclase_1}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar_3nivel({$smarty.section.j.index})"></td>
+
+				<td align = "center"><input type= 'text' name= 'Nuevoprecio_2{$smarty.section.j.index}' size='7' class="camponumber" 
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperaprecio_2}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar_3nivel({$smarty.section.j.index})"></td>
+
+				<td align = "center"><input type= 'text' name= 'Nuevoclase_2{$smarty.section.j.index}' size='4' class="camponumber" 
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperaclase_2}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar_3nivel({$smarty.section.j.index})"></td>
+
+				<td align = "center"><input type= 'text' name= 'Nuevosuplemento_3{$smarty.section.j.index}' size='7' class="camponumber" 
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperasuplemento_3}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar_3nivel({$smarty.section.j.index})"></td>
+
+				<td align = "center"><input type= 'text' name= 'Nuevoclase_3{$smarty.section.j.index}' size='4' class="camponumber" 
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperaclase_3}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar_3nivel({$smarty.section.j.index})"></td>
+
+				<td align = "center"><input type= 'text' name= 'Nuevosuplemento_4{$smarty.section.j.index}' size='7' class="camponumber" 
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperasuplemento_4}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar_3nivel({$smarty.section.j.index})"></td>
+
+				<td align = "center"><input type= 'text' name= 'Nuevoclase_4{$smarty.section.j.index}' size='4' class="camponumber" 
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperaclase_4}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar_3nivel({$smarty.section.j.index})"></td>
+
+				<td align = "center"><input type= 'text' name= 'Nuevosuplemento_5{$smarty.section.j.index}' size='7' class="camponumber" 
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperasuplemento_5}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar_3nivel({$smarty.section.j.index})"></td>
+
+				<td align = "center"><input type= 'text' name= 'Nuevoclase_5{$smarty.section.j.index}' size='4' class="camponumber" 
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperaclase_5}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar_3nivel({$smarty.section.j.index})"></td>
+
+			</tr>
+			{/section}
+
+		</table>
+
+
+
+
+
+
+
+		{include file="$pie"}
+	</form>
+
+ </BODY>
+</HTML>
+
+
+
+

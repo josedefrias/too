@@ -1,0 +1,340 @@
+#caja-filtro, #seccion_aereos, #seccion_alojamientos{
+	width:900px;
+	margin:20px auto;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+	display:block;
+	overflow:hidden;
+	background-color:#f0f0f0;
+	padding:10px 5px 15px 5px;
+}
+#caja-filtro span{
+	width:190px;
+	overflow: hidden;
+	background: #fafafa url('../imagenes/comun/flecha-select.png') 160px 2px no-repeat;
+	border: 1px solid #e6e6e6;	
+	border-radius: 15px;
+	float:left;
+	margin:20px 0 10px 20px;
+}
+#caja-filtro span select{
+	display: inline-block;
+	width:190px;
+	background: transparent;
+	padding: 5px;
+	font-size: 0.9em;
+	line-height: 1;
+	border: 0;
+	border-radius: 0;
+	-webkit-appearance: none;
+	text-transform:uppercase;
+	color:#666;
+	 -moz-appearance: none;
+    text-indent: 0.01px;
+    text-overflow: '';
+}
+#caja-filtro #boton_buscar{
+	background:#B9D305;
+	font-size: 0.9em;
+	line-height: 1;
+	border: 0;
+	border-radius: 15px;
+	margin:20px 0 10px 20px;
+	-webkit-appearance: none;
+	text-transform:uppercase;
+	color:#ffffff !important;
+	width:190px;
+	overflow: hidden;
+	padding: 8px 10px;
+	float:left;
+	cursor:pointer;
+	opacity:1.0;
+	filter:alpha(opacity=100); /* For IE8 and earlier */
+}
+#caja-filtro #boton_buscar:hover{
+	opacity:0.6;
+	filter:alpha(opacity=60); /* For IE8 and earlier */	
+}
+#caja-filtro h1, #seccion_aereos h1, #seccion_alojamientos h1{
+	text-align:left;
+	font-size:2em;
+	color:#ffffff;
+	margin:20px 10px 10px 20px;
+	font-weight:normal;
+	font-style:normal;
+}
+.aereo, .alojamiento{
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+	margin:20px;
+	background:#e6e6e6;
+	padding:10px;
+	clear:both;
+	display:block;
+	overflow:hidden;
+}
+.aereo .aereo-compania{
+	float:left;
+	width:100px;
+	text-align:left;
+	padding:5px 10px 5px 5px;
+	border-right:dotted 2px #c6c6c6;
+}
+.aereo .aereo-compania img{
+	height:30px;
+	clear:both;
+	padding:5px 0;
+}
+.aereo .aereo-compania span{
+	font-size:1em;
+	color:#999999;
+	font-weight:normal;
+	font-style:normal;
+}
+.aereo .aereo-compania span span{
+	color:#6f7073;
+	text-transform:uppercase;
+}
+.aereo .aereo-datos{
+	float:right;
+	text-align:left;
+	width:700px;
+	padding:10px 5px;
+}
+.aereo .aereo-datos span img{
+	height:25px;
+	padding:5px;
+	background-color:#cccccc;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	margin:0 10px;
+	float:left;
+}
+.aereo .aereo-datos span{
+	font-size:1em;
+	color:#999999;
+	font-weight:normal;
+	font-style:normal;
+	text-align:left;
+	float:left;
+	margin:0 20px 0 0;
+	width:150px;
+	display:block;	
+}
+.aereo .aereo-datos span span{
+	float:none;
+	color:#6f7073;
+	text-transform:uppercase;
+}
+.alojamiento img{
+	float:left;
+	-moz-border-radius:10px;
+	border-radius:10px;
+	max-width:300px;
+	margin:10px 20px 20px 10px;
+}
+.alojamiento h2{
+	color:#B9D305;
+	text-align:left;
+	font-size:1.5em;
+	line-height:120%;
+	margin:10px 10px 5px;
+	display:block;
+}
+.alojamiento h3{
+	color:#999999;
+	font-weight:normal;
+	font-style:italic;
+	text-align:left;
+	margin:0 10px 20px;
+}
+.alojamiento .descripcion{
+	text-align:left;
+	width:500px;
+	float:right;
+	padding:0 10px 10px 0;
+	line-height:120%;
+}
+.detalles{
+	margin:20px;
+	padding:10px;
+	clear:both;
+	display:block;
+	overflow:hidden;
+	border-top:dotted 2px #c6c6c6;
+}
+.detalles ul{
+	clear:both;
+	width:100%;
+	margin:5px;
+	display:block;
+	overflow:hidden;
+	background:#ffffff;
+	-moz-border-radius:10px;
+	border-radius:10px;
+	padding:2px 0 2px 4px;
+}
+.detalles ul li{
+	float:left;	
+	padding:10px 8px;
+	width:18%;
+	height:100%;
+	display:block;
+	overflow:hidden;
+	text-align:left;
+	line-height:120%;
+	border-right:dotted 1px #c7c7c7;
+	color:#999999;
+}
+.detalles ul li:last-child{
+	padding-right:0;	
+	border-right:none;
+}
+.detalles ul li span{
+	clear:both;
+	display:block;
+	color:#666666;
+}
+.detalles ul li input{
+	background-color:#B9D305;
+	color:#efefef;
+	border:0;
+	-moz-border-radius:15px;
+	border-radius:15px;
+	width:90%;
+	padding:4px;
+	cursor:pointer;
+	opacity:1.0;
+	filter:alpha(opacity=100); /* For IE8 and earlier */
+}
+.detalles ul li input:hover{
+	opacity:0.6;
+	filter:alpha(opacity=60); /* For IE8 and earlier */
+}
+#precio_solo_vuelo{
+	color:##B9D305 !important;
+	font-size:1.1em;
+	text-align:left;
+	margin:0 0 0 20px;
+}
+@media screen and (max-width: 600px) { 
+	#caja-filtro, #seccion_aereos, #seccion_alojamientos{
+		width:90%;
+		padding:5px 10px;
+	}
+	#caja-filtro span{
+		width:120px;
+		margin:2px 4px;
+		background-position:right center;
+	}
+	#caja-filtro span select{
+		width:120px;
+		padding:6px 4px;
+	}
+	#caja-filtro #boton_buscar{
+		margin:2px 4px;
+		width:120px;
+		padding:6px 4px;
+	}
+	#caja-filtro h1, #seccion_aereos h1, #seccion_alojamientos h1{
+		margin:10px;
+	}
+	.aereo, .alojamiento{
+		padding:5px;
+		margin:10px;
+	}
+	.aereo .aereo-compania{
+		float:none;
+		width:90%;
+		text-align:left;
+		border-right:none;
+		border-bottom:dotted 2px #c6c6c6;
+		display:block;
+		overflow:hidden;
+		clear:both;
+	}
+	.aereo .aereo-compania img{
+		height:30px;
+		padding:5px 10px 5px 5px;
+		float:left;
+		display:block;
+	}
+	.aereo .aereo-compania span{
+		float:left;
+		margin-top:13px;
+		font-size:1.2em;
+	}
+	.aereo .aereo-compania span span{
+		margin-top:0;
+		float:none;
+	}
+	.aereo .aereo-datos{
+		float:none;
+		text-align:left;
+		width:90%;
+		padding:5px;
+		display:block;
+		overflow:hidden;
+		clear:both;
+	}
+	.aereo .aereo-datos span img{
+		margin:5px;
+		float:left;
+	}
+	.aereo .aereo-datos span{
+		text-align:left;
+		float:left;
+		margin:0 10px 0 0;
+		width:45%;
+		display:block;
+		overflow:hidden;
+	}
+	.aereo .aereo-datos span span{
+		float:none;
+		margin:0;
+	}
+	.alojamiento img{
+		float:none;
+		clear:both;
+		max-width:90%;
+		overflow:hidden;
+		margin:10px 5px 5px;
+	}
+	.alojamiento h2{
+		margin:0 10px 5px;
+		display:block;
+		clear:both;
+	}
+	.alojamiento h3{
+		display:block;
+		clear:both;
+	}
+	.alojamiento .descripcion{
+		text-align:left;
+		width:90%;
+		float:none;
+		padding:0 10px 10px 10px;
+	}
+	.detalles{
+		width:90%;
+		margin:20px auto;
+	}
+	.detalles ul{
+		width:90%;
+		margin:5px;
+		padding:2px 0 2px 4px;
+	}
+	.detalles ul li{
+		float:none;	
+		width:99%;
+		text-align:left;
+		border-bottom:dotted 1px #c7c7c7;
+	}
+	.detalles ul li:last-child{
+		border-bottom:none;	
+	}
+	.detalles ul li span{
+		clear:none;
+		display:inline;
+	}
+}

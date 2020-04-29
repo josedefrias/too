@@ -1,0 +1,417 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 5.0 Transitional//EN">
+<HTML>
+
+ <HEAD>
+  <meta charset="utf-8">
+  <TITLE> Menú </TITLE>
+  <META NAME="Generator" CONTENT="EditPlus">
+  <META NAME="Author" CONTENT="Jose de Frias">
+  <META NAME="Keywords" CONTENT="">
+  <META NAME="Description" CONTENT="">
+  <link rel="StyleSheet" href="css/comun.css">
+  <script type="text/javascript" src="funciones_js/funciones.js"></script>
+  <link rel="shortcut icon" type="image/x-icon" href="imagenes/favicon_hit.ico">
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+ </HEAD>
+
+<body background="imagenes/fondo.jpg">
+
+	{include file="$cabecera"}
+	{include file="$menu"}
+
+	<form name="mantenimiento_tabla" method = "post" action="">
+		
+		<table border = "0" align = "left">
+			<tr>
+				<td>
+					<input type=image src="imagenes/selector_inicio2.jpg" width="25" height="15" onclick="Selector(1);">
+					<input type= "hidden" name= "botonSelector" value="0">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_anterior2.jpg" width="25" height="15" onclick="Selector(2);">	
+				</td>
+				<td>
+					<select name="filadesde" align="" onchange="submit();"> 
+						{foreach from=$combo item=fila}
+							<!--<option value="{$fila.inicio}">{$fila.inicio} - {$fila.fin}</option>-->
+							
+							{if {$filades} == {$fila.inicio}}
+								<option value="{$fila.inicio}" selected>{$fila.inicio} - {$fila.fin}</option>
+							{else}
+								<option value="{$fila.inicio}">{$fila.inicio} - {$fila.fin}</option>
+							{/if}
+							
+						{/foreach}
+					</select> 
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_siguiente2.jpg" width="25" height="15" onclick="Selector(3);">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_fin2.jpg" width="25" height="15" onclick="Selector(4);">
+				</td>
+				<td>
+					<th>&nbsp;&nbsp;&nbsp;</th>
+				</td>
+				<td>
+					<th>Email:</th>
+				</td>
+				<td>
+					<input type= 'text' name= 'buscar_email' size='40' value="{$buscar_email}">
+				</td>
+				<td>
+					<th>&nbsp;&nbsp;&nbsp;</th>
+				</td>
+				<td>
+					<th>Telefono</th>
+				</td>
+				<td>
+					<input type= 'text' name= 'buscar_telefono' size='15' value="{$buscar_telefono}">
+				</td>
+				<td>
+					<th>Id:</th>
+				</td>
+				<td>
+					<input type= 'text' name= 'buscar_codigo' size='5' value="{$buscar_codigo}">
+				</td>
+				<td>
+					<th>&nbsp;&nbsp;&nbsp;</th>
+				</td>
+				<td>
+					<th>Nombre:</th>
+				</td>
+				<td>
+					<input type= 'text' name= 'buscar_nombre' size='25' value="{$buscar_nombre}">
+				</td>
+				<td>
+					<th>&nbsp;&nbsp;&nbsp;</th>
+				</td>
+				<td>
+					<th>Oficina:</th>
+				</td>
+				<td>
+					<input type= 'text' name= 'buscar_oficina' size='5' value="{$buscar_oficina}">
+				</td>
+
+
+
+			</tr>
+		</table>
+
+		<BR>	
+
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" class="lineatitulo">
+			<tbody>
+				<tr>
+					<td>
+						<img width="20" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+					<td>
+
+					</td>
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_buscar.jpg" width="70" height="25" onClick="Buscar()">-->
+						<input type="button" id="boton_buscar" value="BUSCAR" class="boton"  onClick="Buscar()"/>
+					</td>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_grabar.jpg" width="70" height="25" onClick="grabar_Tipo_Registro()">-->
+						<input type="button" id="boton_buscar" value="GRABAR" class="boton" onClick="grabar_Tipo_Registro()"/>
+						<input type= "hidden" name= "actuar" value="">
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_nuevo.jpg" width="70" height="25" onClick="NuevoRegistro_Minoristas()">-->
+						<input type="button" id="boton_buscar" value="NUEVO" class="boton" onClick="NuevoRegistro_Minoristas()"/>
+						<input type= "hidden" name= "nuevo_registro" value="{$nuevo_registro}">
+						<input type= "hidden" name= "grabar_registro" value="">
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_salir.jpg" width="70" height="25" onClick="salir('S')">-->
+						<input type= "hidden" name= "ir_a" value="">
+					</td>
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		{$mensaje1}
+		{$mensaje2}
+
+
+		{section name=i loop=$oficinas}
+			<table width="60%" border = "0" align = "left" height="40">
+				<tr>
+					<th>Modificar</th>
+					<td align = "left">
+						<input type= 'checkbox' name= 'seleccion{$smarty.section.i.index}' value="" onChange="desmarcarBorrar({$smarty.section.i.index})">
+						<input type= 'hidden' name= 'selec{$smarty.section.i.index}' value="N">
+					</td>
+					<th>Borrar</th>
+					<td align = "left">
+						<input type= 'checkbox' name= 'borrar{$smarty.section.i.index}' value="" onChange="desmarcarSeleccion({$smarty.section.i.index})">
+						<input type= 'hidden' name= 'borra{$smarty.section.i.index}' value="N">
+					</td>
+					<th>Visible</th>
+					<td>
+						<select name= 'visible{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila1}
+									
+								{if {$oficinas[i].visible} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+					<th>Situacion</th>
+					<td>
+						<select name= 'situacion{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSituacion_venta item=fila1}
+									
+								{if {$oficinas[i].situacion} == {$fila1.codigo}}
+									<option value="{$fila1.codigo}" selected>{$fila1.nombre}</option>
+								{else}
+									<option value="{$fila1.codigo}">{$fila1.nombre}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+					<th>Factura</th>
+					<td>
+						<select name= 'facturacion{$smarty.section.i.index}' align="" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboModo_facturacion item=fila1}
+									
+								{if {$oficinas[i].facturacion} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+					<th>Id</th><td><input type= 'text' name= 'id{$smarty.section.i.index}' size='5' value="{$oficinas[i].id}"></td>
+				</tr>
+			</table>
+
+
+			<table width="85%" border = "0" align = "left" height="40" class="fondotabla" style="clear:both">
+				<tr height="30">
+					<th width="85" align = "left">Nombre</th>
+					<td>
+					<input type= 'text' name= 'nombre{$smarty.section.i.index}' size='30' value="{$oficinas[i].nombre}" onChange="seleccionar({$smarty.section.i.index})" style="color:#000066; font-weight: bold;" readonly>
+					<input type="image" src="imagenes/boton_ir.jpg" width="30" height="17" onClick="salir('I')">
+					</td>
+
+					<th width="85" align = "left">Oficina</th><td><input type= 'text' name= 'oficina{$smarty.section.i.index}' size='12' value="{$oficinas[i].oficina}" onChange="seleccionar({$smarty.section.i.index})" style="color:#000066; font-weight: bold;"</td>
+
+					<th width="85" align = "left">Fax</th><td><input type= 'text' name= 'fax{$smarty.section.i.index}' size='28' value="{$oficinas[i].fax}" onChange="seleccionar({$smarty.section.i.index})"></td>
+				</tr>
+
+				<tr height="30">
+					<th width="85" align = "left">Direccion</th><td colspan = "1"><input type= 'text' name= 'direccion{$smarty.section.i.index}' size='35' value="{$oficinas[i].direccion}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					<th width="85" align = "left">Cif</th><td><input type= 'text' name= 'cif{$smarty.section.i.index}' size='15' value="{$oficinas[i].cif}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					<th width="85" align = "left">Delegacion</th>
+					<td>
+						<select name= 'delegacion{$smarty.section.i.index}' align="" style=" width:200px" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboDelegaciones item=fila3}
+								{if {$oficinas[i].delegacion} == {$fila3.codigo}}
+									<option value="{$fila3.codigo}" selected>{$fila3.nombre}</option>
+								{else}
+									<option value="{$fila3.codigo}">{$fila3.nombre}</option>
+								{/if}	
+							{/foreach}
+						</select> 
+					</td>
+				</tr>
+
+				<tr height="30">
+					<th width="85" align = "left">Localidad</th><td colspan = "1"><input type= 'text' name= 'localidad{$smarty.section.i.index}' size='35' value="{$oficinas[i].localidad}" onChange="seleccionar({$smarty.section.i.index})"></td>
+
+					<th width="85" align = "left">Cic</th><td><input type= 'text' name= 'cic{$smarty.section.i.index}' size='15' value="{$oficinas[i].cic}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					<th width="85" align = "left">Responsable</th><td><input type= 'text' name= 'responsable{$smarty.section.i.index}' size='28' value="{$oficinas[i].responsable}" onChange="seleccionar({$smarty.section.i.index})"></td>
+				</tr>
+
+				<tr height="30">
+					<th width="85" align = "left">C.Postal</th><td><input type= 'text' name= 'codigo_postal{$smarty.section.i.index}' size='35' value="{$oficinas[i].codigo_postal}" onChange="seleccionar({$smarty.section.i.index})"></td>
+
+					<th width="85" align = "left">Telefono</th><td><input type= 'text' name= 'telefono{$smarty.section.i.index}' size='15' value="{$oficinas[i].telefono}" onChange="seleccionar({$smarty.section.i.index})"></td>
+
+					<th width="85" align = "left">Cargo Resp.</th>
+					<td>
+						<select name= 'cargo_responsable{$smarty.section.i.index}' align="" style=" width:200px" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboCargos item=fila3}
+								{if {$oficinas[i].cargo_responsable} == {$fila3.codigo}}
+									<option value="{$fila3.codigo}" selected>{$fila3.nombre}</option>
+								{else}
+									<option value="{$fila3.codigo}">{$fila3.nombre}</option>
+								{/if}	
+							{/foreach}
+						</select> 
+					</td>
+				</tr>
+
+				<tr height="30">
+					<th width="85" align = "left">Provincia</th>
+					<td>
+						<select name= 'provincia{$smarty.section.i.index}' align="" style=" width:240px" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboProvincias item=fila2}
+								{if {$oficinas[i].provincia} == {$fila2.codigo}}
+									<option value="{$fila2.codigo}" selected>{$fila2.nombre}</option>
+								{else}
+									<option value="{$fila2.codigo}">{$fila2.nombre}</option>
+								{/if}	
+							{/foreach}
+						</select> 
+					</td>
+					<th width="85" align = "left">Mail</th><td colspan="3"><input type= 'text' name= 'mail{$smarty.section.i.index}' size='50' value="{$oficinas[i].mail}" onChange="seleccionar({$smarty.section.i.index})"></td>
+
+				</tr>
+
+				<tr height="30">
+					<th width="85" align = "left">Pais</th>
+					<td>
+						<select name= 'pais{$smarty.section.i.index}' align="" style=" width:240px" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboPaises item=fila3}
+								{if {$oficinas[i].pais} == {$fila3.codigo}}
+									<option value="{$fila3.codigo}" selected>{$fila3.nombre}</option>
+								{else}
+									<option value="{$fila3.codigo}">{$fila3.nombre}</option>
+								{/if}	
+							{/foreach}
+						</select> 
+					</td>
+					<th width="85" align = "left">Observaciones</th><td colspan="3"><input type= 'text' name= 'observaciones{$smarty.section.i.index}' size='73' value="{$oficinas[i].observaciones}" onChange="seleccionar({$smarty.section.i.index})"></td>
+				</tr>
+
+			</table>
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" class="lineatitulo" style="padding:15px 0px 15px 0px;">
+			<tbody>
+				<tr>
+					<td>
+						<img width="20" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+
+					<td align='left' bgcolor='#333399' width="20%" height="20px" style="color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+						<font color='#CCFFFF' size='4'><B><I>Datos Web</I></B></font>
+					</td>
+
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+
+			<table width="50%" border = "0" align = "left" height="40" class="fondotabla" style="clear:both">
+				<tr>
+					<th>Usuario</th><td><input type= 'text' name= 'usuario_web{$smarty.section.i.index}' size='25' value="{$oficinas[i].usuario_web}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					<th>Password</th><td><input type= 'text' name= 'password_web{$smarty.section.i.index}' size='25' value="{$oficinas[i].password_web}" onChange="seleccionar({$smarty.section.i.index})"></td>
+
+				</tr>
+			</table>
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" class="lineatitulo" style="padding:15px 0px 15px 0px;">
+			<tbody>
+				<tr>
+					<td>
+						<img width="20" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+
+					<td align='left' bgcolor='#333399' width="20%" height="20px" style="color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+						<font color='#CCFFFF' size='4'><B><I>Datos Fiscales</I></B></font>
+					</td>
+
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+			<table width="85%" border = "0" align = "left" class="fondotabla" style="clear:both">
+				<tr height="30">
+					<th width="85" align = "left">Nombre</th><td colspan = "1"><input type= 'text' name= 'nombre_fiscal{$smarty.section.i.index}' size='35' value="{$oficinas[i].nombre_fiscal}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					<th width="85" align = "left">Provincia</th>
+					<td>
+						<select name= 'provincia_fiscal{$smarty.section.i.index}' align="" style=" width:210px" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboProvincias item=fila2}
+								{if {$oficinas[i].provincia} == {$fila2.codigo}}
+									<option value="{$fila2.codigo}" selected>{$fila2.nombre}</option>
+								{else}
+									<option value="{$fila2.codigo}">{$fila2.nombre}</option>
+								{/if}	
+							{/foreach}
+						</select> 
+					</td>
+					<th width="85" align = "left">Dir. Banco</th><td><input type= 'text' name= 'direccion_banco{$smarty.section.i.index}' size='35' value="{$oficinas[i].direccion_banco}" onChange="seleccionar({$smarty.section.i.index})"></td>
+				</tr>
+
+				<tr height="30">
+					<th width="85" align = "left">Direccion</th><td colspan = "1"><input type= 'text' name= 'direccion_fiscal{$smarty.section.i.index}' size='35' value="{$oficinas[i].direccion_fiscal}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					<th width="85" align = "left">Pais</th>
+					<td>
+						<select name= 'pais_fiscal{$smarty.section.i.index}' align="" style=" width:210px" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboPaises item=fila3}
+								{if {$oficinas[i].pais_fiscal} == {$fila3.codigo}}
+									<option value="{$fila3.codigo}" selected>{$fila3.nombre}</option>
+								{else}
+									<option value="{$fila3.codigo}">{$fila3.nombre}</option>
+								{/if}	
+							{/foreach}
+						</select> 
+					</td>
+					<th width="85" align = "left">SWIFT</th><td colspan = "1"><input type= 'text' name= 'swift{$smarty.section.i.index}' size='35' value="{$oficinas[i].swift}" onChange="seleccionar({$smarty.section.i.index})"></td>
+				</tr>
+
+				<tr height="30">
+					<th width="85" align = "left">Localidad</th><td><input type= 'text' name= 'localidad_fiscal{$smarty.section.i.index}' size='35' value="{$oficinas[i].localidad_fiscal}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					<th width="85" align = "left">Banco</th><td><input type= 'text' name= 'nombre_banco{$smarty.section.i.index}' size='30' value="{$oficinas[i].nombre_banco}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					<th width="85" align = "left">CC/IBAN</th><td colspan = "1"><input type= 'text' name= 'cc_iban{$smarty.section.i.index}' size='35' value="{$oficinas[i].cc_iban}" onChange="seleccionar({$smarty.section.i.index})"></td>
+				</tr>
+		
+				<tr height="30">
+					<th width="85" align = "left">C.Postal</th><td><input type= 'text' name= 'codigo_postal_fiscal{$smarty.section.i.index}' size='35' value="{$oficinas[i].codigo_postal_fiscal}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					<th width="85" align = "left">Mail Conta.</th><td colspan="3"><input type= 'text' name= 'mail_contabilidad{$smarty.section.i.index}' size='93' value="{$oficinas[i].mail_contabilidad}" onChange="seleccionar({$smarty.section.i.index})"></td>
+				</tr>
+			</table>
+
+
+		{/section}
+
+
+		{include file="$pie"}
+	</form>
+
+
+ </BODY>
+</HTML>
+
+
+
+

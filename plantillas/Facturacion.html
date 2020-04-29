@@ -1,0 +1,273 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 5.0 Transitional//EN">
+<HTML>
+
+  <link rel="StyleSheet" href="css/menu.css">
+
+ <HEAD>
+  <meta charset="utf-8">
+  <TITLE> Menú </TITLE>
+  <META NAME="Author" CONTENT="Jose de Frias">
+  <META NAME="Keywords" CONTENT="">
+  <META NAME="Description" CONTENT="">
+  <link rel="StyleSheet" href="css/comun.css">
+  <script type="text/javascript" src="funciones_js/funciones.js"></script>
+  <link rel="shortcut icon" type="image/x-icon" href="imagenes/favicon_hit.ico">
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+  <link rel="StyleSheet" href="css/calendario/calendar-blue2.css">
+  <script type="text/javascript" src="funciones_js/calendario/calendar.js"></script>
+  <script type="text/javascript" src="funciones_js/calendario/calendar-es.js"></script>
+  <script type="text/javascript" src="funciones_js/calendario/calendar-setup.js"></script>
+ </HEAD>
+
+<body background="imagenes/fondo.jpg">
+
+	{include file="$cabecera"}
+	{include file="$menu"}
+
+	<form name="mantenimiento_tabla" method = "post" action="">
+		
+		<table border = "0" align = "left">
+			<tr height="50">
+				<td>
+					<input type=image src="imagenes/selector_inicio2.jpg" width="25" height="15" onclick="Selector(1);">
+					<input type= "hidden" name= "botonSelector" value="0">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_anterior2.jpg" width="25" height="15" onclick="Selector(2);">	
+				</td>			
+				<td>
+					<select name="filadesde" align="" onchange="submit();"> 
+						{foreach from=$combo item=fila}
+							<!--<option value="{$fila.inicio}">{$fila.inicio} - {$fila.fin}</option>-->
+							
+							{if {$filades} == {$fila.inicio}}
+								<option value="{$fila.inicio}" selected>{$fila.inicio} - {$fila.fin}</option>
+							{else}
+								<option value="{$fila.inicio}">{$fila.inicio} - {$fila.fin}</option>
+							{/if}
+							
+						{/foreach}
+					</select> 
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_siguiente2.jpg" width="25" height="15" onclick="Selector(3);">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_fin2.jpg" width="25" height="15" onclick="Selector(4);">
+				</td>
+			</tr>
+		</table>				
+				
+		<table border = "0" align = "left">
+			<tr>				
+
+				<td>
+					<th>Salida desde:</th>
+				</td>
+
+				<td><input type= 'text' id= 'buscar_salida_desde' name= 'buscar_salida_desde' value="{$buscar_salida_desde}" size='9'>
+						<img id="botonbuscar_salida_desde" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'buscar_salida_desde',
+							button : "botonbuscar_salida_desde",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>					
+				</td>
+
+
+				<td>
+					<th>Hasta:</th>
+				</td>
+				
+				<td><input type= 'text' id= 'buscar_salida_hasta' name= 'buscar_salida_hasta' value="{$buscar_salida_hasta}" size='9'>
+						<img id="botonbuscar_salida_hasta" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'buscar_salida_hasta',
+							button : "botonbuscar_salida_hasta",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>					
+				</td>				
+
+				<td>
+					<th>Grupo:</th>
+				</td>
+				<td>
+					<select name="buscar_grupo"> 
+						{foreach from=$comboBuscarGrupos item=fila11}
+							{if {$buscar_grupo} == {$fila11.id}}
+								<option value="{$fila11.id}" selected>{$fila11.nombre}</option>
+							{else}
+								<option value="{$fila11.id}">{$fila11.nombre}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>
+				
+				<td>
+					<th>Estado:</th>
+				</td>
+				<td>
+					<select name="buscar_estado"> 
+						{foreach from=$comboBuscarFacturacion item=fila11}
+							{if {$buscar_estado} == {$fila11.valor}}
+								<option value="{$fila11.valor}" selected>{$fila11.mostrar}</option>
+							{else}
+								<option value="{$fila11.valor}">{$fila11.mostrar}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>
+			</tr>
+
+			<tr>				
+			
+				<td>
+					<th>Localizador:</th>
+				</td>
+				<td>
+					<input type= 'text' name= 'buscar_localizador' size='8' value="{$buscar_localizador}">
+				</td>
+				
+				<td>
+					<th>Factura:</th>
+				</td>
+				<td>
+					<input type= 'text' name= 'buscar_factura' size='8' value="{$buscar_factura}">
+				</td>
+				<td>
+					<th>Importe total:</th>
+				</td>
+				<td>
+					<input type= 'text' name= 'importe_total' size='14' value="{$importetotal}" class="camposololecturacenter" readonly>
+				</td>				
+			</tr>
+		</table>
+
+		<BR>	
+
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" class="lineatitulo" style="padding:15px 0px 15px 0px;">
+			<tbody>
+				<tr>
+					<td>
+						<img width="20" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_buscar.jpg" width="70" height="25">-->
+						<input type="button" id="boton_buscar" value="BUSCAR" class="boton" onClick="Buscar_general()"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_grabar.jpg" width="70" height="25" onClick="grabar()">-->
+						<input type="button" id="boton_grabar" value="FACTURAR RESERVAS SELECCIONADAS" class="boton" onClick="facturar_seleccionadas()"/>
+						<input type= "hidden" name= "actuar" value="">
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_grabar.jpg" width="70" height="25" onClick="grabar()">-->
+						<input type="button" id="boton_grabar" value="FACTURAR POR PARAMETROS" class="boton" onClick="facturar_parametros()"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+
+					<td>
+						<input type="button" id="boton_grabar" value="IMPRIMIR POR PERIODOS" class="boton" onClick="window.location.href='pdf_factura_periodo.php?salida_desde={$buscar_salida_desde}&salida_hasta={$buscar_salida_hasta}&grupo={$buscar_grupo}&estado={$buscar_estado}'"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+
+					<td>
+						<!--<input type="image" src="imagenes/boton_salir.jpg" width="70" height="25" onClick="salir('S')">-->
+						<input type= "hidden" name= "ir_a" value="">
+					</td>
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		{$mensaje1}
+		{$mensaje2}
+
+		<table border = "0" align = "left" class="fondotabla" style="clear:both">
+			<tr class="cabeceratabla">
+				<th>Sel</th>
+				<th>Salida</th>
+				<th>Localizador</th>
+				<th>Referencia</th>
+				<th>Agencia</th>
+				<th>Oficina</th>
+				<th>Dirección</th>
+				<th>Importe</th>
+				<th>Moneda</th>
+				<th>Estado</th>
+				<th>Factura</th>
+				<th>Fecha</th>
+
+			</tr>
+
+			{section name=i loop=$facturacion}
+			<tr>
+				<td align = "center">
+					<input type= 'checkbox' name= 'seleccion{$smarty.section.i.index}' value="" onChange="Seleccion_factura({$smarty.section.i.index})">
+					<input type= 'hidden' name= 'selec{$smarty.section.i.index}' value="N">
+				</td>
+				
+				<td><input type= 'text' name= 'fecha_salida{$smarty.section.i.index}' size='9' value="{$facturacion[i].fecha_salida}" class="camposololecturacenter" readonly></td>
+				<td><input type= 'text' name= 'localizador{$smarty.section.i.index}' size='7' value="{$facturacion[i].localizador}" class="camposololecturacenter" readonly></td>
+				<td><input type= 'text' name= 'referencia{$smarty.section.i.index}' size='10' value="{$facturacion[i].referencia}" class="camposololecturacenter" readonly></td>
+				<td><input type= 'text' name= 'agencia{$smarty.section.i.index}' size='25' value="{$facturacion[i].agencia}" class="camposololecturatext"  readonly></td>
+				<td><input type= 'text' name= 'oficina{$smarty.section.i.index}' size='5' value="{$facturacion[i].oficina}" class="camposololecturacenter"  readonly></td>
+				<td><input type= 'text' name= 'direccion{$smarty.section.i.index}' size='25' value="{$facturacion[i].direccion}" class="camposololecturatext" readonly></td>
+				<td><input type= 'text' name= 'importe{$smarty.section.i.index}' size='7' value="{$facturacion[i].importe}" class="camposololecturanumber"  readonly></td>
+				<td><input type= 'text' name= 'moneda{$smarty.section.i.index}' size='5' value="{$facturacion[i].moneda}" class="camposololecturacenter"  readonly></td>
+				
+				<td>
+					<input type= 'text' name= 'estado{$smarty.section.i.index}' size='12' value="{$facturacion[i].estado}" class="camposololecturatext" readonly>
+				</td>				
+
+				{if {$facturacion[i].factura} eq 0}
+				<td>
+					<input type="button" name="boton_borrador_factura" class="boton" value="Proforma" onClick="window.location.href='pdf_factura.php?loc={$facturacion[i].localizador}'" />					
+				</td>
+				{else}
+				<td>
+					<input type="button" name="boton_borrador_factura" class="boton" value="F-{$facturacion[i].factura}" onClick="window.location.href='pdf_factura.php?loc={$facturacion[i].localizador}'" />	
+
+				</td>					
+				{/if}
+				<td><input type= 'text' name= 'fecha{$smarty.section.i.index}' size='10' value="{$facturacion[i].fecha}" class="camposololecturacenter" readonly></td>
+
+			</tr>
+			{/section}
+
+
+		{include file="$pie"}
+	</form>
+
+
+ </BODY>
+</HTML>
+
+
+
+

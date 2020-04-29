@@ -1,0 +1,1169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 5.0 Transitional//EN">
+<HTML>
+
+  <link rel="StyleSheet" href="css/menu.css">
+
+ <HEAD>
+  <meta charset="utf-8">
+  <TITLE> Menú </TITLE>
+  <META NAME="Generator" CONTENT="EditPlus">
+  <META NAME="Author" CONTENT="Jose de Frias">
+  <META NAME="Keywords" CONTENT="">
+  <META NAME="Description" CONTENT="">
+  <script type="text/javascript" src="funciones_js/funciones.js"></script>
+  <script type="text/javascript" src="funciones_js/funciones_reservas_paquete.js"></script>
+  <script type="text/javascript" src="Jquery/jquery-2.0.3.min.js"></script>
+  <script type="text/javascript" src="funciones_js_ajax/Reserva_paquete.js"></script>
+  <link rel="shortcut icon" type="image/x-icon" href="imagenes/favicon_hit.ico">
+  <link rel="StyleSheet" href="css/menu.css">
+  <link rel="StyleSheet" href="css/calendario/calendar-blue2.css">
+  <script type="text/javascript" src="funciones_js/calendario/calendar.js"></script>
+  <script type="text/javascript" src="funciones_js/calendario/calendar-es.js"></script>
+  <script type="text/javascript" src="funciones_js/calendario/calendar-setup.js"></script>
+ </HEAD>
+
+<body background="imagenes/fondo.jpg" onLoad="visualizar_habitaciones()">
+
+	{include file="$cabecera"}
+
+	<form name="mantenimiento_tabla" method = "post" action="">
+		
+
+					<!--<td>
+						<input type="image" src="imagenes/boton_grabar.jpg" width="70" height="25" onClick="grabar_Tipo_Registro()">
+						<input type= "hidden" name= "actuar" value="">
+					</td>-->
+
+
+
+		<table width="100%" cellspacing="0" cellpadding="0" border="0" summary="" style="clear:both">
+				<tr height="20"></tr>
+				<tr>
+					<td width="20px">
+						<img width="100%" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+
+					<td align='left' bgcolor='#333399'  style="width:250px; height:20px;color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+						<font color='#CCFFFF' size='4'><B><I>Seleccion de Viaje</I></B></font>
+					</td>
+	
+					<td align='left' width="400px">
+						<img width="400px" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td align='left'>
+						<input type="button" id="boton_grabar" value="RESERVAR"  style="width:150px; height:25px; color:#FFFFFF; background:#0066CC; font-family:Arial; font-weight: bold; font-size:15px; text-align:center; border-radius: 10px 10px 10px 10px;" onClick="realizar_reserva()"/>
+						<input type= "hidden" name= "reservar" value="">
+						<input type= "hidden" name= "ir_a" value="">
+					</td>
+					<td align='left' width="100px">
+						<img width="100px" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td align='left' width="20px">
+						<img width="20px" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+		</table>
+
+
+<br>
+
+		{$mensaje1}
+		{$mensaje2}
+<br>
+			<table width="1000px" border = "0" align = "left" height="40" class="fondotabla" style="clear:both">
+				<tr height="40">
+
+					<!--<th align = "left">Origen</th>-->
+					<td>
+						<select id= 'ciudad' name= 'ciudad' align="" style=' width:150px;' onChange='carga_destinos()'> 
+							{foreach from=$comboCiudades item=fila1}
+								{if {$recuperaciudad} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+					<td>
+						<select id ='destino' name='destino' style=' width:150px;' onChange='carga_productos()'>
+						</select>
+						<input type= 'hidden' name= 'recupera_destino' value="{$recupera_destino}">
+						<img id="ajax_load_destinos" src="imagenes/ajax_load.gif" style="display:none"/>
+					</td>
+
+					<td>
+						<select id ='producto' name='producto' style=' width:180px;' onChange='carga_fechas()'>
+						</select>
+						<input type= 'hidden' name= 'recupera_producto' value="{$recupera_producto}">
+						<img id="ajax_load_productos" src="imagenes/ajax_load.gif" style="display:none"/>
+					</td>
+		
+					<td>
+						<select id ='fecha' name='fecha' style=' width:200px;' onChange='carga_noches()'>
+						</select>
+						<input type= 'hidden' name= 'recupera_fecha' value="{$recupera_fecha}">
+						<img id="ajax_load_fechas" src="imagenes/ajax_load.gif" style="display:none"/>
+					</td>
+		
+					<td>
+						<select id ='noches' name='noches' style=' width:200px;' onChange='carga_opcion_alojamiento()'>
+						</select>
+						<input type= 'hidden' name= 'recupera_noches' value="{$recupera_noches}">
+						<img id="ajax_load_noches" src="imagenes/ajax_load.gif" style="display:none"/>
+					</td>
+
+				</tr>
+
+				<tr height="40">
+
+					<td colspan="3">
+						<select id ='opcion' name='opcion' style=' width:535px;'>
+						</select>
+						<input type= 'hidden' name= 'recupera_opcion' value="{$recupera_opcion}">
+						<img id="ajax_load_opcion" src="imagenes/ajax_load.gif" style="display:none"/>
+					</td>
+
+					<td>
+						<select id ='alojamiento' name='alojamiento' style=' width:200px;' onChange='carga_caracteristica()'>
+						</select>
+						<input type= 'hidden' name= 'recupera_alojamiento' value="{$recupera_alojamiento}">
+						<img id="ajax_load_alojamiento" src="imagenes/ajax_load.gif" style="display:none"/>
+					</td>
+
+					<td>
+						<select id ='caracteristica' name='caracteristica' style=' width:200px;' onChange='carga_regimen()'>
+						</select>
+						<input type= 'hidden' name= 'recupera_caracteristica' value="{$recupera_caracteristica}">
+						<img id="ajax_load_caracteristica" src="imagenes/ajax_load.gif" style="display:none"/>
+					</td>
+
+					<td>
+						<select id ='regimen' name='regimen' style=' width:50px;'>
+						</select>
+						<input type= 'hidden' name= 'recupera_regimen' value="{$recupera_regimen}">
+						<img id="ajax_load_regimen" src="imagenes/ajax_load.gif" style="display:none"/>
+					</td>
+
+				</tr>
+			</table>
+
+
+				<table width="100%" cellspacing="0" cellpadding="0" border="0" summary="" style="clear:both">
+						<tr height="20"></tr>
+						<tr>
+							<td width="20px">
+								<img width="100%" height="4" alt="" src="imagenes/cghes.gif">
+							</td>
+
+							<td align='left' bgcolor='#333399' width="200px" height="20px" style="color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+								<font color='#CCFFFF' size='4'><B><I>Habitaciones</I></B></font>
+							</td>
+
+
+							<td>
+								<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+							</td>
+							<td>
+								<img width="100%" height="4" alt="" src="imagenes/cghee.gif">
+							</td>
+						</tr>
+				</table>
+				<br>
+
+
+		<!--NUEVA SECCION DE HABITACIONES-->
+			<!--NUEVA SECCION DE NUMERO DE HABITACIONES-->
+			<section id="seccion_habitaciones" width="600px" border = "0" align = "left" height="40" class="fondotabla" style="display:none; clear:both; margin:30px 5px;">
+                <span>
+						<select name= 'cantidad_habitaciones' align="" onChange="visualizar_habitaciones()"> 
+							{foreach from=$comboCantidad_Habitaciones item=fila1}
+								{if {$recuperacantidad_habitaciones} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+                </span>		
+				<div id="habitacion1" style="display:block;">
+
+					<span>
+						<select name= 'habitacion1_caracteristica' align="" class="margen_habitaciones_reserva_paquetes"> 
+							{foreach from=$combohabitaciones_car item=fila1}
+								{if {$recuperahabitacion1_caracteristica} == {$fila1.codigo}}
+									<option value="{$fila1.codigo}" selected>{$fila1.nombre}</option>
+								{else}
+									<option value="{$fila1.codigo}">{$fila1.nombre}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>		
+	
+					<span>
+						<select name= 'habitacion1_adultos' align="" class="margen_habitaciones_reserva_paquetes" onChange="visualizar_pasajeros()"> 
+							{foreach from=$comboHabitaciones_Adultos item=fila1}
+								{if {$recuperahabitacion1_adultos} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>	
+
+					<span>
+						<select name= 'habitacion1_ninos' align="" class="margen_habitaciones_reserva_paquetes" onChange="visualizar_pasajeros()"> 
+							{foreach from=$comboHabitaciones_Ninos item=fila1}
+								{if {$recuperahabitacion1_ninos} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>	
+
+					<span>
+						<select name= 'habitacion1_bebes' align="" class="margen_habitaciones_reserva_paquetes" onChange="visualizar_pasajeros()"> 
+							{foreach from=$comboHabitaciones_Bebes item=fila1}
+								{if {$recuperahabitacion1_bebes} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>					
+
+					<span>
+						<select name= 'habitacion1_novios' align="" class="margen_habitaciones_reserva_paquetes" onChange="visualizar_pasajeros()"> 
+							{foreach from=$comboHabitaciones_Novios item=fila1}
+								{if {$recuperahabitacion1_novios} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>				
+
+					<span>
+						<select name= 'habitacion1_jubilados' align="" class="margen_habitaciones_reserva_paquetes" onChange="visualizar_pasajeros()"> 
+							{foreach from=$comboHabitaciones_Jubilados item=fila1}
+								{if {$recuperahabitacion1_jubilados} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>
+				</div>
+
+				<div id="habitacion2" style="display:none;">
+					<span>
+						<select name= 'habitacion2_caracteristica' align="" class="margen_habitaciones_reserva_paquetes"> 
+							{foreach from=$combohabitaciones_car item=fila1}
+								{if {$recuperahabitacion2_caracteristica} == {$fila1.codigo}}
+									<option value="{$fila1.codigo}" selected>{$fila1.nombre}</option>
+								{else}
+									<option value="{$fila1.codigo}">{$fila1.nombre}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>		
+	
+					<span>
+						<select name= 'habitacion2_adultos' align="" class="margen_habitaciones_reserva_paquetes" onChange="visualizar_pasajeros()"> 
+							{foreach from=$comboHabitaciones_Adultos item=fila1}
+								{if {$recuperahabitacion2_adultos} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>	
+
+					<span>
+						<select name= 'habitacion2_ninos' align="" class="margen_habitaciones_reserva_paquetes" onChange="visualizar_pasajeros()"> 
+							{foreach from=$comboHabitaciones_Ninos item=fila1}
+								{if {$recuperahabitacion2_ninos} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>	
+
+					<span>
+						<select name= 'habitacion2_bebes' align="" class="margen_habitaciones_reserva_paquetes" onChange="visualizar_pasajeros()"> 
+							{foreach from=$comboHabitaciones_Bebes item=fila1}
+								{if {$recuperahabitacion2_bebes} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>					
+
+					<span>
+						<select name= 'habitacion2_novios' align="" class="margen_habitaciones_reserva_paquetes" onChange="visualizar_pasajeros()"> 
+							{foreach from=$comboHabitaciones_Novios item=fila1}
+								{if {$recuperahabitacion2_novios} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>				
+
+					<span>
+						<select name= 'habitacion2_jubilados' align="" class="margen_habitaciones_reserva_paquetes" onChange="visualizar_pasajeros()"> 
+							{foreach from=$comboHabitaciones_Jubilados item=fila1}
+								{if {$recuperahabitacion2_jubilados} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>
+				</div>
+
+				<div id="habitacion3" style="display:none;">
+					<span>
+						<select name= 'habitacion3_caracteristica' align="" class="margen_habitaciones_reserva_paquetes"> 
+							{foreach from=$combohabitaciones_car item=fila1}
+								{if {$recuperahabitacion3_caracteristica} == {$fila1.codigo}}
+									<option value="{$fila1.codigo}" selected>{$fila1.nombre}</option>
+								{else}
+									<option value="{$fila1.codigo}">{$fila1.nombre}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>		
+	
+					<span>
+						<select name= 'habitacion3_adultos' align="" class="margen_habitaciones_reserva_paquetes" onChange="visualizar_pasajeros()"> 
+							{foreach from=$comboHabitaciones_Adultos item=fila1}
+								{if {$recuperahabitacion3_adultos} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>	
+
+					<span>
+						<select name= 'habitacion3_ninos' align="" class="margen_habitaciones_reserva_paquetes" onChange="visualizar_pasajeros()"> 
+							{foreach from=$comboHabitaciones_Ninos item=fila1}
+								{if {$recuperahabitacion3_ninos} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>	
+
+					<span>
+						<select name= 'habitacion3_bebes' align="" class="margen_habitaciones_reserva_paquetes" onChange="visualizar_pasajeros()"> 
+							{foreach from=$comboHabitaciones_Bebes item=fila1}
+								{if {$recuperahabitacion3_bebes} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>					
+
+					<span>
+						<select name= 'habitacion3_novios' align="" class="margen_habitaciones_reserva_paquetes" onChange="visualizar_pasajeros()"> 
+							{foreach from=$comboHabitaciones_Novios item=fila1}
+								{if {$recuperahabitacion3_novios} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>				
+
+					<span>
+						<select name= 'habitacion3_jubilados' align="" class="margen_habitaciones_reserva_paquetes" onChange="visualizar_pasajeros()"> 
+							{foreach from=$comboHabitaciones_Jubilados item=fila1}
+								{if {$recuperahabitacion3_jubilados} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>					
+
+				</div>
+
+				<div id="habitacion4" style="display:none;">
+					<span>
+						<select name= 'habitacion4_caracteristica' class="margen_habitaciones_reserva_paquetes"> 
+							{foreach from=$combohabitaciones_car item=fila1}
+								{if {$recuperahabitacion4_caracteristica} == {$fila1.codigo}}
+									<option value="{$fila1.codigo}" selected>{$fila1.nombre}</option>
+								{else}
+									<option value="{$fila1.codigo}">{$fila1.nombre}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>		
+	
+					<span>
+						<select name= 'habitacion4_adultos' align="" class="margen_habitaciones_reserva_paquetes" onChange="visualizar_pasajeros()"> 
+							{foreach from=$comboHabitaciones_Adultos item=fila1}
+								{if {$recuperahabitacion4_adultos} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>	
+
+					<span>
+						<select name= 'habitacion4_ninos' align="" class="margen_habitaciones_reserva_paquetes" onChange="visualizar_pasajeros()"> 
+							{foreach from=$comboHabitaciones_Ninos item=fila1}
+								{if {$recuperahabitacion4_ninos} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>	
+
+					<span>
+						<select name= 'habitacion4_bebes' align="" class="margen_habitaciones_reserva_paquetes" onChange="visualizar_pasajeros()"> 
+							{foreach from=$comboHabitaciones_Bebes item=fila1}
+								{if {$recuperahabitacion4_bebes} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>					
+
+					<span>
+						<select name= 'habitacion4_novios' align="" class="margen_habitaciones_reserva_paquetes" onChange="visualizar_pasajeros()"> 
+							{foreach from=$comboHabitaciones_Novios item=fila1}
+								{if {$recuperahabitacion4_novios} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>				
+
+					<span>
+						<select name= 'habitacion4_jubilados' align="" class="margen_habitaciones_reserva_paquetes" onChange="visualizar_pasajeros()"> 
+							{foreach from=$comboHabitaciones_Jubilados item=fila1}
+								{if {$recuperahabitacion4_jubilados} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>				
+
+				</div>
+            </section>		
+
+
+			<!--NUEVA SECCION PASAJEROS SOLO VUELO-->
+			<section id="seccion_pasajeros_solo_vuelo" width="600px" border = "0" align = "left" height="40" class="fondotabla" style="display:none; clear:both; margin:30px 5px;">
+					<span>
+						<select name= 'solo_vuelo_adultos' align="" class="margen_habitaciones_reserva_paquetes" onChange="visualizar_pasajeros()"> 
+							{foreach from=$comboSoloVuelo_Adultos item=fila1}
+								{if {$recuperasolo_vuelo_adultos} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>	
+
+					<span>
+						<select name= 'solo_vuelo_ninos' align="" class="margen_habitaciones_reserva_paquetes" onChange="visualizar_pasajeros()"> 
+							{foreach from=$comboSoloVuelo_Ninos item=fila1}
+								{if {$recuperasolo_vuelo_ninos} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>	
+            </section>	
+
+				<table width="100%" cellspacing="0" cellpadding="0" border="0" summary="" style="clear:both">
+						<tr height="20"></tr>
+						<tr>
+							<td width="20px">
+								<img width="100%" height="4" alt="" src="imagenes/cghes.gif">
+							</td>
+
+							<td align='left' bgcolor='#333399' width="200px" height="20px" style="color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+								<font color='#CCFFFF' size='4'><B><I>Agencia</I></B></font>
+							</td>
+
+
+							<td>
+								<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+							</td>
+							<td>
+								<img width="100%" height="4" alt="" src="imagenes/cghee.gif">
+							</td>
+						</tr>
+				</table>
+				<br>
+
+
+				<div id='seccion_buscar_agencia' style="display: {$seccion_buscar_agencia_display}">
+				<input type= 'hidden' name= 'seccion_buscar_agencia_display' value="{$seccion_buscar_agencia_display}">
+
+				<table width="85%" border = "0" align = "left" height="4" style="clear:both">
+					<tbody>
+						<tr height="30">
+
+							<th width="65" align = "left">Agencia</th>
+							<td align = "left">
+								<input type= 'text' id= 'buscar_agencia_minorista' size='15' onkeypress="return CancelSubmit(event)">
+							</td>
+							<th width="65" align = "left">Oficina</th>
+							<td align = "left">
+								<input type= 'text' id= 'buscar_agencia_oficina' size='2' onkeypress="return CancelSubmit(event)">
+							</td>
+							<th width="65" align = "left">Localidad</th>
+							<td align = "left">
+								<input type= 'text' id= 'buscar_agencia_localidad' size='15' onkeypress="return CancelSubmit(event)">
+							</td>
+							<th width="65" align = "left">Direccion</th>
+							<td align = "left">
+								<input type= 'text' id= 'buscar_agencia_direccion' size='15' onkeypress="return CancelSubmit(event)">
+							</td>
+							<th width="65" align = "left">Teléfono</th>
+							<td align = "left">
+								<input type= 'text' id= 'buscar_agencia_telefono' size='10' onkeypress="return CancelSubmit(event)">
+							</td>
+
+						</tr>
+						
+
+						<tr height="30">
+
+							<td colspan="11">
+								<select id = 'clave_agencia' name='clave_agencia' style=' width:780px; font-family: monospace;' onChange='seleccionar_agencia_reserva_paquetes()'>
+								</select>
+
+								<input type= 'hidden' name= 'clave_agencia_recuperada' value="{$recuperaclave_agencia}">
+
+								<input type="button" id="boton_buscar_agencia2" value="BUSCAR AGENCIA (con Ajax/Json)"  style="height:20px; width:200px; color:#FFFFFF; background:#0066CC; font-family:Arial; font-weight: bold; font-size:10px; text-align:center; border-radius: 10px 10px 10px 10px;" onClick="Cargar_busqueda_agencias2()"/>
+				
+								<img id="ajax_load" src="imagenes/ajax_load.gif" style="display:none"/>
+
+							</td>
+						</tr>
+
+
+
+					</tbody>
+				</table>
+
+				</div>
+
+			<table width="850px" border = "0" align = "left" height="40" class="fondotabla" style="clear:both">
+
+				<tr>
+
+					<!--<th align = "left">Agencia</th>
+					<td><input type= 'text' name= 'clave_agencia' size='7' value="{$recuperaclave_agencia}"></td>-->
+					
+					<th align = "left">Agente</th>
+					<td><input type= 'text' name= 'agente' size='30' value="{$recuperaagente}"></td>
+
+					<th align = "left">Referencia Agencia</th>
+					<td><input type= 'text' name= 'referencia_agencia' size='30' value="{$recuperareferencia_agencia}"></td>
+				</tr>
+			</table>
+
+			<table width="1000px" border = "0" align = "left" height="40" class="fondotabla" style="clear:both">
+					<th align = "left">Observaciones</th>
+					<td><input type= 'text' name= 'observaciones' size='145' value="{$recuperaobservaciones}"></td>
+
+
+				</tr>
+
+			</table>
+
+
+
+				<table width="100%" cellspacing="0" cellpadding="0" border="0" summary="" style="clear:both">
+
+						<tr height="20"></tr>
+						<tr>
+							<td width="20px">
+								<img width="100%" height="4" alt="" src="imagenes/cghes.gif">
+							</td>
+
+							<td align='left' bgcolor='#333399' width="200px" height="20px" style="color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+								<font color='#CCFFFF' size='4'><B><I>Pasajeros</I></B></font>
+							</td>
+
+
+							<td>
+								<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+							</td>
+							<td>
+								<img width="100%" height="4" alt="" src="imagenes/cghee.gif">
+							</td>
+						</tr>
+
+				</table>
+				<br>
+
+			<!-------------------------->
+			<!--SECCION PASAJEROS------->
+			<!-------------------------->
+
+			<section id='seccion_pasajeros' class="fondotabla">
+
+
+
+
+				<table id="pasajero1" style="display:none;" width="100%">
+					<tr class="cabeceratabla">
+						<th>Num</th>		
+						<th>Hab</th>
+						<th>Trato</th>
+						<th>Apellido</th>
+						<th>Nombre</th>
+						<th>Tipo</th>
+						<th>Edad</th>
+					</tr>
+					<tr>
+						<td>
+							<input type= 'text' name= 'pasajero1_numero' size='2' value="{$recuperapasajero1_numero}"></td>
+						</td>		
+		
+						<td>
+							<input type= 'text' name= 'pasajero1_habitacion' size='2' value="{$recuperapasajero1_habitacion}"></td>
+						</td>	
+						
+						<td>
+							<select name= 'pasajero1_sexo' align="" class="margen_habitaciones_reserva_paquetes"> 
+								{foreach from=$comboSexo item=fila1}
+									{if {$recuperapasajero1_sexo} == {$fila1.valor}}
+										<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+									{else}
+										<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+									{/if}					
+								{/foreach}
+							</select> 
+						</td>	
+
+						<td>
+							<input type= 'text' name= 'pasajero1_apellidos' size='40' value="{$recuperapasajero1_apellidos}"></td>
+						</td>	
+
+						<td>
+							<input type= 'text' name= 'pasajero1_nombre' size='30' value="{$recuperapasajero1_nombre}"></td>
+						</td>	
+
+						<td>
+							<select name= 'pasajero1_tipo' align="" class="margen_habitaciones_reserva_paquetes"> 
+								{foreach from=$comboPasajeros_Tipo item=fila1}
+									{if {$recuperapasajero1_tipo} == {$fila1.valor}}
+										<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+									{else}
+										<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+									{/if}					
+								{/foreach}
+							</select> 
+						</td>	
+
+						<td id="edad1">
+							<select name= 'pasajero1_edad' align="" class="margen_habitaciones_reserva_paquetes"> 
+
+									{foreach from=$comboPasajeros_Edad_Ninos item=fila1}
+										{if {$recuperapasajero1_edad} == {$fila1.valor}}
+											<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+										{else}
+											<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+										{/if}					
+									{/foreach}
+
+								
+							</select> 
+						</td>	
+					</tr>
+				</table>
+
+
+				<table id="pasajero2" style="display:none;">
+					<tr>
+					<td>
+						<input type= 'text' name= 'pasajero2_numero' size='2' value="{$recuperapasajero2_numero}"></td>
+					</td>		
+	
+					<td>
+						<input type= 'text' name= 'pasajero2_habitacion' size='2' value="{$recuperapasajero2_habitacion}"></td>
+					</td>	
+					<td>
+						<select name= 'pasajero2_sexo' align="" class="margen_habitaciones_reserva_paquetes"> 
+							{foreach from=$comboSexo item=fila1}
+								{if {$recuperapasajero2_sexo} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>	
+
+					<td>
+						<input type= 'text' name= 'pasajero2_apellidos' size='40' value="{$recuperapasajero2_apellidos}"></td>
+					</td>	
+
+					<td>
+						<input type= 'text' name= 'pasajero2_nombre' size='30' value="{$recuperapasajero2_nombre}"></td>
+					</td>	
+
+					<td>
+						<select name= 'pasajero2_tipo' align="" class="margen_habitaciones_reserva_paquetes"> 
+							{foreach from=$comboPasajeros_Tipo item=fila1}
+								{if {$recuperapasajero2_tipo} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>	
+
+					<td id="edad2">
+						<select name= 'pasajero2_edad' align="" class="margen_habitaciones_reserva_paquetes"> 
+					
+								{foreach from=$comboPasajeros_Edad_Ninos item=fila1}
+									{if {$recuperapasajero2_edad} == {$fila1.valor}}
+										<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+									{else}
+										<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+									{/if}					
+								{/foreach}
+
+						</select> 
+					</td>	
+					</tr>
+				</table>
+
+				<table id="pasajero3">
+					<tr>
+					<td>
+						<input type= 'text' name= 'pasajero3_numero' size='2' value="{$recuperapasajero3_numero}"></td>
+					</td>		
+	
+					<td>
+						<input type= 'text' name= 'pasajero3_habitacion' size='2' value="{$recuperapasajero3_habitacion}"></td>
+					</td>	
+					<td>
+						<select name= 'pasajero3_sexo' align="" class="margen_habitaciones_reserva_paquetes"> 
+							{foreach from=$comboSexo item=fila1}
+								{if {$recuperapasajero3_sexo} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>					
+					<td>
+						<input type= 'text' name= 'pasajero3_apellidos' size='40' value="{$recuperapasajero3_apellidos}"></td>
+					</td>	
+
+					<td>
+						<input type= 'text' name= 'pasajero3_nombre' size='30' value="{$recuperapasajero3_nombre}"></td>
+					</td>	
+
+					<td>
+						<select name= 'pasajero3_tipo' align="" class="margen_habitaciones_reserva_paquetes"> 
+							{foreach from=$comboPasajeros_Tipo item=fila1}
+								{if {$recuperapasajero3_tipo} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>	
+
+					<td id="edad3">
+						<select name= 'pasajero3_edad' align="" class="margen_habitaciones_reserva_paquetes"> 
+
+								{foreach from=$comboPasajeros_Edad_Ninos item=fila1}
+									{if {$recuperapasajero3_edad} == {$fila1.valor}}
+										<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+									{else}
+										<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+									{/if}					
+								{/foreach}
+
+						</select> 
+					</td>	
+					</tr>
+				</table>
+
+				<table id="pasajero4" style="display:none;">
+					<tr>
+					<td>
+						<input type= 'text' name= 'pasajero4_numero' size='2' value="{$recuperapasajero4_numero}"></td>
+					</td>		
+	
+					<td>
+						<input type= 'text' name= 'pasajero4_habitacion' size='2' value="{$recuperapasajero4_habitacion}"></td>
+					</td>	
+					<td>
+						<select name= 'pasajero4_sexo' align="" class="margen_habitaciones_reserva_paquetes"> 
+							{foreach from=$comboSexo item=fila1}
+								{if {$recuperapasajero4_sexo} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>					
+					<td>
+						<input type= 'text' name= 'pasajero4_apellidos' size='40' value="{$recuperapasajero4_apellidos}"></td>
+					</td>	
+
+					<td>
+						<input type= 'text' name= 'pasajero4_nombre' size='30' value="{$recuperapasajero4_nombre}"></td>
+					</td>	
+
+					<td>
+						<select name= 'pasajero4_tipo' align="" class="margen_habitaciones_reserva_paquetes"> 
+							{foreach from=$comboPasajeros_Tipo item=fila1}
+								{if {$recuperapasajero4_tipo} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>	
+
+					<td id="edad4">
+						<select name= 'pasajero4_edad' align="" class="margen_habitaciones_reserva_paquetes"> 
+							{foreach from=$comboPasajeros_Edad_Ninos item=fila1}
+								{if {$recuperapasajero4_edad} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>	
+					</tr>
+				</table>
+
+				<table id="pasajero5" style="display:none;">
+					<tr>
+					<td>
+						<input type= 'text' name= 'pasajero5_numero' size='2' value="{$recuperapasajero5_numero}"></td>
+					</td>		
+	
+					<td>
+						<input type= 'text' name= 'pasajero5_habitacion' size='2' value="{$recuperapasajero5_habitacion}"></td>
+					</td>	
+					<td>
+						<select name= 'pasajero5_sexo' align="" class="margen_habitaciones_reserva_paquetes"> 
+							{foreach from=$comboSexo item=fila1}
+								{if {$recuperapasajero5_sexo} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>					
+					<td>
+						<input type= 'text' name= 'pasajero5_apellidos' size='40' value="{$recuperapasajero5_apellidos}"></td>
+					</td>	
+
+					<td>
+						<input type= 'text' name= 'pasajero5_nombre' size='30' value="{$recuperapasajero5_nombre}"></td>
+					</td>	
+
+					<td>
+						<select name= 'pasajero5_tipo' align="" class="margen_habitaciones_reserva_paquetes"> 
+							{foreach from=$comboPasajeros_Tipo item=fila1}
+								{if {$recuperapasajero5_tipo} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>	
+
+					<td id="edad5">
+						<select name= 'pasajero5_edad' align="" class="margen_habitaciones_reserva_paquetes"> 
+							{foreach from=$comboPasajeros_Edad_Ninos item=fila1}
+								{if {$recuperapasajero5_edad} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>	
+					</tr>
+				</table>
+
+				<table id="pasajero6" style="display:none;">
+					<tr>
+					<td>
+						<input type= 'text' name= 'pasajero6_numero' size='2' value="{$recuperapasajero6_numero}"></td>
+					</td>		
+	
+					<td>
+						<input type= 'text' name= 'pasajero6_habitacion' size='2' value="{$recuperapasajero6_habitacion}"></td>
+					</td>	
+					<td>
+						<select name= 'pasajero6_sexo' align="" class="margen_habitaciones_reserva_paquetes"> 
+							{foreach from=$comboSexo item=fila1}
+								{if {$recuperapasajero6_sexo} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>					
+					<td>
+						<input type= 'text' name= 'pasajero6_apellidos' size='40' value="{$recuperapasajero6_apellidos}"></td>
+					</td>	
+
+					<td>
+						<input type= 'text' name= 'pasajero6_nombre' size='30' value="{$recuperapasajero6_nombre}"></td>
+					</td>	
+
+					<td>
+						<select name= 'pasajero6_tipo' align="" class="margen_habitaciones_reserva_paquetes"> 
+							{foreach from=$comboPasajeros_Tipo item=fila1}
+								{if {$recuperapasajero6_tipo} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>	
+
+					<td id="edad6">
+						<select name= 'pasajero6_edad' align="" class="margen_habitaciones_reserva_paquetes"> 
+							{foreach from=$comboPasajeros_Edad_Ninos item=fila1}
+								{if {$recuperapasajero6_edad} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>	
+					</tr>
+				</table>
+
+				<table id="pasajero7" style="display:none;">
+					<tr>
+					<td>
+						<input type= 'text' name= 'pasajero7_numero' size='2' value="{$recuperapasajero7_numero}"></td>
+					</td>		
+	
+					<td>
+						<input type= 'text' name= 'pasajero7_habitacion' size='2' value="{$recuperapasajero7_habitacion}"></td>
+					</td>	
+					<td>
+						<select name= 'pasajero7_sexo' align="" class="margen_habitaciones_reserva_paquetes"> 
+							{foreach from=$comboSexo item=fila1}
+								{if {$recuperapasajero7_sexo} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>					
+					<td>
+						<input type= 'text' name= 'pasajero7_apellidos' size='40' value="{$recuperapasajero7_apellidos}"></td>
+					</td>	
+
+					<td>
+						<input type= 'text' name= 'pasajero7_nombre' size='30' value="{$recuperapasajero7_nombre}"></td>
+					</td>	
+
+					<td>
+						<select name= 'pasajero7_tipo' align="" class="margen_habitaciones_reserva_paquetes"> 
+							{foreach from=$comboPasajeros_Tipo item=fila1}
+								{if {$recuperapasajero7_tipo} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>	
+
+					<td id="edad7">
+						<select name= 'pasajero7_edad' align="" class="margen_habitaciones_reserva_paquetes"> 
+							{foreach from=$comboPasajeros_Edad_Ninos item=fila1}
+								{if {$recuperapasajero7_edad} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>	
+					</tr>
+				</table>
+
+				<table id="pasajero8" style="display:none;">
+					<tr>
+					<td>
+						<input type= 'text' name= 'pasajero8_numero' size='2' value="{$recuperapasajero8_numero}"></td>
+					</td>		
+	
+					<td>
+						<input type= 'text' name= 'pasajero8_habitacion' size='2' value="{$recuperapasajero8_habitacion}"></td>
+					</td>	
+					<td>
+						<select name= 'pasajero8_sexo' align="" class="margen_habitaciones_reserva_paquetes"> 
+							{foreach from=$comboSexo item=fila1}
+								{if {$recuperapasajero8_sexo} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>					
+					<td>
+						<input type= 'text' name= 'pasajero8_apellidos' size='40' value="{$recuperapasajero8_apellidos}"></td>
+					</td>	
+
+					<td>
+						<input type= 'text' name= 'pasajero8_nombre' size='30' value="{$recuperapasajero8_nombre}"></td>
+					</td>	
+
+					<td>
+						<select name= 'pasajero8_tipo' align="" class="margen_habitaciones_reserva_paquetes"> 
+							{foreach from=$comboPasajeros_Tipo item=fila1}
+								{if {$recuperapasajero8_tipo} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>	
+
+					<td id="edad8">
+						<select name= 'pasajero8_edad' align="" class="margen_habitaciones_reserva_paquetes"> 
+							{foreach from=$comboPasajeros_Edad_Ninos item=fila1}
+								{if {$recuperapasajero8_edad} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>	
+					</tr>
+				</table>
+
+				<table id="pasajero9" style="display:none;">
+					<tr>
+					<td>
+						<input type= 'text' name= 'pasajero9_numero' size='2' value="{$recuperapasajero9_numero}"></td>
+					</td>		
+	
+					<td>
+						<input type= 'text' name= 'pasajero9_habitacion' size='2' value="{$recuperapasajero9_habitacion}"></td>
+					</td>	
+					<td>
+						<select name= 'pasajero9_sexo' align="" class="margen_habitaciones_reserva_paquetes"> 
+							{foreach from=$comboSexo item=fila1}
+								{if {$recuperapasajero9_sexo} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>					
+					<td>
+						<input type= 'text' name= 'pasajero9_apellidos' size='40' value="{$recuperapasajero9_apellidos}"></td>
+					</td>	
+
+					<td>
+						<input type= 'text' name= 'pasajero9_nombre' size='30' value="{$recuperapasajero9_nombre}"></td>
+					</td>	
+
+					<td>
+						<select name= 'pasajero9_tipo' align="" class="margen_habitaciones_reserva_paquetes"> 
+							{foreach from=$comboPasajeros_Tipo item=fila1}
+								{if {$recuperapasajero9_tipo} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>	
+
+					<td id="edad9">
+						<select name= 'pasajero9_edad' align="" class="margen_habitaciones_reserva_paquetes"> 
+							{foreach from=$comboPasajeros_Edad_Ninos item=fila1}
+								{if {$recuperapasajero9_edad} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>	
+					</tr>
+				</table>
+
+			</section>
+
+		{include file="$pie"}
+	</form>
+
+ </BODY>
+</HTML>
+
+
+
+

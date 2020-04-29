@@ -1,0 +1,1 @@
+http://wwwaps.panavision-tours.es:8089/amadeusgw/dReserva.asp?xml=<Cryptic_GetScreen_Query><Command>SN01MAYMADTFN</Command></Cryptic_GetScreen_Query>

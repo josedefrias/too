@@ -1,0 +1,858 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 5.0 Transitional//EN">
+<HTML>
+
+  <link rel="StyleSheet" href="css/menu.css">
+
+ <HEAD>
+  <meta charset="utf-8">
+  <TITLE> Menú </TITLE>
+  <META NAME="Generator" CONTENT="EditPlus">
+  <META NAME="Author" CONTENT="Jose de Frias">
+  <META NAME="Keywords" CONTENT="">
+  <META NAME="Description" CONTENT="">
+  <script type="text/javascript" src="funciones_js/funciones.js"></script>
+  <script type="text/javascript" src="funciones_js/funciones_reservas_paquete.js"></script>
+   <script type="text/javascript" src="Jquery/jquery-2.0.3.min.js"></script>
+  <script type="text/javascript" src="funciones_js_ajax/Reserva_paquete.js"></script>
+  <link rel="shortcut icon" type="image/x-icon" href="imagenes/favicon_hit.ico">
+  <link rel="StyleSheet" href="css/menu.css">
+  <link rel="StyleSheet" href="css/calendario/calendar-blue2.css">
+  <script type="text/javascript" src="funciones_js/calendario/calendar.js"></script>
+  <script type="text/javascript" src="funciones_js/calendario/calendar-es.js"></script>
+  <script type="text/javascript" src="funciones_js/calendario/calendar-setup.js"></script>
+ </HEAD>
+
+<body background="imagenes/fondo.jpg" onLoad="visualizar_habitaciones()">
+
+	{include file="$cabecera"}
+
+	<form name="mantenimiento_tabla" method = "post" action="">
+		
+
+					<!--<td>
+						<input type="image" src="imagenes/boton_grabar.jpg" width="70" height="25" onClick="grabar_Tipo_Registro()">
+						<input type= "hidden" name= "actuar" value="">
+					</td>-->
+
+
+
+		<table width="100%" cellspacing="0" cellpadding="0" border="0" summary="" style="clear:both">
+				<tr height="20"></tr>
+				<tr>
+					<td width="20px">
+						<img width="100%" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+
+					<td align='left' bgcolor='#333399'  style="width:250px; height:20px;color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+						<font color='#CCFFFF' size='4'><B><I>Seleccion de Viaje</I></B></font>
+					</td>
+	
+					<td align='left' width="400px">
+						<img width="400px" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td align='left'>
+						<input type="button" id="boton_grabar" value="RESERVAR"  style="width:150px; height:25px; color:#FFFFFF; background:#0066CC; font-family:Arial; font-weight: bold; font-size:15px; text-align:center; border-radius: 10px 10px 10px 10px;" onClick="realizar_reserva()"/>
+						<input type= "hidden" name= "reservar" value="">
+						<input type= "hidden" name= "ir_a" value="">
+					</td>
+					<td align='left' width="100px">
+						<img width="100px" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td align='left' width="20px">
+						<img width="20px" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+		</table>
+
+
+<br>
+
+		{$mensaje1}
+		{$mensaje2}
+<br>
+			<table width="1000px" border = "0" align = "left" height="40" class="fondotabla" style="clear:both">
+				<tr>
+
+					<!--<th align = "left">Origen</th>-->
+					<td>
+						<select id= 'ciudad' name= 'ciudad' align="" onChange='carga_destinos()'> 
+							{foreach from=$comboCiudades item=fila1}
+								{if {$recuperaciudad} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+					<td>
+						<select id ='destino' name='destino' style=' width:200px; font-family: monospace;'>
+						</select>
+
+						<input type= 'hidden' name= 'recupera_destino' value="{$recupera_destino}">
+				
+						<img id="ajax_load_destinos" src="imagenes/ajax_load.gif" style="display:none"/>
+
+					</td>
+
+
+
+					<th>Folleto</th>
+					<td>
+						<select name= 'folleto' align=""> 
+							{foreach from=$comboFolletos item=fila1}
+								{if {$recuperafolleto} == {$fila1.codigo}}
+									<option value="{$fila1.codigo}" selected>{$fila1.nombre}</option>
+								{else}
+									<option value="{$fila1.codigo}">{$fila1.nombre}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+					<th align = "left">Cuadro</th>
+					<td><input type= 'text' name= 'cuadro' size='7' value="{$recuperacuadro}"></td>
+
+
+
+					<th align = "left">Opcion</th>
+					<td><input type= 'text' name= 'opcion' size='2' value="{$recuperaopcion}"></td>
+
+					<th align = "left">Fecha</th>
+					<td><input type= 'text' id='fecha' name= 'fecha' size='10' value="{$recuperafecha}">
+						<img id="botonfecha" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'fecha',
+							button : "botonfecha",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>
+					
+					</td>
+
+					<th align = "left">Paquete</th>
+					<td><input type= 'text' name= 'paquete' size='7' value="{$recuperapaquete}"></td>
+
+					<th align = "left">Regimen</th>
+					<td>
+						<select name= 'regimen' align=""> 
+							{foreach from=$comboRegimen item=fila1}
+								{if {$recuperaregimen} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+				</tr>
+			</table>
+
+				<table width="100%" cellspacing="0" cellpadding="0" border="0" summary="" style="clear:both">
+						<tr height="20"></tr>
+						<tr>
+							<td width="20px">
+								<img width="100%" height="4" alt="" src="imagenes/cghes.gif">
+							</td>
+
+							<td align='left' bgcolor='#333399' width="300px" height="20px" style="color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+								<font color='#CCFFFF' size='4'><B><I>Pasajeros y Habitaciones</I></B></font>
+							</td>
+
+
+							<td>
+								<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+							</td>
+							<td>
+								<img width="100%" height="4" alt="" src="imagenes/cghee.gif">
+							</td>
+						</tr>
+				</table>
+				<br>
+
+			<table width="550px" border = "0" align = "left" height="40" class="fondotabla" style="clear:both">
+				<tr>
+
+					<th align = "left">Adultos</th>
+					<td><input type= 'text' name= 'adultos' size='3' value="{$recuperaadultos}"></td>
+
+					<th align = "left">Niños</th>
+					<td><input type= 'text' name= 'ninos' size='3' value="{$recuperaninos}"></td>
+
+					<th align = "left">Bebes</th>
+					<td><input type= 'text' name= 'bebes' size='3' value="{$recuperabebes}"></td>
+
+					<th align = "left">Novios</th>
+					<td><input type= 'text' name= 'novios' size='3' value="{$recuperanovios}"></td>
+
+					<th align = "left">3ª Edad</th>
+					<td><input type= 'text' name= 'jubilados' size='3' value="{$recuperajubilados}"></td>
+
+
+				</tr>
+			</table>
+
+				<table width="100%" cellspacing="0" cellpadding="0" border="0" summary="" style="clear:both">
+						<tr ></tr>
+						<tr>
+							<td>
+								<img width="100%" height="1" alt="" src="imagenes/cghes.gif">
+							</td>
+							<td>
+								<img width="100%" height="1" alt="" src="imagenes/cghec.gif">
+							</td>
+							<td>
+								<img width="100%" height="1" alt="" src="imagenes/cghee.gif">
+							</td>
+						</tr>
+				</table>
+
+			<table width="600px" border = "0" align = "left" height="40" class="fondotabla" style="clear:both">
+				<tr>
+
+					<th>Habitacion</th>
+					<td>
+						<select name= 'habitacion1' align=""> 
+							{foreach from=$comboHabitaciones item=fila1}
+								{if {$recuperahabitacion1} == {$fila1.codigo}}
+									<option value="{$fila1.codigo}" selected>{$fila1.nombre}</option>
+								{else}
+									<option value="{$fila1.codigo}">{$fila1.nombre}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+					<th>Caracteristica</th>
+					<td>
+						<select name= 'caracteristica1' align=""> 
+							{foreach from=$combohabitaciones_car item=fila1}
+								{if {$recuperacaracteristica1} == {$fila1.codigo}}
+									<option value="{$fila1.codigo}" selected>{$fila1.nombre}</option>
+								{else}
+									<option value="{$fila1.codigo}">{$fila1.nombre}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+					<th align = "left">Cantidad</th>
+					<td><input type= 'text' name= 'cantidad1' size='7' value="{$recuperacantidad1}"></td>
+
+				</tr>
+
+				<tr>
+
+					<th>Habitacion</th>
+					<td>
+						<select name= 'habitacion2' align=""> 
+							{foreach from=$comboHabitaciones item=fila1}
+								{if {$recuperahabitacion2} == {$fila1.codigo}}
+									<option value="{$fila1.codigo}" selected>{$fila1.nombre}</option>
+								{else}
+									<option value="{$fila1.codigo}">{$fila1.nombre}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+					<th>Caracteristica</th>
+					<td>
+						<select name= 'caracteristica2' align=""> 
+							{foreach from=$combohabitaciones_car item=fila1}
+								{if {$recuperacaracteristica2} == {$fila1.codigo}}
+									<option value="{$fila1.codigo}" selected>{$fila1.nombre}</option>
+								{else}
+									<option value="{$fila1.codigo}">{$fila1.nombre}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+					<th align = "left">Cantidad</th>
+					<td><input type= 'text' name= 'cantidad2' size='7' value="{$recuperacantidad2}"></td>
+
+				</tr>
+
+				<tr>
+
+					<th>Habitacion</th>
+					<td>
+						<select name= 'habitacion3' align=""> 
+							{foreach from=$comboHabitaciones item=fila1}
+								{if {$recuperahabitacion3} == {$fila1.codigo}}
+									<option value="{$fila1.codigo}" selected>{$fila1.nombre}</option>
+								{else}
+									<option value="{$fila1.codigo}">{$fila1.nombre}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+					<th>Caracteristica</th>
+					<td>
+						<select name= 'caracteristica3' align=""> 
+							{foreach from=$combohabitaciones_car item=fila1}
+								{if {$recuperacaracteristica3} == {$fila1.codigo}}
+									<option value="{$fila1.codigo}" selected>{$fila1.nombre}</option>
+								{else}
+									<option value="{$fila1.codigo}">{$fila1.nombre}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</td>
+
+					<th align = "left">Cantidad</th>
+					<td><input type= 'text' name= 'cantidad3' size='7' value="{$recuperacantidad3}"></td>
+
+				</tr>
+			</table>
+
+
+
+		<!--NUEVA SECCION DE HABITACIONES-->
+			<!--NUEVA SECCION DE NUMERO DE HABITACIONES-->
+			<section id="seccion_habitaciones" width="600px" border = "0" align = "left" height="40" class="fondotabla" style="clear:both">
+                <span>
+
+					<span>
+						<select name= 'cantidad_habitaciones' align="" onChange="visualizar_habitaciones()"> 
+							{foreach from=$comboCantidad_Habitaciones item=fila1}
+								{if {$recuperacantidad_habitaciones} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>	
+
+                </span>		
+				<div id="habitacion1" style="display:block">
+
+
+
+					<span>
+						<select name= 'habitacion1_caracteristica' align=""> 
+							{foreach from=$combohabitaciones_car item=fila1}
+								{if {$recuperahabitacion1_caracteristica} == {$fila1.codigo}}
+									<option value="{$fila1.codigo}" selected>{$fila1.nombre}</option>
+								{else}
+									<option value="{$fila1.codigo}">{$fila1.nombre}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>		
+	
+					<span>
+						<select name= 'habitacion1_adultos' align=""> 
+							{foreach from=$comboHabitaciones_Adultos item=fila1}
+								{if {$recuperahabitacion1_adultos} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>	
+
+					<span>
+						<select name= 'habitacion1_ninos' align=""> 
+							{foreach from=$comboHabitaciones_Ninos item=fila1}
+								{if {$recuperahabitacion1_ninos} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>	
+
+					<span>
+						<select name= 'habitacion1_bebes' align=""> 
+							{foreach from=$comboHabitaciones_Bebes item=fila1}
+								{if {$recuperahabitacion1_bebes} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>					
+
+					<span>
+						<select name= 'habitacion1_novios' align=""> 
+							{foreach from=$comboHabitaciones_Novios item=fila1}
+								{if {$recuperahabitacion1_novios} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>				
+
+					<span>
+						<select name= 'habitacion1_jubilados' align=""> 
+							{foreach from=$comboHabitaciones_Jubilados item=fila1}
+								{if {$recuperahabitacion1_jubilados} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>
+				</div>
+
+				<div id="habitacion2" style="display:none">
+					<span>
+						<select name= 'habitacion2_caracteristica' align=""> 
+							{foreach from=$combohabitaciones_car item=fila1}
+								{if {$recuperahabitacion2_caracteristica} == {$fila1.codigo}}
+									<option value="{$fila1.codigo}" selected>{$fila1.nombre}</option>
+								{else}
+									<option value="{$fila1.codigo}">{$fila1.nombre}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>		
+	
+					<span>
+						<select name= 'habitacion2_adultos' align=""> 
+							{foreach from=$comboHabitaciones_Adultos item=fila1}
+								{if {$recuperahabitacion2_adultos} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>	
+
+					<span>
+						<select name= 'habitacion2_ninos' align=""> 
+							{foreach from=$comboHabitaciones_Ninos item=fila1}
+								{if {$recuperahabitacion2_ninos} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>	
+
+					<span>
+						<select name= 'habitacion2_bebes' align=""> 
+							{foreach from=$comboHabitaciones_Bebes item=fila1}
+								{if {$recuperahabitacion2_bebes} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>					
+
+					<span>
+						<select name= 'habitacion2_novios' align=""> 
+							{foreach from=$comboHabitaciones_Novios item=fila1}
+								{if {$recuperahabitacion2_novios} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>				
+
+					<span>
+						<select name= 'habitacion2_jubilados' align=""> 
+							{foreach from=$comboHabitaciones_Jubilados item=fila1}
+								{if {$recuperahabitacion2_jubilados} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>
+				</div>
+
+				<div id="habitacion3" style="display:none">
+					<span>
+						<select name= 'habitacion3_caracteristica' align=""> 
+							{foreach from=$combohabitaciones_car item=fila1}
+								{if {$recuperahabitacion3_caracteristica} == {$fila1.codigo}}
+									<option value="{$fila1.codigo}" selected>{$fila1.nombre}</option>
+								{else}
+									<option value="{$fila1.codigo}">{$fila1.nombre}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>		
+	
+					<span>
+						<select name= 'habitacion3_adultos' align=""> 
+							{foreach from=$comboHabitaciones_Adultos item=fila1}
+								{if {$recuperahabitacion3_adultos} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>	
+
+					<span>
+						<select name= 'habitacion3_ninos' align=""> 
+							{foreach from=$comboHabitaciones_Ninos item=fila1}
+								{if {$recuperahabitacion3_ninos} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>	
+
+					<span>
+						<select name= 'habitacion3_bebes' align=""> 
+							{foreach from=$comboHabitaciones_Bebes item=fila1}
+								{if {$recuperahabitacion3_bebes} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>					
+
+					<span>
+						<select name= 'habitacion3_novios' align=""> 
+							{foreach from=$comboHabitaciones_Novios item=fila1}
+								{if {$recuperahabitacion3_novios} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>				
+
+					<span>
+						<select name= 'habitacion3_jubilados' align=""> 
+							{foreach from=$comboHabitaciones_Jubilados item=fila1}
+								{if {$recuperahabitacion3_jubilados} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>					
+
+				</div>
+
+				<div id="habitacion4" style="display:none">
+					<span>
+						<select name= 'habitacion4_caracteristica' align=""> 
+							{foreach from=$combohabitaciones_car item=fila1}
+								{if {$recuperahabitacion4_caracteristica} == {$fila1.codigo}}
+									<option value="{$fila1.codigo}" selected>{$fila1.nombre}</option>
+								{else}
+									<option value="{$fila1.codigo}">{$fila1.nombre}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>		
+	
+					<span>
+						<select name= 'habitacion4_adultos' align=""> 
+							{foreach from=$comboHabitaciones_Adultos item=fila1}
+								{if {$recuperahabitacion4_adultos} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>	
+
+					<span>
+						<select name= 'habitacion4_ninos' align=""> 
+							{foreach from=$comboHabitaciones_Ninos item=fila1}
+								{if {$recuperahabitacion4_ninos} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>	
+
+					<span>
+						<select name= 'habitacion4_bebes' align=""> 
+							{foreach from=$comboHabitaciones_Bebes item=fila1}
+								{if {$recuperahabitacion4_bebes} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>					
+
+					<span>
+						<select name= 'habitacion4_novios' align=""> 
+							{foreach from=$comboHabitaciones_Novios item=fila1}
+								{if {$recuperahabitacion4_novios} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>				
+
+					<span>
+						<select name= 'habitacion4_jubilados' align=""> 
+							{foreach from=$comboHabitaciones_Jubilados item=fila1}
+								{if {$recuperahabitacion4_jubilados} == {$fila1.valor}}
+									<option value="{$fila1.valor}" selected>{$fila1.mostrar}</option>
+								{else}
+									<option value="{$fila1.valor}">{$fila1.mostrar}</option>
+								{/if}					
+							{/foreach}
+						</select> 
+					</span>				
+
+				</div>
+            </section>		
+
+
+				<table width="100%" cellspacing="0" cellpadding="0" border="0" summary="" style="clear:both">
+						<tr height="20"></tr>
+						<tr>
+							<td width="20px">
+								<img width="100%" height="4" alt="" src="imagenes/cghes.gif">
+							</td>
+
+							<td align='left' bgcolor='#333399' width="200px" height="20px" style="color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+								<font color='#CCFFFF' size='4'><B><I>Agencia</I></B></font>
+							</td>
+
+
+							<td>
+								<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+							</td>
+							<td>
+								<img width="100%" height="4" alt="" src="imagenes/cghee.gif">
+							</td>
+						</tr>
+				</table>
+				<br>
+
+
+				<div id='seccion_buscar_agencia' style="display: {$seccion_buscar_agencia_display}">
+				<input type= 'hidden' name= 'seccion_buscar_agencia_display' value="{$seccion_buscar_agencia_display}">
+
+				<table width="85%" border = "0" align = "left" height="4" style="clear:both">
+					<tbody>
+						<tr height="30">
+
+							<th width="65" align = "left">Agencia</th>
+							<td align = "left">
+								<input type= 'text' id= 'buscar_agencia_minorista' size='15' onkeypress="return CancelSubmit(event)">
+							</td>
+							<th width="65" align = "left">Oficina</th>
+							<td align = "left">
+								<input type= 'text' id= 'buscar_agencia_oficina' size='2' onkeypress="return CancelSubmit(event)">
+							</td>
+							<th width="65" align = "left">Localidad</th>
+							<td align = "left">
+								<input type= 'text' id= 'buscar_agencia_localidad' size='15' onkeypress="return CancelSubmit(event)">
+							</td>
+							<th width="65" align = "left">Direccion</th>
+							<td align = "left">
+								<input type= 'text' id= 'buscar_agencia_direccion' size='15' onkeypress="return CancelSubmit(event)">
+							</td>
+							<th width="65" align = "left">Teléfono</th>
+							<td align = "left">
+								<input type= 'text' id= 'buscar_agencia_telefono' size='10' onkeypress="return CancelSubmit(event)">
+							</td>
+
+						</tr>
+						
+
+						<tr height="30">
+
+							<td colspan="11">
+								<select id = 'clave_agencia' name='clave_agencia' style=' width:780px; font-family: monospace;' onChange='seleccionar_agencia_reserva_paquetes()'>
+								</select>
+
+								<input type= 'hidden' name= 'clave_agencia_recuperada' value="{$recuperaclave_agencia}">
+
+								<input type="button" id="boton_buscar_agencia2" value="BUSCAR AGENCIA (con Ajax/Json)"  style="height:20px; width:200px; color:#FFFFFF; background:#0066CC; font-family:Arial; font-weight: bold; font-size:10px; text-align:center; border-radius: 10px 10px 10px 10px;" onClick="Cargar_busqueda_agencias2()"/>
+				
+								<img id="ajax_load" src="imagenes/ajax_load.gif" style="display:none"/>
+
+							</td>
+						</tr>
+
+
+
+					</tbody>
+				</table>
+
+				</div>
+
+			<table width="850px" border = "0" align = "left" height="40" class="fondotabla" style="clear:both">
+
+				<tr>
+
+					<!--<th align = "left">Agencia</th>
+					<td><input type= 'text' name= 'clave_agencia' size='7' value="{$recuperaclave_agencia}"></td>-->
+					
+					<th align = "left">Agente</th>
+					<td><input type= 'text' name= 'agente' size='30' value="{$recuperaagente}"></td>
+
+					<th align = "left">Referencia Agencia</th>
+					<td><input type= 'text' name= 'referencia_agencia' size='30' value="{$recuperareferencia_agencia}"></td>
+				</tr>
+			</table>
+
+			<table width="1000px" border = "0" align = "left" height="40" class="fondotabla" style="clear:both">
+					<th align = "left">Observaciones</th>
+					<td><input type= 'text' name= 'observaciones' size='145' value="{$recuperaobservaciones}"></td>
+
+
+				</tr>
+
+			</table>
+
+
+
+			<div id='seccion_aereos' style="display: {$seccion_aereos_display}">
+				<input type= 'hidden' name= 'seccion_aereos_display' value="{$seccion_aereos_display}">
+
+
+				<table width="100%" cellspacing="0" cellpadding="0" border="0" summary="" style="clear:both">
+						<tr height="20"></tr>
+						<tr>
+							<td width="20px">
+								<img width="100%" height="4" alt="" src="imagenes/cghes.gif">
+							</td>
+
+							<td align='left' bgcolor='#333399' width="200px" height="20px" style="color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+								<font color='#CCFFFF' size='4'><B><I>Aereos</I></B></font>
+							</td>
+
+
+							<td>
+								<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+							</td>
+							<td>
+								<img width="100%" height="4" alt="" src="imagenes/cghee.gif">
+							</td>
+						</tr>
+				</table>
+				<br>
+
+				<table width="700px" border = "0" align = "left" height="40" class="fondotabla">
+					<tr>
+
+					</tr>
+
+				</table>
+
+			</div>
+
+
+			<div id='seccion_alojamientos' style="display: {$seccion_alojamientos_display}">
+				<input type= 'hidden' name= 'seccion_alojamientos_display' value="{$seccion_alojamientos_display}">
+
+
+				<table width="100%" cellspacing="0" cellpadding="0" border="0" summary="" style="clear:both">
+
+						<tr height="20"></tr>
+						<tr>
+							<td width="20px">
+								<img width="100%" height="4" alt="" src="imagenes/cghes.gif">
+							</td>
+
+							<td align='left' bgcolor='#333399' width="200px" height="20px" style="color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+								<font color='#CCFFFF' size='4'><B><I>Pasajeros</I></B></font>
+							</td>
+
+
+							<td>
+								<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+							</td>
+							<td>
+								<img width="100%" height="4" alt="" src="imagenes/cghee.gif">
+							</td>
+						</tr>
+
+				</table>
+				<br>
+
+				<table width="700px" border = "0" align = "left" height="40" class="fondotabla">
+					<tr>
+
+					</tr>
+
+				</table>
+
+			</div>
+
+
+			<div id='seccion_pasajeros' style="display: {$seccion_pasajeros_display}">
+				<input type= 'hidden' name= 'seccion_pasajeros_display' value="{$seccion_pasajeros_display}">
+
+
+				<table width="100%" cellspacing="0" cellpadding="0" border="0" summary="" style="clear:both">
+
+						<tr height="20"></tr>
+						<tr>
+							<td width="20px">
+								<img width="100%" height="4" alt="" src="imagenes/cghes.gif">
+							</td>
+
+							<td align='left' bgcolor='#333399' width="200px" height="20px" style="color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+								<font color='#CCFFFF' size='4'><B><I>Pasajeros</I></B></font>
+							</td>
+
+
+							<td>
+								<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+							</td>
+							<td>
+								<img width="100%" height="4" alt="" src="imagenes/cghee.gif">
+							</td>
+						</tr>
+
+				</table>
+				<br>
+
+				<table width="700px" border = "0" align = "left" height="40" class="fondotabla">
+					<tr>
+
+					</tr>
+
+				</table>
+
+			</div>
+
+		{include file="$pie"}
+	</form>
+
+ </BODY>
+</HTML>
+
+
+
+

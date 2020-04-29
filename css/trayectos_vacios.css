@@ -1,0 +1,153 @@
+
+
+
+
+
+/***************/
+/***CONTENIDO ***/
+/***************/
+
+#contenido{
+	text-align:left;
+	background-color:#FFFFFF;
+	width:1480px;
+	height:auto;
+	margin:0px 0px 0px 5px;
+	display:block;
+	/*overflow:hidden;*/
+	float:left;
+
+}
+
+
+
+
+/************************/
+/***RESULTADO BUSQUEDA ***/
+/************************/
+
+#resultado_busqueda{
+	text-align:left;
+	display:block;
+	width:1480px;
+	height:30px;
+	font-size:1em;
+
+	border-radius: 0px;
+
+	color: #0A73B0; 
+	background-color: #FFFFFF; 
+	clear:both; 
+	padding:5px 0px 5px 0px; 
+	border-top:dotted 0.2px #0C2E8A;
+
+	position: relative;
+	float:left;
+
+
+}
+
+#resultado_busqueda div{
+	/*height:40px;*/
+	position: relative; 
+	padding: 0px 20px 0px 10px; 
+	text-align:left;
+	font-size:1em;
+	color: #0C2E8A;
+
+	/*border-bottom:dotted 0.5px #0C2E8A;*/
+
+	float:left;
+}
+
+#resultado_busqueda div input div span div select {
+	position: relative; 
+	float:left;
+}
+
+#resultado_busqueda input{
+	
+	position: relative; 
+	/*color:#0C2E8A;
+	border: 1px solid #2EAFF0;
+	margin:0px 0px 0px 0px;
+	padding:0px 0px 0px 10px;
+	height: 20px;
+	vertical-align:middle;
+	border-radius: 1px;
+	background:rgb(250, 250, 250);
+	font-size:1em;
+	width:30px;*/
+}
+
+#resultado_busqueda_cabecera{
+	text-align:left;
+	display:block;
+	width:1480px;
+	height:20px;
+	font-size:1.2em;
+
+	border-radius: 0px;
+
+	color: #0A73B0; 
+	background-color: #FFFFFF; 
+	clear:both; 
+	padding:5px 0px 5px 0px; 
+	border-top:dotted 0.2px #0C2E8A;
+
+	position: relative;
+	float:left;
+
+
+}
+
+#resultado_busqueda_cabecera a{
+	text-align:center;
+	display:block;
+	height:20px;
+	font-size:1em;
+	color: #0A73B0; 
+	background-color: #FFFFFF; 
+
+	margin:0px 0px 0px 2px;
+
+	padding:5px 0px 5px 0px; 
+
+	position: relative;
+	float:left;
+
+
+}
+
+/*#resultado_busqueda span{
+	
+	padding:5px 0px 5px 5px;
+	vertical-align:middle;
+
+	background: rgb(250, 250, 250) url('../imagenes/comun/flecha-select.png') right center no-repeat;
+	border: 1px solid #E7E7E7;	
+	border-radius: 0px;
+	margin:10px 0px 5px 5px !important;
+	height: 20px;
+	color:#0C2E8A;
+	position:relative;
+	padding:0px 0px;
+}
+
+#resultado_busqueda select{
+	position:relative;
+	margin:0px 0px 0px 0px;
+	display: inline-block;
+	width:50px;
+	height: 20px;
+	background: transparent;
+	font-size: 14px;
+
+	border: 0;
+	border-radius: 0;
+	vertical-align:middle;
+	color:#0C2E8A;
+	 -moz-appearance: none;
+
+}*/
+

@@ -1,0 +1,2930 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 5.0 Transitional//EN">
+<HTML>
+
+ <HEAD>
+  <meta charset="utf-8">
+  <TITLE> Menú </TITLE>
+  <META NAME="Generator" CONTENT="EditPlus">
+  <META NAME="Author" CONTENT="Jose de Frias">
+  <META NAME="Keywords" CONTENT="">
+  <META NAME="Description" CONTENT="">
+
+  <script type="text/javascript" src="funciones_js/funciones.js"></script>
+  <script type="text/javascript" src="Jquery/jquery-2.0.3.min.js"></script>
+  <script type="text/javascript" src="funciones_js_ajax/Reservas.js"></script>
+  <link rel="StyleSheet" href="css/comun.css">
+  <link rel="shortcut icon" type="image/x-icon" href="imagenes/favicon_hit.ico">
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+
+  <link rel="StyleSheet" href="css/calendario/calendar-blue2.css">
+  <script type="text/javascript" src="funciones_js/calendario/calendar.js"></script>
+  <script type="text/javascript" src="funciones_js/calendario/calendar-es.js"></script>
+  <script type="text/javascript" src="funciones_js/calendario/calendar-setup.js"></script>
+
+
+ </HEAD>
+
+<body onload="Cargar_inicio('{$posicion}')">
+
+	{include file="$cabecera"}
+	{include file="$menu"}
+
+	<form id="mantenimiento_tabla" name="mantenimiento_tabla" method = "post" action="">
+		
+		<input type= "hidden" id= "manda_posicion" name= "manda_posicion">		
+
+		<table width="20%" border = "0" align = "left">
+			<tr height="100">
+				<td>
+					<input type=image src="imagenes/selector_inicio2.jpg" width="25" height="15" onclick="Selector(1);">
+					<input type= "hidden" name= "botonSelector" value="0">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_anterior2.jpg" width="25" height="15" onclick="Selector(2);">	
+				</td>			
+				<td>
+					<select name="filadesde" align="" onchange="submit();" style="width:80px;"> 
+						{foreach from=$combo item=fila}
+							<!--<option value="{$fila.inicio}">{$fila.inicio} - {$fila.fin}</option>-->
+							
+							{if {$filades} == {$fila.inicio}}
+								<option value="{$fila.inicio}" selected>{$fila.inicio} / {$fila.fin}</option>
+							{else}
+								<option value="{$fila.inicio}">{$fila.inicio} / {$fila.fin}</option>
+							{/if}
+							
+						{/foreach}
+					</select> 
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_siguiente2.jpg" width="25" height="15" onclick="Selector(3);">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_fin2.jpg" width="25" height="15" onclick="Selector(4);">
+				</td>
+			</tr>
+		</table>
+
+		<table width="75%" border = "0" align = "left" style="padding:0px 0px 0px 20px;">
+			<tr>
+				
+				<th align = "left">Localizador</th>
+				
+				<td align = "left">
+					<input type= 'text' id= 'buscar_localizador' name= 'buscar_localizador' size='9' value="{$buscar_localizador}">
+				</td>
+				
+				<th align = "left">Referencia</th>
+				
+				<td align = "left" width="110">
+					<input type= 'text' name= 'buscar_referencia' size='12' value="{$buscar_referencia}">
+				</td>
+				
+				<th align = "left">Ref.Agencia</th>
+				
+				<td align = "left" width="130">
+					<input type= 'text' name= 'buscar_referencia_agencia' size='15' value="{$buscar_referencia_agencia}">
+				</td>
+				
+				<th align = "left">Tfno.Agencia</th>
+
+				<td align = "left">
+					<input type= 'text' name= 'buscar_telefono_oficina' size='11' value="{$buscar_telefono_oficina}">
+				</td>
+			</tr>
+
+
+			<tr>
+				
+				<th align = "left">Folleto</th>
+				
+				<td align = "left" colspan="3">
+					<select name="buscar_folleto" align="" style=" width:250px"> 
+						{foreach from=$comboFolletos item=fila}
+							{if {$buscar_folleto} == {$fila.codigo}}
+								<option value="{$fila.codigo}" selected>{$fila.nombre}</option>
+							{else}
+								<option value="{$fila.codigo}">{$fila.nombre}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>
+				
+				<th align = "left">Cuadro</th>
+				
+				<td align = "left">
+					<input type= 'text' name= 'buscar_cuadro' size='15' value="{$buscar_cuadro}">
+				</td>
+				
+				<th align = "left">F.Salida</th>
+				
+				<td align = "left">
+					<input type= 'text' name= 'buscar_fecha_salida' size='11' value="{$buscar_fecha_salida}">
+				</td>
+
+			</tr>
+
+			<tr>
+				
+				<th align = "left">Minorista</th>
+				
+				<td align = "left" colspan="3">
+					<input type= 'text' name= 'buscar_minorista' size='39' value="{$buscar_minorista}">
+				</td>
+				
+				<th align = "left">Oficina</th>
+				
+				<td align = "left">
+					<input type= 'text' name= 'buscar_oficina' size='15' value="{$buscar_oficina}">
+				</td>
+				
+
+				<th align = "left">F.Reserva</th>
+
+				<td align = "left">
+					<input type= 'text' name= 'buscar_fecha_reserva' size='11' value="{$buscar_fecha_reserva}">
+				</td>			
+
+			</tr>
+			<tr>
+				
+					<th align = "left">Apellido</th>
+				
+				<td align = "left" colspan="3">
+					<input type= 'text' name= 'buscar_nombre' size='39' value="{$buscar_nombre}">
+				</td>
+				
+				
+			</tr>
+			<tr>	
+				<th align = "left" colspan="2">Reservas Encontradas</th>			
+				<td align = "left" colspan="7">
+					<select name="busca_reservas" align=""  style="width:600px; font-family: monospace;" onChange="submit();"> 
+						{foreach from=$comboReservas item=fila}
+							{if {$reservas[i].busca_reservas} == {$fila.localizador}}
+								<option value="{$fila.localizador}" selected>{$fila.nombre}</option>
+							{else}
+								<option value="{$fila.localizador}">{$fila.nombre}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>
+			</tr>
+
+		</table>
+
+		<BR>	
+
+		{section name=i loop=$reservas}	
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" style="clear:both" style="padding:15px 0px 15px 0px;">
+			<tbody>
+				<tr height="25"></tr>
+				<tr height="25">
+					<td>
+						<img width="15" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+
+
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<input type="button" id="boton_buscar" value="BUSCAR" class="boton" onClick="Buscar()"/>
+					</td>
+
+					{if {$reservas[i].bloqueada} eq "Si" and {$usuario} eq {$reservas[i].bloqueada_usuario}}
+						<td>
+							<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+						</td>
+
+						<td>
+							<input type="button" id="boton_grabar" value="GRABAR" class="boton" onClick="grabar_Tipo_Registro_Reserva()"/>
+						</td>
+					{/if}
+
+					{if {$reservas[i].localizador} eq ""}
+						<td>
+							<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+						</td>
+						</td>
+						<td>
+							<input type="button" id="boton_grabar" value="GRABAR" class="boton" onClick="grabar_Tipo_Registro_Reserva()"/>
+						</td>
+					{/if}
+
+
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+							<input type= "hidden" name= "actuar" value="">
+					</td>
+					<td>
+
+						<input type="button" id="boton_nuevo" value="RESERVA MANUAL" class="boton" onClick="NuevoRegistro_Reserva()"/>
+						<input type= "hidden" name= "nuevo_registro" value="{$nuevo_registro}">
+						<input type= "hidden" name= "grabar_registro" value="">
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+
+						{if {$reservas[i].bloqueada} eq "Si" and {$usuario} eq {$reservas[i].bloqueada_usuario}}
+							<input type="button" id="boton_desbloquear" value="DESBLOQUEAR" class="boton" onClick="Bloquear_Desbloquear()"/>
+						{else}
+							<input type="button" id="boton_bloquear" value="BLOQUEAR" class="boton" onClick="Bloquear_Desbloquear()"/>
+						{/if}
+
+
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					{if {$reservas[i].factura} eq 0}
+						<td>
+							<input type="button" name="boton_borrador_factura" class="boton" value="FACTURA PROFORMA" onClick="window.location.href='pdf_factura.php?loc={$reservas[i].localizador}'" />
+							<!--<input type="button" id="boton_borrador_factura" value="FACTURA PROFORMA"  style="height:25px; color:#FFFFFF; background:#0066CC; font-family:Arial; font-weight: bold; font-size:10px; text-align:center; border-radius: 10px 10px 10px 10px;"/>-->
+						</td>
+					{else}
+						<td>
+							<input type="button" name="boton_borrador_factura" class="boton" value="FACTURA" onClick="window.location.href='pdf_factura.php?loc={$reservas[i].localizador}'" />
+							<!--<input type="button" id="boton_borrador_factura" value="FACTURA"  style="height:25px; color:#FFFFFF; background:#0066CC; font-family:Arial; font-weight: bold; font-size:10px; text-align:center; border-radius: 10px 10px 10px 10px;"/> -->
+						</td>					
+					{/if}
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<input type="button" name="boton_documentacion" class="boton" value="DOCUMENTACION" onClick="window.location.href='pdf_documentacion.php?loc={$reservas[i].localizador}'" />
+					</td>	
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<input type="button" name="boton_documentacion" class="boton" value="ENVIAR MAIL AGENCIA" onClick="Enviar_Mail_Agencia()" />
+					</td>	
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<input type="button" name="boton_documentacion" class="boton" value="ENVIAR MAIL HOTEL" onClick="Enviar_Mail_Hotel()" />
+					</td>					
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+							<input type= "hidden" name= "ir_a" value="">
+					</td>
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+				<tr height="10"></tr>
+			</tbody>
+		</table>
+
+		{$mensaje1}
+		{$mensaje2}
+
+			<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" style="padding:15px 0px 15px 0px;">
+				<tbody>
+					<tr>
+						<td>
+							<img width="10px" height="4" alt="" src="imagenes/cghes.gif">
+						</td>
+
+						<td align='center' bgcolor='#333399' width="15%" height="23px" style="color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+							<font color='#CCFFFF' size='3'><B><I>Estado</I></B></font>
+						</td>
+
+
+						<td width="100%">
+							<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+						</td>
+
+
+						<td>
+							<img width="20px" height="4" alt="" src="imagenes/cghee.gif">
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+
+			<table width="95%" border = "0" align = "left" height="40" style="clear:both">
+
+				<tr height="30">
+
+					<th width="80" align = "left">Situacion</th><td><input type= 'text' name= 'situacion{$smarty.section.i.index}' size='15' class="camposololecturacenter" value="{$reservas[i].situacion}"   readonly>
+					<input type= "hidden" name= "codigo_situacion{$smarty.section.i.index}" value="{$reservas[i].codigo_situacion}">					
+					</td>
+					<th width="80" align = "left">Bloqueada</th><td><input type= 'text' name= 'bloqueada{$smarty.section.i.index}' size='4' value="{$reservas[i].bloqueada}" class="camposololecturacenter"  readonly></td>
+					<th width="150" align = "left">Usuario de Bloqueo</th><td><input type= 'text' name= 'bloqueada_usuario{$smarty.section.i.index}' size='15' class="camposololecturacenter"  value="{$reservas[i].bloqueada_usuario}" readonly></td>
+					<th width="80" align = "left">F. Reserva</th><td><input type= 'text' name= 'fecha_reserva{$smarty.section.i.index}' size='10' class="camposololecturacenter"  value="{$reservas[i].fecha_reserva}" readonly></td>
+					<th width="100" align = "left">Usu. Reserva</th><td><input type= 'text' name= 'usuario_reserva{$smarty.section.i.index}' size='15' class="camposololecturacenter"  value="{$reservas[i].usuario_reserva}" readonly></td>
+
+				</tr>
+				<tr height="30">
+					<th width="80" align = "left" colspan="2"></th>
+					<th width="80" align = "left">F. Modif.</th><td><input type= 'text' name= 'fecha_modificacion{$smarty.section.i.index}' size='10' class="camposololecturacenter"  value="{$reservas[i].fecha_modificacion}" readonly></td>
+					<th width="100" align = "left">Usu. Modif.</th><td><input type= 'text' name= 'usuario_modificacion{$smarty.section.i.index}' size='15' class="camposololecturacenter"  value="{$reservas[i].usuario_modificacion}" readonly></td>
+					<th width="80" align = "left">F. Anul.</th><td><input type= 'text' name= 'anulacion_fecha{$smarty.section.i.index}' size='10' class="camposololecturacenter"  value="{$reservas[i].anulacion_fecha}" readonly></td>
+					<th width="100" align = "left">Usu. Anul.</th><td><input type= 'text' name= 'anulacion_usuario{$smarty.section.i.index}' size='15' class="camposololecturacenter"  value="{$reservas[i].anulacion_usuario}" readonly></td>
+				</tr>
+
+			</table>
+
+
+			<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" style="padding:15px 0px 15px 0px;">
+				<tbody>
+					<tr>
+						<td>
+							<img width="10px" height="4" alt="" src="imagenes/cghes.gif">
+						</td>
+
+						<td align='center' bgcolor='#333399' width="15%" height="23px" style="color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+							<font color='#CCFFFF' size='3'><B><I>Datos Generales</I></B></font>
+						</td>
+
+
+						<td width="100%">
+							<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+						</td>
+
+
+						<td>
+							<img width="20px" height="4" alt="" src="imagenes/cghee.gif">
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<table width="75%" border = "0" align = "left" height="40" style="clear:both">
+				<tr>
+					<th>Modificar</th>
+					<td align = "left">
+						<input type= 'checkbox' name= 'seleccion{$smarty.section.i.index}' value="" onChange="desmarcarBorrar({$smarty.section.i.index})">
+						<input type= 'hidden' name= 'selec{$smarty.section.i.index}' value="N">
+					</td>
+					<th>Anular</th>
+					<td align = "left">
+						<input type= 'checkbox' name= 'borrar{$smarty.section.i.index}' value="" onChange="desmarcarSeleccion({$smarty.section.i.index})">
+						<input type= 'hidden' name= 'borra{$smarty.section.i.index}' value="N">
+					</td>
+
+					<th>Localizador</th><td><input type= 'text' name= 'localizador{$smarty.section.i.index}' size='12' value="{$reservas[i].localizador}" style="color:#000066; font-weight: bolder; text-align:center; font-size:15px; box-shadow: 8px 5px 25px #000;
+															-moz-box-shadow: -8px -5px 25px #000;
+															-webkit-box-shadow: -8px -5px 25px #000;
+															border-radius: 10px 10px 10px 10px;" readonly></td>
+					<th>Referencia</th><td><input type= 'text' name= 'referencia{$smarty.section.i.index}' size='12' value="{$reservas[i].referencia}" style="color:#000066; font-weight: bold;" onChange="seleccionar({$smarty.section.i.index})"></td>
+					<th>Ref.Agencia</th><td><input type= 'text' name= 'referencia_agencia{$smarty.section.i.index}' size='20' value="{$reservas[i].referencia_agencia}" onChange="seleccionar({$smarty.section.i.index})" style="color:#000066; font-weight: bold;"></td>
+				</tr>
+			</table>
+
+			<table width="75%" border = "0" align = "left" height="40" style="clear:both">
+
+				<tr height="30">
+
+					<th width="90" align = "left">Folleto</th>
+					<td colspan="3">
+						<select name= 'folleto{$smarty.section.i.index}' align="" style=" width:275px" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboFolletos item=fila2}
+								{if {$reservas[i].folleto} == {$fila2.codigo}}
+									<option value="{$fila2.codigo}" selected>{$fila2.nombre}</option>
+								{else}
+									<option value="{$fila2.codigo}">{$fila2.nombre}</option>
+								{/if}	
+							{/foreach}
+						</select> 
+					</td>
+					<th width="65" align = "left">Cuadro</th><td><input type= 'text' name= 'cuadro{$smarty.section.i.index}' size='10' value="{$reservas[i].cuadro}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					<th width="65" align = "left">Paquete</th><td><input type= 'text' name= 'paquete{$smarty.section.i.index}' size='10' value="{$reservas[i].paquete}" onChange="seleccionar({$smarty.section.i.index})"></td>
+
+					<th width="65" align = "left">Regimen</th>
+					<td>
+						<select name= 'regimen{$smarty.section.i.index}' align="" style=" width:60px" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboRegimen item=fila3}
+								{if {$reservas[i].regimen} == {$fila3.valor}}
+									<option value="{$fila3.valor}" selected>{$fila3.mostrar}</option>
+								{else}
+									<option value="{$fila3.valor}">{$fila3.mostrar}</option>
+								{/if}	
+							{/foreach}
+						</select> 
+					</td>
+
+				</tr>
+
+				<tr height="30">
+					<th width="65" align = "left">Ciudad</th><td><input type= 'text' name= 'ciudad_salida{$smarty.section.i.index}' size='5' value="{$reservas[i].ciudad_salida}" onChange="seleccionar({$smarty.section.i.index})"></td>
+
+					<th width="90" align = "left">F.Salida</th><td ><input type= 'text' id= 'fecha_salida{$smarty.section.i.index}' name= 'fecha_salida{$smarty.section.i.index}' size='10' value="{$reservas[i].fecha_salida}" onChange="seleccionar({$smarty.section.i.index})">
+
+						<img id="botonSalIni{$smarty.section.i.index}" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'fecha_salida{$smarty.section.i.index}',
+							button : "botonSalIni{$smarty.section.i.index}",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>
+					</td>
+
+					<th width="65" align = "left">F.Regreso</th><td><input type= 'text' name= 'fecha_regreso{$smarty.section.i.index}' size='10' value="{$reservas[i].fecha_regreso}" class="camposololecturacenter"  readonly></td>
+
+					<th width="80" align = "left">Dias Base</th><td><input type= 'text' name= 'dias_cuadro{$smarty.section.i.index}' size='10' value="{$reservas[i].dias_cuadro}" onChange="seleccionar({$smarty.section.i.index})" class="camposololecturacenter" readonly></td>
+					<th width="100" align = "left">Noches Extra</th><td><input type= 'text' name= 'noches_extra{$smarty.section.i.index}' size='6' value="{$reservas[i].noches_extra}" onChange="seleccionar({$smarty.section.i.index})" class="camposololecturacenter" readonly></td>
+
+				</tr>
+
+				<tr height="30">
+					<th width="65" align = "left">Titular</th><td colspan="9"><input type= 'text' name= 'nombre_titular{$smarty.section.i.index}' size='50' value="{$reservas[i].nombre_titular}" onChange="seleccionar({$smarty.section.i.index})"></td>
+
+				</tr>
+
+			</table>
+			<table width="75%" border = "0" align = "left" height="40" style="clear:both">
+				<tr height="30">
+					<th width="90" align = "left">Pax</th><td><input type= 'text' name= 'pax{$smarty.section.i.index}' id= 'pax{$smarty.section.i.index}' size='3' value="{$reservas[i].pax}" tyle="text-align:center; background:#EFEFEF" readonly></td>
+
+
+					<th width="65" align = "left">Adultos</th><td><input type= 'text' name= 'adultos{$smarty.section.i.index}' size='3' value="{$reservas[i].adultos}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					<th width="65" align = "left">Niños</th><td><input type= 'text' name= 'ninos{$smarty.section.i.index}' size='3' value="{$reservas[i].ninos}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					<th width="65" align = "left">Bebes</th><td><input type= 'text' name= 'bebes{$smarty.section.i.index}' size='3' value="{$reservas[i].bebes}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					<th width="65" align = "left">Novios</th><td><input type= 'text' name= 'novios{$smarty.section.i.index}' size='3' value="{$reservas[i].novios}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					<th width="65" align = "left">Jubilados</th><td><input type= 'text' name= 'jubilados{$smarty.section.i.index}' size='3' value="{$reservas[i].jubilados}" onChange="seleccionar({$smarty.section.i.index})"></td>
+				</tr>
+			</table>
+
+
+		<table width="95%" border = "0" align = "left" height="4" style="clear:both">
+				<tr>
+					<td>
+						<img width="100%" height="3" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+		</table>
+
+			<table width="75%" border = "0" align = "left" height="40" style="clear:both">
+				<tr height="30">
+					<th width="150" align = "left">Alternativa Aerea</th>
+					<td>
+					<select name= 'alternativa_aerea{$smarty.section.i.index}' style="width:550px;" onChange="seleccionar({$smarty.section.i.index})"> 
+						{foreach from=$comboAlternativas_Aereas item=fila10}
+							{if {$reservas[i].alternativa_aerea} == {$fila10.valor}}
+								<option value="{$fila10.valor}" selected>{$fila10.mostrar}</option>
+							{else}
+								<option value="{$fila10.valor}">{$fila10.mostrar}</option>
+							{/if}	
+						{/foreach}
+					</select>
+					</td>
+
+				</tr>
+			</table>		
+
+		<table width="75%" border = "0" align = "left" height="4" style="clear:both">
+				<tr height="30">
+					<td>
+						<img width="100%" height="3" alt="" src="imagenes/cghes.gif">
+					</td>
+					<td width="100%">
+						<img width="100%" height="3" alt="" src="imagenes/cghec.gif">
+					</td>
+
+ 					<td>
+						<input type="button" id="boton_ver_observaciones" value="Motrar/Ocultar Observaciones" class="boton" onClick="mostrarOcultar('seccion_observaciones')"/>
+					</td>
+
+
+					<td>
+						<img width="50" height="3" alt="" src="imagenes/cghee.gif">
+					</td>
+
+				</tr>
+		</table>
+
+
+		<div id='seccion_observaciones' style="display: {$seccion_observaciones_display}">
+	    <input type= 'hidden' name= 'seccion_observaciones_display' value="{$seccion_observaciones_display}">
+
+			<table width="75%" border = "0" align = "left" height="40" style="clear:both">
+				<tr height="30">
+					<th width="110" align = "left" valign="top">Observaciones Internas</th><td colspan="9"><textarea name='observaciones_internas{$smarty.section.i.index}' cols="110" rows="2" value="{$reservas[i].observaciones_internas}" onChange="seleccionar({$smarty.section.i.index})">{$reservas[i].observaciones_internas}</textarea></td>
+				</tr>
+				<tr height="30">
+					<th width="65" align = "left"></th><td colspan="9"><strong>(No se muestran en ningún pdf ni email. Solo en esta pantalla y en otras pantallas de hits)</strong></td>
+				</tr>			
+			</table>	
+
+			<table width="80%" border = "0" align = "left" height="1" style="clear:both">
+					<tr height="1">
+						<td>
+							<img width="100%" height="1" alt="" src="imagenes/cghes.gif">
+						</td>
+						<td width="100%">
+							<img width="100%" height="1" alt="" src="imagenes/cghec.gif">
+						</td>
+						<td>
+							<img width="100%" height="1" alt="" src="imagenes/cghee.gif">
+						</td>
+
+					</tr>
+			</table>
+			
+			<table width="75%" border = "0" align = "left" height="40" style="clear:both">
+				<tr height="30">
+					<!--<th width="65" align = "left">Observac.</th><td colspan="9"><input type= 'text' name= 'observaciones{$smarty.section.i.index}' size='100' value="{$reservas[i].observaciones}" onChange="seleccionar({$smarty.section.i.index})"></td>-->
+					<th width="110" align = "left" valign="top">Observaciones Agencia</th><td colspan="9"><textarea name='observaciones{$smarty.section.i.index}' cols="110" rows="2" value="{$reservas[i].observaciones}" onChange="seleccionar({$smarty.section.i.index})">{$reservas[i].observaciones}</textarea></td>
+				</tr>
+				<tr height="30">
+					<th width="110" align = "left"></th><td colspan="9"><strong>(Se muestran en los emails y pdfs de confirmaciones e información de reserva)</strong></td>
+				</tr>
+			</table>
+
+			<table width="80%" border = "0" align = "left" height="1" style="clear:both">
+					<tr height="1">
+						<td>
+							<img width="100%" height="1" alt="" src="imagenes/cghes.gif">
+						</td>
+						<td width="100%">
+							<img width="100%" height="1" alt="" src="imagenes/cghec.gif">
+						</td>
+						<td>
+							<img width="100%" height="1" alt="" src="imagenes/cghee.gif">
+						</td>
+
+					</tr>
+			</table>
+			
+			<table width="75%" border = "0" align = "left" height="40"  style="clear:both">
+					<tr height="30">
+						<th width="110" align = "left" valign="top">Observaciones Clientes</th><td colspan="9"><textarea name='observaciones_clientes{$smarty.section.i.index}' cols="110" rows="2" value="{$reservas[i].observaciones_clientes}" onChange="seleccionar({$smarty.section.i.index})">{$reservas[i].observaciones_clientes}</textarea></td>
+					</tr>
+					<tr height="30">
+						<th width="110" align = "left"></th><td colspan="9"><strong>(Se muestran sólo en el pdf de la documentación)</strong></td>
+					</tr>
+			</table>
+
+			<table width="80%" border = "0" align = "left" height="1" style="clear:both">
+					<tr height="1">
+						<td>
+							<img width="100%" height="1" alt="" src="imagenes/cghes.gif">
+						</td>
+						<td width="100%">
+							<img width="100%" height="1" alt="" src="imagenes/cghec.gif">
+						</td>
+						<td>
+							<img width="100%" height="1" alt="" src="imagenes/cghee.gif">
+						</td>
+
+					</tr>
+			</table>
+			
+			<table width="75%" border = "0" align = "left" height="40"  style="clear:both">
+					<tr height="30">
+						<th width="110" align = "left" valign="top">Observaciones Alojamientos</th><td colspan="9"><textarea name='observaciones_hotel{$smarty.section.i.index}' cols="110" rows="2" value="{$reservas[i].observaciones_hotel}" onChange="seleccionar({$smarty.section.i.index})">{$reservas[i].observaciones_hotel}</textarea></td>
+					</tr>
+					<tr height="30">
+						<th width="110" align = "left"></th><td colspan="9"><strong>(Se muestran sólo en los reenvíos desde esta pantalla de emails a los hoteles)</strong></td>
+					</tr>
+			</table>
+
+		</div>			
+
+
+		<!-------------------------------------------------------------->
+		<!-------------------------------------------------------------->
+		<!-------------------------AGENCIAS-------------------------->
+		<!-------------------------------------------------------------->			
+			
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" style="padding:15px 0px 15px 0px;">
+				<tbody>
+					<tr>
+						<td>
+							<img width="10px" height="4" alt="" src="imagenes/cghes.gif">
+						</td>
+
+						<td align='center' bgcolor='#333399' width="15%" height="23px" style="color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+							<font color='#CCFFFF' size='3'><B><I>Agencia</I></B></font>
+						</td>
+
+
+						<td width="100%">
+							<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+						</td>
+
+
+						<td>
+							<img width="20px" height="4" alt="" src="imagenes/cghee.gif">
+						</td>
+					</tr>
+				</tbody>
+		</table>
+
+		<table width="75%" border = "0" align = "left" height="40" style="clear:both">
+
+				<tr height="30">
+					<th width="65" align = "left">Agencia</th><td colspan="3"><input type= 'text' name= 'agencia{$smarty.section.i.index}' size='40' value="{$reservas[i].agencia}" class="camposololecturatextbold" readonly>
+					
+					<input type= "hidden" name= "minorista{$smarty.section.i.index}" value="{$reservas[i].minorista}">
+
+					</td>
+					<th width="65" align = "left">Oficina</th><td><input type= 'text' name= 'oficina{$smarty.section.i.index}' size='5' value="{$reservas[i].oficina}" class="camposololecturacenterbold" onChange="seleccionar({$smarty.section.i.index})" readonly></td>
+					<th width="65" align = "left">Agente</th><td><input type= 'text' name= 'agente{$smarty.section.i.index}' size='20' value="{$reservas[i].agente}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					<th width="65" align = "left">Envio</th>
+					<td>
+						<select name= 'envio{$smarty.section.i.index}' align="" style=" width:45px" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila3}
+								{if {$reservas[i].envio} == {$fila3.valor}}
+									<option value="{$fila3.valor}" selected>{$fila3.mostrar}</option>
+								{else}
+									<option value="{$fila3.valor}">{$fila3.mostrar}</option>
+								{/if}	
+							{/foreach}
+						</select> 
+					</td>
+				</tr>
+
+				<tr height="30">
+					<th width="90" align = "left">Localidad</th><td colspan="3"><input type= 'text' name= 'agencia_localidad{$smarty.section.i.index}' size='40' value="{$reservas[i].agencia_localidad}" class="camposololecturatext" readonly></td>
+					<th width="65" align = "left">Dirección</th><td colspan="3"><input type= 'text' name= 'agencia_direccion{$smarty.section.i.index}' size='40' value="{$reservas[i].agencia_direccion}" class="camposololecturatext" readonly></td>
+					<th width="65" align = "left">Teléfono</th><td><input type= 'text' name= 'agencia_telefono{$smarty.section.i.index}' size='12' value="{$reservas[i].agencia_telefono}" class="camposololecturacenter" readonly></td>
+				</tr>
+				<tr height="30">
+					<th width="65" align = "left">Mail</th><td colspan="6"><input type= 'text' name= 'agencia_mail{$smarty.section.i.index}' size='60' value="{$reservas[i].agencia_mail}" class="camposololecturatext" readonly></td>
+				</tr>
+
+		</table>
+
+		<table width="75%" border = "0" align = "left" height="4" style="clear:both">
+				<tr height="30">
+					<td>
+						<img width="100%" height="3" alt="" src="imagenes/cghes.gif">
+					</td>
+					<td width="100%">
+						<img width="100%" height="3" alt="" src="imagenes/cghec.gif">
+					</td>
+
+				{if {$reservas[i].bloqueada} eq "Si" and {$usuario} eq {$reservas[i].bloqueada_usuario}}
+ 					<td>
+						<input type="button" id="boton_modificar_agencia" value="Modificar agencia" class="boton" onClick="mostrarOcultar('seccion_buscar_agencia')"/>
+					</td>
+				{/if}
+
+					<td>
+						<img width="50" height="3" alt="" src="imagenes/cghee.gif">
+					</td>
+
+				</tr>
+		</table>
+
+
+		<div id='seccion_buscar_agencia' style="display: {$seccion_buscar_agencia_display}">
+	    <input type= 'hidden' name= 'seccion_buscar_agencia_display' value="{$seccion_buscar_agencia_display}">
+
+		<table width="85%" border = "0" align = "left" height="4" style="clear:both">
+			<tbody>
+				<tr height="30">
+
+					<th width="65" align = "left">Agencia</th>
+					<td align = "left">
+						<input type= 'text' id= 'buscar_agencia_minorista' size='15' onkeypress="return CancelSubmit(event)">
+					</td>
+					<th width="65" align = "left">Oficina</th>
+					<td align = "left">
+						<input type= 'text' id= 'buscar_agencia_oficina' size='2' onkeypress="return CancelSubmit(event)">
+					</td>
+					<th width="65" align = "left">Localidad</th>
+					<td align = "left">
+						<input type= 'text' id= 'buscar_agencia_localidad' size='15' onkeypress="return CancelSubmit(event)">
+					</td>
+					<th width="65" align = "left">Direccion</th>
+					<td align = "left">
+						<input type= 'text' id= 'buscar_agencia_direccion' size='15' onkeypress="return CancelSubmit(event)">
+					</td>
+					<th width="65" align = "left">Teléfono</th>
+					<td align = "left">
+						<input type= 'text' id= 'buscar_agencia_telefono' size='10' onkeypress="return CancelSubmit(event)">
+					</td>
+					<td align = "left" colspan="1">
+
+						<input type="button" id="boton_buscar_agencia" value="BUSCAR AGENCIA" class="boton" onClick="Cargar_busqueda_agencias()"/>
+
+						<!--<input type="button" id="boton_buscar_agencia"  style="width:116px; background:url('imagenes/boton_buscar_agencia.jpg');" onClick="Cargar_busqueda_agencias()"/>	-->				
+						<img id="ajax_load" src="imagenes/ajax_load.gif" style="display:none"/>
+					</td>
+				</tr>
+
+
+
+
+				<tr height="30">
+
+					<td colspan="11">
+						<div id="pageContent"></div>
+					</td>
+				</tr>
+				
+<!--
+				<tr height="30">
+
+					<td colspan="11">
+						<select id = 'clave_agencia' name='clave_agencia' style=' width:780px; font-family: monospace;' onChange='seleccionar(0)'>
+
+						</select>
+
+						<input type="button" id="boton_buscar_agencia2" value="BUSCAR AGENCIA (con Ajax/Json)"  style="height:20px; width:200px; color:#FFFFFF; background:#0066CC; font-family:Arial; font-weight: bold; font-size:10px; text-align:center; border-radius: 10px 10px 10px 10px;" onClick="Cargar_busqueda_agencias2()"/>
+		
+						<img id="ajax_load" src="imagenes/ajax_load.gif" style="display:none"/
+
+					</td>
+				</tr>
+-->
+
+			</tbody>
+		</table>
+
+		</div>
+
+
+
+		{/section}
+
+
+
+<!-------------------------------------------------------------->
+<!-------------------------------------------------------------->
+<!-------------------------PASAJEROS---------------------------->
+<!-------------------------------------------------------------->
+
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" style="padding:15px 0px 15px 0px;">
+				<tbody>
+					<tr>
+						<td>
+							<img width="10px" height="4" alt="" src="imagenes/cghes.gif">
+						</td>
+
+						<td align='center' bgcolor='#333399' width="15%" height="23px" style="color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+							<font color='#CCFFFF' size='3'><B><I>Pasajeros</I></B></font>
+						</td>
+
+
+						<td width="100%">
+							<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+						</td>
+
+
+						<td>
+							<img width="20px" height="4" alt="" src="imagenes/cghee.gif">
+						</td>
+					</tr>
+				</tbody>
+		</table>
+
+		<table border = "0" align = "left" style="clear:both">
+			<tr height="25">
+				<td>
+					<input type=image src="imagenes/selector_inicio2.jpg" width="25" height="15" onclick="Selector_2nivel(1);">
+					<input type= "hidden" name= "botonSelector_2nivel" value="0">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_anterior2.jpg" width="25" height="15" onclick="Selector_2nivel(2);">	
+				</td>			
+				<td>
+					<select name="filadesde_pasajeros" align="" onchange="submit();"> 
+						{foreach from=$combo_pasajeros item=fila}
+							
+							{if {$filades_pasajeros} == {$fila.inicio}}
+								<option value="{$fila.inicio}" selected>{$fila.inicio} - {$fila.fin}</option>
+							{else}
+								<option value="{$fila.inicio}">{$fila.inicio} - {$fila.fin}</option>
+							{/if}
+							
+						{/foreach}
+					</select> 
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_siguiente2.jpg" width="25" height="15" onclick="Selector_2nivel(3);">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_fin2.jpg" width="25" height="15" onclick="Selector_2nivel(4);">
+				</td>
+				
+				<th>&nbsp;&nbsp;&nbsp;</th>
+				
+				
+				<th>Apellido</th>
+				
+				<td>
+					<input type= 'text' name= 'buscar_apellido' size='30' value="{$buscar_apellido}">
+				</td>
+				
+				<th>Nombre</th>
+				
+				<td>
+					<input type= 'text' name= 'buscar_nombre_pax' size='25' value="{$buscar_nombre_pax}">
+				</td>
+				
+				<th>Paginacion</th>
+				
+				<td align = "left">
+					<select name="paginacion_pasajeros" align="" style=" width:50px"> 
+						{foreach from=$comboSino item=fila}
+							{if {$paginacion_pasajeros} == {$fila.valor}}
+								<option value="{$fila.valor}" selected>{$fila.mostrar}</option>
+							{else}
+								<option value="{$fila.valor}">{$fila.mostrar}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>
+			</tr>
+		</table>
+
+		<BR>	
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" style="clear:both">
+			<tbody>
+				<tr>
+					<td>
+						<img width="200" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<input type="button" id="boton_buscar" value="BUSCAR" class="boton" onClick="Reserva_Buscar_Pasajero()"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+				{section name=i loop=$reservas}	
+				{if {$reservas[i].bloqueada} eq "Si" and {$usuario} eq {$reservas[i].bloqueada_usuario}}
+					<td>
+						<input type="button" id="boton_grabar_nombre" value="GRABAR" class="boton" onClick="Reserva_grabar_pasajeros()"/>
+					</td>
+				{/if}
+				{/section}
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+						<input type= "hidden" name= "actuar_2nivel" value="">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		{$mensaje1_pasajeros}
+		{$mensaje2_pasajeros}
+
+		<table width="95%">
+			<tr class="cabeceratabla">
+				<th>Sel</th>
+				<th>Nº</th>
+				<th>Hab</th>
+				<th>Apellidos</th>
+				<th>Nombre</th>
+				<th>Sexo</th>
+				<th>Tipo</th>
+				<th>Edad</th>
+				<th>Doc.Tipo</th>
+				<th>Documento</th>
+				<th COLSPAN="2">Fecha nac.</th>
+				<th>Pais</th>
+				<th>Telefono</th>
+				<th>Observaciones</th>
+				<th>Borrar</th>
+
+			</tr>
+
+			{section name=i loop=$pasajeros}
+			<tr id= 'lineas_pasajeros{$pasajeros[i].numero}'>
+				<td align = "center">
+					<input type= 'checkbox' name= 'seleccion_2nivel{$smarty.section.i.index}' value="" onChange="desmarcarBorrar_2nivel({$smarty.section.i.index})">
+					<input type= 'hidden' name= 'selec_2nivel{$smarty.section.i.index}' value="N">
+				</td>
+				<td><input type= 'text' name= 'numero{$smarty.section.i.index}' size='1' value="{$pasajeros[i].numero}" class="campocenter"  onChange="seleccionar_2nivel({$smarty.section.i.index})">
+				<input type= 'hidden' name= 'numero_old{$smarty.section.i.index}' value="{$pasajeros[i].numero}">
+				</td>
+
+				<td><input type= 'text' name= 'habitacion{$smarty.section.i.index}' size='1' value="{$pasajeros[i].habitacion}" class="campocenter" onChange="seleccionar_2nivel({$smarty.section.i.index})">
+				</td>
+
+				<td><input type= 'text' name= 'apellido{$smarty.section.i.index}' size='25' value="{$pasajeros[i].apellido}" onChange="seleccionar_2nivel({$smarty.section.i.index})">
+				</td>
+
+				<td><input type= 'text' name= 'nombre_pax{$smarty.section.i.index}' size='25' value="{$pasajeros[i].nombre_pax}" onChange="seleccionar_2nivel({$smarty.section.i.index})">
+				</td>
+
+				<td>
+					<select name= 'sexo{$smarty.section.i.index}' align="" style=" width:50px" onChange="seleccionar_2nivel({$smarty.section.i.index})"> 
+						{foreach from=$comboPasajerosSexo item=fila3}
+							{if {$pasajeros[i].sexo} == {$fila3.valor}}
+								<option value="{$fila3.valor}" selected>{$fila3.mostrar}</option>
+							{else}
+								<option value="{$fila3.valor}">{$fila3.mostrar}</option>
+							{/if}	
+						{/foreach}
+					</select> 
+				</td>
+
+				<td>
+					<select name= 'tipo{$smarty.section.i.index}' align="" style=" width:75px" onChange="seleccionar_2nivel({$smarty.section.i.index})"> 
+						{foreach from=$comboPasajerosTipo item=fila3}
+							{if {$pasajeros[i].tipo} == {$fila3.valor}}
+								<option value="{$fila3.valor}" selected>{$fila3.mostrar}</option>
+							{else}
+								<option value="{$fila3.valor}">{$fila3.mostrar}</option>
+							{/if}	
+						{/foreach}
+					</select> 
+				</td>
+
+				<td><input type= 'text' name= 'edad{$smarty.section.i.index}' size='1' value="{$pasajeros[i].edad}" class="campocenter"  onChange="seleccionar_2nivel({$smarty.section.i.index})">
+				</td>
+
+				<td>
+					<select name= 'documento_tipo{$smarty.section.i.index}' align="" style=" width:70px" onChange="seleccionar_2nivel({$smarty.section.i.index})"> 
+						{foreach from=$comboPasajerosDocumentoTipo item=fila3}
+							{if {$pasajeros[i].documento_tipo} == {$fila3.valor}}
+								<option value="{$fila3.valor}" selected>{$fila3.mostrar}</option>
+							{else}
+								<option value="{$fila3.valor}">{$fila3.mostrar}</option>
+							{/if}	
+						{/foreach}
+					</select> 
+				</td>
+
+				<td><input type= 'text' name= 'documento{$smarty.section.i.index}' size='9' value="{$pasajeros[i].documento}" onChange="seleccionar_2nivel({$smarty.section.i.index})">
+				</td>
+
+				<td><input type= 'text' id= 'fecha_nacimiento{$smarty.section.i.index}' name= 'fecha_nacimiento{$smarty.section.i.index}' size='8' value="{$pasajeros[i].fecha_nacimiento}" onChange="seleccionar_2nivel({$smarty.section.i.index})">
+				</td>
+				<td>
+						<img id="botonPasajeros{$smarty.section.i.index}" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'fecha_nacimiento{$smarty.section.i.index}',
+							button : "botonPasajeros{$smarty.section.i.index}",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>
+
+				</td>
+
+				<td>
+					<select name= 'pais{$smarty.section.i.index}' align="" style=" width:100px" onChange="seleccionar_2nivel({$smarty.section.i.index})"> 
+						{foreach from=$comboPaises item=fila2}
+							{if {$pasajeros[i].pais} == {$fila2.codigo}}
+								<option value="{$fila2.codigo}" selected>{$fila2.nombre}</option>
+							{else}
+								<option value="{$fila2.codigo}">{$fila2.nombre}</option>
+							{/if}	
+						{/foreach}
+					</select> 
+				</td>
+
+				<td><input type= 'text' name= 'telefono{$smarty.section.i.index}' size='9' value="{$pasajeros[i].telefono}" onChange="seleccionar_2nivel({$smarty.section.i.index})">
+				</td>
+
+				<td><input type= 'text' name= 'observaciones_pax{$smarty.section.i.index}' size='15' value="{$pasajeros[i].observaciones_pax}" onChange="seleccionar_2nivel({$smarty.section.i.index})">
+				</td>
+
+
+				<td align = "center">
+					<input type= 'checkbox' name= 'borrar_2nivel{$smarty.section.i.index}' value="" onChange="desmarcarSeleccion_2nivel({$smarty.section.i.index})">
+					<input type= 'hidden' name= 'borra_2nivel{$smarty.section.i.index}' value="N">
+				</td>
+			</tr>
+			{/section}
+
+		</table>
+
+<!-------------------------------------------------------------->
+<!-------------------------------------------------------------->
+<!-------------------------AEREOS------------------------->
+<!-------------------------------------------------------------->
+
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" style="clear:both; padding:15px 0px 15px 0px;">
+			<tbody>
+				<tr>
+					<td>
+						<img width="15" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+
+					<td align='center' bgcolor='#333399' width="15%" height="23px" style="color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+							<font color='#CCFFFF' size='3'><B><I>Aéreos</I></B></font>
+					</td>
+
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+				{section name=i loop=$reservas}	
+				{if {$reservas[i].bloqueada} eq "Si" and {$usuario} eq {$reservas[i].bloqueada_usuario}}
+					<td>
+						<input type="button" id="boton_grabar_aereos" value="GRABAR" class="boton" onClick="Reserva_grabar_aereos()"/>
+					</td>
+				{/if}
+				{/section}	
+
+					<td width="100%">
+						<input type= "hidden" name= "actuar_3nivel" value="">
+						<input type= "hidden" name= "actuar_31nivel" value="">
+						<input type= "hidden" name= "actuar_32nivel" value="">
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+				<tr height="10"></tr>
+			</tbody>
+		</table>
+
+
+		{$mensaje1_aereos}
+		{$mensaje2_aereos}
+
+
+		<table width="80%" style="clear:both">
+			<tr class="cabeceratabla">
+				<th>Sel</th>
+				<th>orden</th>
+				<th>Reserva</th>
+				<th>Tipo acuerdo</th>
+				<th>Cia</th>
+				<th>Plazas</th>
+				<th>Fecha reserva</th>
+				<th>Emitido</th>
+				<th>Fecha emision</th>
+				<th>Pvp</th>
+				<th>Pvp Tasas</th>
+				<th>Borrar</th>
+			</tr>
+
+
+
+			{section name=i loop=$aereos}
+			<tr id= 'linea_aereos{$smarty.section.i.index}'>
+				<td align = "center">
+					<input type= 'checkbox' name= 'seleccion_3nivel{$smarty.section.i.index}' value="" onChange="Seleccionar_Aereos({$smarty.section.i.index})">
+					<input type= 'hidden' name= 'selec_3nivel{$smarty.section.i.index}' value="N">
+				</td>
+				<td><input type= 'text' name= 'aereos_orden{$smarty.section.i.index}' size='2' value="{$aereos[i].aereos_orden}" class="camposololecturacenter"  readonly>
+					<input type= 'hidden' name= 'aereos_clave{$smarty.section.i.index}' value="{$aereos[i].aereos_clave}">
+
+				</td>
+
+				<td><input type= 'text' name= 'aereos_reserva{$smarty.section.i.index}' size='21' value="{$aereos[i].aereos_reserva}" 
+
+				{if {$aereos[i].aereos_tipo_cuerdo} eq "CHR" or {$aereos[i].aereos_tipo_cuerdo} eq "BUS"}
+					style=" text-align:left; background:#EFEFEF" 
+					readonly
+				{/if}
+				onChange="seleccionar_3nivel({$smarty.section.i.index})">
+				</td>
+
+				<td>
+					<select name= 'aereos_tipo_cuerdo{$smarty.section.i.index}' align="" readonly> 
+						{foreach from=$comboAcuerdosAereos item=fila10}
+							{if {$aereos[i].aereos_tipo_cuerdo} == {$fila10.valor}}
+								<option value="{$fila10.valor}" selected>{$fila10.mostrar}</option>
+							{else}
+								<option value="{$fila10.valor}">{$fila10.mostrar}</option>
+							{/if}	
+						{/foreach}
+					</select>
+				</td>
+
+				<td><input type= 'text' name= 'aereos_cia{$smarty.section.i.index}' size='2' value="{$aereos[i].aereos_cia}" style=" text-align:right" onChange="seleccionar_3nivel({$smarty.section.i.index})">
+				</td>
+
+				<td><input type= 'text' name= 'aereos_plazas{$smarty.section.i.index}' size='2' value="{$aereos[i].aereos_plazas}" style=" text-align:right" onChange="seleccionar_3nivel({$smarty.section.i.index})">
+				</td>
+
+				<td><input type= 'text' id= 'aereos_fecha_reserva{$smarty.section.i.index}' name= 'aereos_fecha_reserva{$smarty.section.i.index}' size='10' value="{$aereos[i].aereos_fecha_reserva}" style=" text-align:center" onChange="seleccionar_3nivel({$smarty.section.i.index})">
+						<img id="botonaereos_fecha_reserva{$smarty.section.i.index}" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'aereos_fecha_reserva{$smarty.section.i.index}',
+							button : "botonaereos_fecha_reserva{$smarty.section.i.index}",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>
+				</td>
+
+				<td>
+					<select name= 'aereos_emitido{$smarty.section.i.index}' align="" style=" width:50px" onChange="seleccionar_3nivel({$smarty.section.i.index})"> 
+						{foreach from=$comboSino item=fila3}
+							{if {$aereos[i].aereos_emitido} == {$fila3.valor}}
+								<option value="{$fila3.valor}" selected>{$fila3.mostrar}</option>
+							{else}
+								<option value="{$fila3.valor}">{$fila3.mostrar}</option>
+							{/if}	
+						{/foreach}
+					</select> 
+				</td>
+
+				<td><input type= 'text' id= 'aereos_fecha_emision{$smarty.section.i.index}' name= 'aereos_fecha_emision{$smarty.section.i.index}' size='10' value="{$aereos[i].aereos_fecha_emision}" style=" text-align:center" onChange="seleccionar_3nivel({$smarty.section.i.index})">
+
+						<img id="botonaereos_fecha_emision{$smarty.section.i.index}" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'aereos_fecha_emision{$smarty.section.i.index}',
+							button : "botonaereos_fecha_emision{$smarty.section.i.index}",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>
+
+				</td>
+
+
+				<td><input type= 'text' name= 'aereos_pvp{$smarty.section.i.index}' size='8' value="{$aereos[i].aereos_pvp}" style=" text-align:right" class="camposololecturanumber" readonly>
+				</td>
+
+				<td><input type= 'text' name= 'aereos_tasas_pvp{$smarty.section.i.index}' size='8' value="{$aereos[i].aereos_tasas_pvp}" style=" text-align:right" class="camposololecturanumber" readonly>
+				</td>
+
+				<td align = "center">
+					<input type= 'checkbox' name= 'borrar_3nivel{$smarty.section.i.index}' value="" onChange="desmarcarSeleccion_3nivel({$smarty.section.i.index})">
+					<input type= 'hidden' name= 'borra_3nivel{$smarty.section.i.index}' value="N">
+				</td>
+
+
+			</tr>
+			{/section}
+
+		</table>
+
+
+
+		<table width="95%" border = "0" align = "left" height="4" style="clear:both">
+				<tr height="30">
+					<td>
+						<img width="100%" height="3" alt="" src="imagenes/cghes.gif">
+					</td>
+					<td width="100%">
+						<img width="100%" height="3" alt="" src="imagenes/cghec.gif">
+					</td>
+
+				{section name=i loop=$reservas}	
+				{if {$reservas[i].bloqueada} eq "Si" and {$usuario} eq {$reservas[i].bloqueada_usuario}}
+ 					<td>
+						<input type="button" id="boton_anadir_aereos" value="Añadir reserva aereos" class="boton" onClick="mostrarOcultar('seccion_anadir_aereos')"/>
+					</td>
+				{/if}
+				{/section}
+
+
+					<td width="100%">
+						<img width="100%" height="3" alt="" src="imagenes/cghec.gif">
+					</td>
+
+				{section name=i loop=$reservas}	
+				{if {$reservas[i].bloqueada} eq "Si" and {$usuario} eq {$reservas[i].bloqueada_usuario}}
+ 					<td>
+						<input type="button" id="boton_modificar_pasajeros" value="Modificar pasajeros" class="boton" onClick="mostrarOcultar('seccion_modificar_aereos_pasajeros')"/>
+					</td>
+				{/if}
+				{/section}
+
+					<td>
+						<img width="50" height="3" alt="" src="imagenes/cghee.gif">
+					</td>
+
+				</tr>
+		</table>
+
+		<!------------------------------------
+		----SUBSECCION AEREOS AÑADIR AEREO----
+		------------------------------------>
+
+		<div id='seccion_anadir_aereos' style="display: {$seccion_anadir_aereos_display}">
+		<input type= 'hidden' name= 'seccion_anadir_aereos_display' value="{$seccion_anadir_aereos_display}">
+
+		<table width="70%" border = "0" align = "left">
+
+			{section name=j loop=$aereosnuevos}
+			<tr>
+				<td align = "center">
+					<input type= 'checkbox' name= 'Nuevoseleccion_3nivel{$smarty.section.j.index}' value="">
+					<input type= 'hidden' name= 'Nuevoselec_3nivel{$smarty.section.j.index}' value="N">
+				</td>
+
+				<td><input type= 'text' name= 'Nuevoaereos_orden{$smarty.section.j.index}' size='2' 
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperaaereos_orden}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar_3nivel({$smarty.section.j.index})"></td>
+
+				<td><input type= 'text' name= 'Nuevoaereos_reserva{$smarty.section.j.index}' size='21' 
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperaaereos_reserva}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar_3nivel({$smarty.section.j.index})"></td>
+
+
+				<td>
+					<select name= 'Nuevoaereos_tipo_acuerdo{$smarty.section.j.index}' align="" onchange="Nuevosseleccionar_3nivel({$smarty.section.j.index})"> 
+						{foreach from=$comboAcuerdosAereos item=fila7}
+							{if {$recuperaaereos_tipo_cuerdo} == {$fila7.valor}}
+								<option value="{$recuperaaereos_tipo_cuerdo}" selected>{$fila7.mostrar}</option>
+							{else}
+								<option value="{$fila7.valor}">{$fila7.mostrar}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>
+
+				<td><input type= 'text' name= 'Nuevoaereos_cia{$smarty.section.j.index}' size='2' 
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperaaereos_cia}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar_3nivel({$smarty.section.j.index})"></td>
+
+				<td><input type= 'text' name= 'Nuevoaereos_plazas{$smarty.section.j.index}' size='2' 
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperaaereos_plazas}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar_3nivel({$smarty.section.j.index})"></td>
+
+				<td><input type= 'text' id= 'Nuevoaereos_fecha_reserva{$smarty.section.j.index}' name= 'Nuevoaereos_fecha_reserva{$smarty.section.j.index}' size='10' 
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperaaereos_fecha_reserva}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar_3nivel({$smarty.section.j.index})">
+				
+						<img id="botonNuevoaereos_fecha_reserva{$smarty.section.i.index}" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'Nuevoaereos_fecha_reserva{$smarty.section.j.index}',
+							button : "botonNuevoaereos_fecha_reserva{$smarty.section.i.index}",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>				
+				
+				</td>
+
+				<td>
+					<select name= 'Nuevoaereos_emitido{$smarty.section.j.index}' align="" style=" width:50px" onchange="Nuevosseleccionar_3nivel({$smarty.section.j.index})"> 
+						{foreach from=$comboSino item=fila5}
+							{if {$recuperaaereos_emitido} == {$fila5.valor} and {$smarty.section.j.index} == 0}
+								<option value="{$recuperaaereos_emitido}" selected>{$fila5.mostrar}</option>
+							{else}
+								<option value="{$fila5.valor}">{$fila5.mostrar}</option>
+							{/if}
+						{/foreach}
+					</select> 		
+				</td>
+
+				<td><input type= 'text' id= 'Nuevoaereos_fecha_emision{$smarty.section.j.index}' name= 'Nuevoaereos_fecha_emision{$smarty.section.j.index}' size='10' 
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperaaereos_fecha_emision}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar_3nivel({$smarty.section.j.index})">
+
+						<img id="botonNuevoaereos_fecha_emision{$smarty.section.i.index}" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'Nuevoaereos_fecha_emision{$smarty.section.j.index}',
+							button : "botonNuevoaereos_fecha_emision{$smarty.section.i.index}",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>					
+				</td>
+
+			</tr>
+			{/section}
+
+		</table>
+
+		</div>
+
+		<!--------------------------------------------
+		----SUBSECCION MODIFICAR AEREOS PASAJEROS-----
+		-------------------------------------------->
+		<div width="100%"  id='seccion_modificar_aereos_pasajeros' style="display: {$seccion_modificar_aereos_pasajeros_display}">
+		<input type= 'hidden' name= 'seccion_modificar_aereos_pasajeros_display' value="{$seccion_modificar_aereos_pasajeros_display}">
+
+		<table width="75%" border = "0" align = "left" height="4" style="clear:both">
+				<tr>
+					<td>
+						<img width="100%" height="3" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+		</table>
+
+		<table width="60%" border = "0" align = "left">
+
+			{if {$mensaje1_aereos_pasajeros} != '' or {$mensaje1_aereos_pasajeros} != ''}
+			<tr bgcolor='#F3F3F3'>
+				<td align = "left" colspan="10">
+				{$mensaje1_aereos_pasajeros}
+				{$mensaje2_aereos_pasajeros}
+				</td>				
+			</tr>
+			{/if}			
+
+			<tr class="cabeceratabla">
+				<th>Sel</th>
+				<th>Reserva</th>
+				<th>Numero</th>
+				<th>Apellido</th>
+				<th>Nombre</th>
+				<th>Billete</th>
+				<th>Coste</th>
+				<th>Tasas</th>
+				<th>Borrar</th>
+			</tr>
+
+
+
+			{section name=i loop=$aereos_pasajeros}
+			<input type= 'hidden' name= 'cantidad_lineas_aereos_pasajeros{$smarty.section.i.index}' value="{$smarty.section.i.loop}">
+			<tr id= 'linea_aereos_pasajeros{$smarty.section.i.index}'>
+				<td align = "center">
+					<input type= 'checkbox' name= 'seleccion_31nivel{$smarty.section.i.index}' value="" onChange="desmarcarBorrar_31nivel({$smarty.section.i.index})">
+					<input type= 'hidden' name= 'selec_31nivel{$smarty.section.i.index}' value="N">
+				</td>
+
+				<td><input type= 'text' name= 'aereos_pasajeros_reserva{$smarty.section.i.index}' size='21' value="{$aereos_pasajeros[i].aereos_pasajeros_reserva}" class="camposololecturacenter"  readonly>
+					<input type= 'hidden' name= 'aereos_pasajeros_orden{$smarty.section.i.index}' value="{$aereos_pasajeros[i].aereos_pasajeros_orden}">
+					<input type= 'hidden' name= 'aereos_pasajeros_clave_pasajero{$smarty.section.i.index}' value="{$aereos_pasajeros[i].aereos_pasajeros_clave_pasajero}">
+					<input type= 'hidden' name= 'aereos_pasajeros_clave_aereo{$smarty.section.i.index}' value="{$aereos_pasajeros[i].aereos_pasajeros_clave_aereo}">
+				</td>
+
+				<td><input type= 'text' name= 'aereos_pasajeros_numero{$smarty.section.i.index}' size='2' value="{$aereos_pasajeros[i].aereos_pasajeros_numero}" class="camposololecturacenter"  readonly>
+				</td>
+
+				<td><input type= 'text' name= 'aereos_pasajeros_apellido{$smarty.section.i.index}' size='30' value="{$aereos_pasajeros[i].aereos_pasajeros_apellido}" class=" camposololecturatext"  readonly>
+				</td>
+
+				<td><input type= 'text' name= 'aereos_pasajeros_nombre{$smarty.section.i.index}' size='25' value="{$aereos_pasajeros[i].aereos_pasajeros_nombre}" class=" camposololecturatext"  readonly>
+				</td>
+
+				<td><input type= 'text' name= 'aereos_pasajeros_billete{$smarty.section.i.index}' size='15' value="{$aereos_pasajeros[i].aereos_pasajeros_billete}" style=" text-align:right" onChange="seleccionar_31nivel({$smarty.section.i.index})">
+				</td>
+
+				<td><input type= 'text' name= 'aereos_pasajeros_coste{$smarty.section.i.index}' size='8' value="{$aereos_pasajeros[i].aereos_pasajeros_coste}" style=" text-align:right" onChange="seleccionar_31nivel({$smarty.section.i.index})">
+				</td>
+
+				<td><input type= 'text' name= 'aereos_pasajeros_tasas{$smarty.section.i.index}' size='8' value="{$aereos_pasajeros[i].aereos_pasajeros_tasas}" style=" text-align:right" onChange="seleccionar_31nivel({$smarty.section.i.index})">
+				</td>
+
+				<td align = "center">
+					<input type= 'checkbox' name= 'borrar_31nivel{$smarty.section.i.index}' value="" onChange="desmarcarSeleccion_31nivel({$smarty.section.i.index})">
+					<input type= 'hidden' name= 'borra_31nivel{$smarty.section.i.index}' value="N">
+				</td>
+
+			</tr>
+			{/section}
+
+		</table>
+
+		<table width="75%" border = "0" align = "left" height="4" style="clear:both">
+				<tr>
+					<td>
+						<img width="100%" height="3" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+		</table>
+
+		<table width="35%" border = "0" align = "left">
+
+			{section name=j loop=$aereos_pasajerosnuevos}
+			<tr>
+				<td align = "center">
+					<input type= 'checkbox' name= 'Nuevoseleccion_31nivel{$smarty.section.j.index}' value="">
+					<input type= 'hidden' name= 'Nuevoselec_31nivel{$smarty.section.j.index}' value="N">
+				</td>
+
+
+				<td>
+					<select name= 'Nuevoaereos_clave{$smarty.section.j.index}' align="" onchange="Nuevosseleccionar_31nivel({$smarty.section.j.index})"> 
+						{foreach from=$comboReservasAereos item=fila7}
+							{if {$recuperaaereos_clave} == {$fila7.clave}}
+								<option value="{$recuperaaereos_clave}" selected>{$fila7.reserva}</option>
+							{else}
+								<option value="{$fila7.clave}">{$fila7.reserva}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>
+
+				<td>
+					<select name= 'Nuevoaereos_pasajeros_numero{$smarty.section.j.index}' align="" onchange="Nuevosseleccionar_31nivel({$smarty.section.j.index})"> 
+						{foreach from=$comboReservasPasajeros item=fila7}
+							{if {$recuperaaereos_pasajero_numero} == {$fila7.numero}}
+								<option value="{$recuperaaereos_pasajero_numero}" selected>{$fila7.nombre}</option>
+							{else}
+								<option value="{$fila7.numero}">{$fila7.nombre}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>
+
+			</tr>
+			{/section}
+
+		</table>
+		</div>
+
+
+		<!--------------------------------------------
+		----SECCION AEREOS TRAYECTOS------------------
+		-------------------------------------------->
+
+		<table width="95%" border = "0" align = "left" height="4" style="clear:both">
+				<tr>
+					<td>
+						<img width="100%" height="3" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+		</table>
+
+
+
+		<table width="95%" border = "0" align = "left">
+
+			{if {$mensaje1_aereos_trayectos} != '' or {$mensaje1_aereos_trayectos} != ''}
+			<tr bgcolor='#F3F3F3'>
+				<td align = "left" colspan="15">
+				{$mensaje1_aereos_trayectos}
+				{$mensaje2_aereos_trayectos}
+				</td>				
+			</tr>
+			{/if}	
+
+			<tr class="cabeceratabla">
+				<th>Sel</th>
+				<th>Fecha</th>
+				<th>Origen</th>
+				<th>Destino</th>
+				<th>Cia</th>
+				<th>Vuelo</th>
+				<th>H Sal</th>
+				<th>H Lle</th>
+				<th>Dia</th>
+				<th>Clas</th>
+				<th>Sit</th>
+				<th>Acuerd</th>
+				<th>Sub</th>
+				<th>Pvp</th>
+				<th>Pvp Tasas</th>
+				<th>Tipo Pvp</th>
+				<th>Borrar</th>
+			</tr>
+
+
+			{section name=i loop=$aereos_trayectos}
+			<input type= 'hidden' name= 'cantidad_lineas_aereos_trayectos{$smarty.section.i.index}' value="{$smarty.section.i.loop}">
+			<tr id= 'linea_aereos_trayectos{$smarty.section.i.index}'>
+				<td align = "center">
+					<input type= 'checkbox' name= 'seleccion_32nivel{$smarty.section.i.index}' value="" onChange="desmarcarBorrar_32nivel({$smarty.section.i.index})">
+					<input type= 'hidden' name= 'selec_32nivel{$smarty.section.i.index}' value="N">
+				</td>
+
+				<td><input type= 'text' id= 'aereos_trayectos_fecha{$smarty.section.i.index}' name= 'aereos_trayectos_fecha{$smarty.section.i.index}' size='10' value="{$aereos_trayectos[i].aereos_trayectos_fecha}" style=" text-align:center" onChange="seleccionar_32nivel({$smarty.section.i.index})">
+					<input type= 'hidden' name= 'aereos_trayectos_orden{$smarty.section.i.index}' value="{$aereos_trayectos[i].aereos_trayectos_orden}">
+					<input type= 'hidden' name= 'aereos_trayectos_numero{$smarty.section.i.index}' value="{$aereos_trayectos[i].aereos_trayectos_numero}">
+					<input type= 'hidden' name= 'aereos_trayectos_clave_aereo{$smarty.section.i.index}' value="{$aereos_trayectos[i].aereos_trayectos_clave_aereo}">
+
+						<img id="botonaereos_trayectos_fecha{$smarty.section.i.index}" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'aereos_trayectos_fecha{$smarty.section.i.index}',
+							button : "botonaereos_trayectos_fecha{$smarty.section.i.index}",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>	
+				</td>
+
+
+				<td><input type= 'text' name= 'aereos_trayectos_origen{$smarty.section.i.index}' size='5' value="{$aereos_trayectos[i].aereos_trayectos_origen}" style=" text-align:center" onChange="seleccionar_32nivel({$smarty.section.i.index})">
+				</td>
+
+				<td><input type= 'text' name= 'aereos_trayectos_destino{$smarty.section.i.index}' size='5' value="{$aereos_trayectos[i].aereos_trayectos_destino}" style=" text-align:center" onChange="seleccionar_32nivel({$smarty.section.i.index})">
+				</td>
+
+				<td><input type= 'text' name= 'aereos_trayectos_cia{$smarty.section.i.index}' size='6' value="{$aereos_trayectos[i].aereos_trayectos_cia}" style=" text-align:center" onChange="seleccionar_32nivel({$smarty.section.i.index})">
+				</td>
+
+				<td><input type= 'text' name= 'aereos_trayectos_vuelo{$smarty.section.i.index}' size='5' value="{$aereos_trayectos[i].aereos_trayectos_vuelo}" style=" text-align:center" onChange="seleccionar_32nivel({$smarty.section.i.index})">
+				</td>
+
+				<td><input type= 'text' name= 'aereos_trayectos_hora_salida{$smarty.section.i.index}' size='5' value="{$aereos_trayectos[i].aereos_trayectos_hora_salida}" style=" text-align:center" onChange="seleccionar_32nivel({$smarty.section.i.index})">
+				</td>
+
+				<td><input type= 'text' name= 'aereos_trayectos_hora_llegada{$smarty.section.i.index}' size='5' value="{$aereos_trayectos[i].aereos_trayectos_hora_llegada}" style=" text-align:center" onChange="seleccionar_32nivel({$smarty.section.i.index})">
+				</td>
+
+				<td><input type= 'text' name= 'aereos_trayectos_desplazamiento_llegada{$smarty.section.i.index}' size='2' value="{$aereos_trayectos[i].aereos_trayectos_desplazamiento_llegada}" style=" text-align:center" onChange="seleccionar_32nivel({$smarty.section.i.index})">
+				</td>
+
+				<td><input type= 'text' name= 'aereos_trayectos_clase{$smarty.section.i.index}' size='2' value="{$aereos_trayectos[i].aereos_trayectos_clase}" style=" text-align:center" onChange="seleccionar_32nivel({$smarty.section.i.index})">
+				</td>
+
+				<td>
+					<select name= 'aereos_trayectos_situacion{$smarty.section.i.index}' align="" style=" width:52px" onChange="seleccionar_32nivel({$smarty.section.i.index})"> 
+						{foreach from=$comboSituacion_cupos item=fila3}
+							{if {$aereos_trayectos[i].aereos_trayectos_situacion} == {$fila3.valor}}
+								<option value="{$fila3.valor}" selected>{$fila3.mostrar}</option>
+							{else}
+								<option value="{$fila3.valor}">{$fila3.mostrar}</option>
+							{/if}	
+						{/foreach}
+					</select> 
+					<!--<input type= 'hidden' name= 'regimen_old{$smarty.section.i.index}' value="{$alojamientos[i].regimen_alojamiento}">-->
+				</td>
+
+				<td><input type= 'text' name= 'aereos_trayectos_acuerdo{$smarty.section.i.index}' size='5' value="{$aereos_trayectos[i].aereos_trayectos_acuerdo}" style=" text-align:center" onChange="seleccionar_32nivel({$smarty.section.i.index})">
+				</td>
+
+				<td><input type= 'text' name= 'aereos_trayectos_subacuerdo{$smarty.section.i.index}' size='2' value="{$aereos_trayectos[i].aereos_trayectos_subacuerdo}" style=" text-align:center" onChange="seleccionar_32nivel({$smarty.section.i.index})">
+				</td>
+
+				<td><input type= 'text' name= 'aereos_trayectos_pvp_total_trayecto{$smarty.section.i.index}' size='8' value="{$aereos_trayectos[i].aereos_trayectos_pvp_total_trayecto}" style=" text-align:right" class="camposololecturanumber" onChange="seleccionar_32nivel({$smarty.section.i.index})">
+				</td>
+
+				<td><input type= 'text' name= 'aereos_trayectos_tasas_pvp_total_trayecto{$smarty.section.i.index}' size='8' value="{$aereos_trayectos[i].aereos_trayectos_tasas_pvp_total_trayecto}" style=" text-align:right" class="camposololecturanumber" onChange="seleccionar_32nivel({$smarty.section.i.index})">
+				</td>
+				
+				<td>
+					<select name= 'aereos_trayectos_tipo_precio{$smarty.section.i.index}' align="" style=" width:100px" onChange="seleccionar_32nivel({$smarty.section.i.index})"> 
+						{foreach from=$comboTipo_precios_reserva item=fila3}
+							{if {$aereos_trayectos[i].aereos_trayectos_tipo_precio} == {$fila3.valor}}
+								<option value="{$fila3.valor}" selected>{$fila3.mostrar}</option>
+							{else}
+								<option value="{$fila3.valor}">{$fila3.mostrar}</option>
+							{/if}	
+						{/foreach}
+					</select> 
+				</td>				
+				
+				<td align = "center">
+					<input type= 'checkbox' name= 'borrar_32nivel{$smarty.section.i.index}' value="" onChange="desmarcarSeleccion_32nivel({$smarty.section.i.index})">
+					<input type= 'hidden' name= 'borra_32nivel{$smarty.section.i.index}' value="N">
+				</td>
+
+			</tr>
+			{/section}
+
+		</table>
+
+		<table width="75%" border = "0" align = "left" height="4" style="clear:both">
+				<tr height="30">
+					<td>
+						<img width="100%" height="3" alt="" src="imagenes/cghes.gif">
+					</td>
+					<td width="100%">
+						<img width="100%" height="3" alt="" src="imagenes/cghec.gif">
+					</td>
+
+				{section name=i loop=$reservas}	
+				{if {$reservas[i].bloqueada} eq "Si" and {$usuario} eq {$reservas[i].bloqueada_usuario}}
+ 					<td>
+						<input type="button" id="boton_anadir_trayectos_manual" value="Añadir trayectos manual" class="boton" onClick="mostrarOcultar('seccion_anadir_trayectos_manual')"/>
+					</td>
+ 					<td>
+						<input type="button" id="boton_anadir_trayectos_cupos" value="Añadir trayectos de cupo" class="boton" onClick="mostrarOcultar('seccion_anadir_trayectos_cupos')"/>
+					</td>
+				{/if}
+				{/section}
+
+					<td>
+						<img width="50" height="3" alt="" src="imagenes/cghee.gif">
+					</td>
+
+				</tr>
+		</table>
+
+		<!---------------------------------------------------
+		----SUBSECCION AÑADIR AEREOS TRAYECTOS MANUAL -------
+		---------------------------------------------------->
+
+		<div width="100%"  id='seccion_anadir_trayectos_manual' style="display: {$seccion_anadir_trayectos_manual_display}">
+		<input type= 'hidden' name= 'seccion_anadir_trayectos_manual_display' value="{$seccion_anadir_trayectos_manual_display}">
+
+			<table width="95%" border = "0" align = "left">
+			<tr class="cabeceratabla">
+				<th>Sel</th>
+				<th>Fecha</th>
+				<th>Origen</th>
+				<th>Destino</th>
+				<th>Cia</th>
+				<th>Vuelo</th>
+				<th>H Sal</th>
+				<th>H Lle</th>
+				<th>Dia</th>
+				<th>Clas</th>
+				<th>Sit</th>
+				<th>Acuerd</th>
+				<th>Sub</th>
+				<th>Pvp</th>
+				<th>Pvp Tasas</th>
+				<th>Tipo Pvp</th>
+				<th>Reserva</th>
+				
+
+			</tr>
+				{section name=j loop=$aereos_trayectosnuevos}
+				<tr>
+					<td align = "center">
+						<input type= 'checkbox' name= 'Nuevoseleccion_32nivel{$smarty.section.j.index}' value="">
+						<input type= 'hidden' name= 'Nuevoselec_32nivel{$smarty.section.j.index}' value="N">
+					</td>
+
+					<td><input type= 'text' id= 'Nuevoaereos_trayectos_fecha{$smarty.section.j.index}' name= 'Nuevoaereos_trayectos_fecha{$smarty.section.j.index}' size='10' 
+							{if {$smarty.section.j.index} == 0}
+								value="{$recuperaaereos_trayectos_fecha}"
+							{else}
+								value=""
+							{/if}
+							onchange="Nuevosseleccionar_32nivel({$smarty.section.j.index})">
+					
+							<img id="botonNuevoaereos_trayectos_fecha{$smarty.section.j.index}" height="20" src="imagenes/cal.gif">
+							<script type="text/javascript">
+								Calendar.setup({
+								inputField : 'Nuevoaereos_trayectos_fecha{$smarty.section.j.index}',
+								button : "botonNuevoaereos_trayectos_fecha{$smarty.section.j.index}",
+								ifFormat : "%d-%m-%Y",
+								align : "tr"
+								});
+							</script>				
+					</td>
+
+					<td><input type= 'text' name= 'Nuevoaereos_trayectos_origen{$smarty.section.j.index}' size='4' 
+							{if {$smarty.section.j.index} == 0}
+								value="{$recuperaaereos_trayectos_origen}"
+							{else}
+								value=""
+							{/if}
+					onchange="Nuevosseleccionar_32nivel({$smarty.section.j.index})"></td>
+
+					<td><input type= 'text' name= 'Nuevoaereos_trayectos_destino{$smarty.section.j.index}' size='4' 
+							{if {$smarty.section.j.index} == 0}
+								value="{$recuperaaereos_trayectos_destino}"
+							{else}
+								value=""
+							{/if}
+					onchange="Nuevosseleccionar_32nivel({$smarty.section.j.index})"></td>
+
+					<td><input type= 'text' name= 'Nuevoaereos_trayectos_cia{$smarty.section.j.index}' size='4' 
+							{if {$smarty.section.j.index} == 0}
+								value="{$recuperaaereos_trayectos_cia}"
+							{else}
+								value=""
+							{/if}
+					onchange="Nuevosseleccionar_32nivel({$smarty.section.j.index})"></td>
+
+					<td><input type= 'text' name= 'Nuevoaereos_trayectos_vuelo{$smarty.section.j.index}' size='5' 
+							{if {$smarty.section.j.index} == 0}
+								value="{$recuperaaereos_trayectos_vuelo}"
+							{else}
+								value=""
+							{/if}
+					onchange="Nuevosseleccionar_32nivel({$smarty.section.j.index})"></td>
+
+					<td><input type= 'text' name= 'Nuevoaereos_trayectos_hora_salida{$smarty.section.j.index}' size='5' 
+							{if {$smarty.section.j.index} == 0}
+								value="{$recuperaaereos_trayectos_hora_salida}"
+							{else}
+								value=""
+							{/if}
+					onchange="Nuevosseleccionar_32nivel({$smarty.section.j.index})"></td>
+
+					<td><input type= 'text' name= 'Nuevoaereos_trayectos_hora_llegada{$smarty.section.j.index}' size='5' 
+							{if {$smarty.section.j.index} == 0}
+								value="{$recuperaaereos_trayectos_hora_llegada}"
+							{else}
+								value=""
+							{/if}
+					onchange="Nuevosseleccionar_32nivel({$smarty.section.j.index})"></td>
+
+					<td><input type= 'text' name= 'Nuevoaereos_trayectos_desplazamiento_llegada{$smarty.section.j.index}' size='1' 
+							{if {$smarty.section.j.index} == 0}
+								value="{$recuperaaereos_trayectos_desplazamiento_llegada}"
+							{else}
+								value=""
+							{/if}
+					onchange="Nuevosseleccionar_32nivel({$smarty.section.j.index})"></td>
+
+					<td><input type= 'text' name= 'Nuevoaereos_trayectos_clase{$smarty.section.j.index}' size='1' 
+							{if {$smarty.section.j.index} == 0}
+								value="{$recuperaaereos_trayectos_clase}"
+							{else}
+								value=""
+							{/if}
+					onchange="Nuevosseleccionar_32nivel({$smarty.section.j.index})"></td>
+
+					<td>
+						<select name= 'Nuevoaereos_trayectos_situacion{$smarty.section.j.index}' align="" style=" width:52px" onchange="Nuevosseleccionar_32nivel({$smarty.section.j.index})"> 
+							{foreach from=$comboSituacion_cupos item=fila5}
+								{if {$recuperaaereos_trayectos_situacion} == {$fila5.valor} and {$smarty.section.j.index} == 0}
+									<option value="{$recuperaaereos_trayectos_situacion}" selected>{$fila5.mostrar}</option>
+								{else}
+									<option value="{$fila5.valor}">{$fila5.mostrar}</option>
+								{/if}
+							{/foreach}
+						</select> 		
+					</td>
+
+					<td><input type= 'text' name= 'Nuevoaereos_trayectos_acuerdo{$smarty.section.j.index}' size='4' 
+							{if {$smarty.section.j.index} == 0}
+								value="{$recuperaaereos_trayectos_acuerdo}"
+							{else}
+								value=""
+							{/if}
+					onchange="Nuevosseleccionar_32nivel({$smarty.section.j.index})"></td>
+
+					<td><input type= 'text' name= 'Nuevoaereos_trayectos_subacuerdo{$smarty.section.j.index}' size='1' 
+							{if {$smarty.section.j.index} == 0}
+								value="{$recuperaaereos_trayectos_subacuerdo}"
+							{else}
+								value=""
+							{/if}
+					onchange="Nuevosseleccionar_32nivel({$smarty.section.j.index})"></td>
+
+					<td><input type= 'text' name= 'Nuevoaereos_trayectos_pvp_total_trayecto{$smarty.section.j.index}' size='8' 
+							{if {$smarty.section.j.index} == 0}
+								value="{$recuperaaereos_trayectos_pvp_total_trayecto}"
+							{else}
+								value=""
+							{/if}
+					onchange="Nuevosseleccionar_32nivel({$smarty.section.j.index})"></td>
+					
+					<td><input type= 'text' name= 'Nuevoaereos_trayectos_tasas_pvp_total_trayecto{$smarty.section.j.index}' size='8' 
+							{if {$smarty.section.j.index} == 0}
+								value="{$recuperaaereos_trayectos_tasas_pvp_total_trayecto}"
+							{else}
+								value=""
+							{/if}
+					onchange="Nuevosseleccionar_32nivel({$smarty.section.j.index})"></td>		
+					
+					<td>
+						<select name= 'Nuevoaereos_trayectos_tipo_precio{$smarty.section.j.index}' align="" onchange="Nuevosseleccionar_32nivel({$smarty.section.j.index})"> 
+							{foreach from=$comboTipo_precios_reserva item=fila7}
+								{if {$recuperaaereos_trayectos_tipo_precio} == {$fila7.valor}}
+									<option value="{$recuperaaereos_trayectos_tipo_precio}" selected>{$fila7.mostrar}</option>
+								{else}
+									<option value="{$fila7.valor}">{$fila7.mostrar}</option>
+								{/if}
+							{/foreach}
+						</select> 
+					</td>					
+					
+					<td>
+						<select name= 'Nuevoaereos_trayectos_clave_aereo{$smarty.section.j.index}' align="" onchange="Nuevosseleccionar_32nivel({$smarty.section.j.index})"> 
+							{foreach from=$comboReservasAereos item=fila7}
+								{if {$recuperaaereos_clave} == {$fila7.clave}}
+									<option value="{$recuperaaereos_trayectos_clave_aereo}" selected>{$fila7.reserva}</option>
+								{else}
+									<option value="{$fila7.clave}">{$fila7.reserva}</option>
+								{/if}
+							{/foreach}
+						</select> 
+					</td>
+
+				</tr>
+				{/section}
+
+			</table>
+		</div>
+
+		<!-----------------------------------------------
+		----SUBSECCION AÑADIR AEREOS TRAYECTOS CUPOS-----
+		------------------------------------------------>
+
+
+		{section name=i loop=$reservas}
+
+
+		<div id='seccion_anadir_trayectos_cupos' style="display: {$seccion_anadir_trayectos_cupos_display}">
+		<input type= 'hidden' name= 'seccion_anadir_trayectos_cupos_display' value="{$seccion_anadir_trayectos_cupos_display}">
+
+		<table width="80%" border = "0" align = "left" height="4" style="clear:both">
+				<tr height="5">
+				</tr>
+				<tr height="10">
+
+					<th width="50" align = "left">Fecha</th>
+					<td align = "left">
+						<input type= 'text' id= 'busca_aereos_cupos_fecha' name= 'busca_aereos_cupos_fecha' size='10' onkeypress="return CancelSubmit(event)">
+
+						<img id="botonbuscaaereoscuposfecha{$smarty.section.i.index}" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'busca_aereos_cupos_fecha',
+							button : "botonbuscaaereoscuposfecha{$smarty.section.i.index}",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>
+					</td>
+
+					<th width="50" align = "left">Origen</th>
+					<td align = "left">
+						<input type= 'text' id= 'busca_aereos_cupos_origen' name= 'busca_aereos_cupos_origen' size='5' onkeypress="return CancelSubmit(event)">
+					</td>
+
+					<th width="55" align = "left">Destino</th>
+					<td align = "left">
+						<input type= 'text' id= 'busca_aereos_cupos_destino' name= 'busca_aereos_cupos_destino' size='5' onkeypress="return CancelSubmit(event)">
+					</td>
+
+					<th width="40" align = "left">Tipo</th>
+					<td align = "left">
+						<select id="busca_aereos_tipo_trayecto" name="busca_aereos_tipo_trayecto" align=""  style=" width:100px"> 
+							{foreach from=$comboTipostrayecto item=fila}
+								{if {$reservas[i].busca_aereos_tipo_trayecto} == {$fila.valor}}
+									<option value="{$fila.valor}" selected>{$fila.mostrar}</option>
+								{else}
+									<option value="{$fila.valor}">{$fila.mostrar}</option>
+								{/if}
+							{/foreach}
+						</select> 
+					</td>
+
+					<th width="55" align = "left">F.Vuelta</th>
+					<td align = "left">
+						<input type= 'text' id= 'busca_aereos_cupos_fecha_vuelta' name= 'busca_aereos_cupos_fecha_vuelta' size='10' onkeypress="return CancelSubmit(event)">
+						<img id="botonbusca_aereos_cupos_fecha_vuelta{$smarty.section.i.index}" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'busca_aereos_cupos_fecha_vuelta',
+							button : "botonbusca_aereos_cupos_fecha_vuelta{$smarty.section.i.index}",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>
+					</td>
+
+					<td align = "left" colspan="2">
+
+						<input type="button" id="boton_buscar_aereos_cupos" value="BUSCAR CUPOS" class="boton" onClick="Cargar_busqueda_aereos_cupos()"/>
+	
+						<img id="ajax_load_aereos" src="imagenes/ajax_load.gif" style="display:none"/>
+					</td>
+
+				</tr>
+				<tr height="5">
+				</tr>
+
+		</table>
+
+		<table width="80%" border = "0" align = "left" height="4" style="clear:both">
+
+
+				<tr height="30">
+
+					<td>
+						<div id="pageContentAereos"></div>
+						<input type= 'hidden' name= 'Añadir_Reserva_Trayectos_Cupos'/>
+					</td>
+				</tr>
+
+		</table>
+
+		<table width="35%" border = "0" align = "left" height="4" style="clear:both">
+
+				<tr height="30">
+					<th width="200" align = "left">Seleccionar Reserva Aereos</th>
+
+					<td align = "left">
+						<select name= 'nuevo_trayecto_cupo_clave_aereo' align=""> 
+							{foreach from=$comboReservasAereos item=fila7}
+									<option value="{$fila7.clave}">{$fila7.reserva}</option>
+							{/foreach}
+						</select> 
+					</td>
+					<td align = "left">
+						<input type='button' value='Grabar' class="boton" onClick='NuevoReserva_Trayectos_Cupos()'/>
+					</td>
+
+				</tr>
+
+
+		</table>
+		</div>
+
+			{/section}
+
+
+<!-------------------------------------------------------------->
+<!-------------------------------------------------------------->
+<!-------------------------ALOJAMIENTOS------------------------->
+<!-------------------------------------------------------------->
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" style="padding:15px 0px 15px 0px;">
+			<tbody>
+				<tr >
+					<td>
+						<img width="15" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+
+					<td align='center' bgcolor='#333399' width="15%" height="23px" style="color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+							<font color='#CCFFFF' size='3'><B><I>Alojamientos</I></B></font>
+					</td>
+					
+
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+				{section name=i loop=$reservas}	
+				{if {$reservas[i].bloqueada} eq "Si" and {$usuario} eq {$reservas[i].bloqueada_usuario}}
+					<td>
+						<input type="button" id="boton_grabar_alojamientos" value="GRABAR" class="boton" onClick="Reserva_grabar_alojamientos()"/>
+					</td>
+				{/if}
+				{/section}	
+
+					<td>
+						<input type= "hidden" name= "actuar_4nivel" value="">
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<!--<td>
+						<input type="button" id="boton_actualizar_precios" value="ACTUALIZAR PRECIOS"  style="height:25px; color:#FFFFFF; background:#0066CC; font-family:Arial; font-weight: bold; font-size:10px; text-align:center; border-radius: 10px 10px 10px 10px;"/><!--onClick="confirmar_4nivel()"
+					</td>-->
+
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+				<tr height="10"></tr>
+			</tbody>
+		</table>
+	
+
+		{$mensaje1_alojamientos}
+		{$mensaje2_alojamientos}
+
+		<table>
+			<tr class="cabeceratabla">
+				<th>Sel</th>
+				<th>Fecha</th>
+				<th>Alojamiento</th>
+				<th>Num</th>
+				<th>Tipo Hab.</th>
+				<th>Carac. Hab.</th>
+				<th>Uso</th>
+				<th>Reg.</th>
+				<th>Acuer.</th>
+				<th>Noc</th>
+				<th>Nºhab</th>
+				<th>Pax</th>
+				<th>Adu</th>
+				<th>Niñ</th>
+				<th>Beb</th>
+				<th>Nov</th>
+				<th>Sit.</th>
+				<th>Tipo Ac.</th>
+				<th>Pvp</th>
+				<th>Tipo Pvp</th>
+
+
+
+				{if {$hay_interfaz_alojamientos} == 0}
+					<th>Borrar</th>
+				{else}
+					<th>Interfaz</th>
+					<th>Localizador</th>
+					<th>Bono</th>
+					<th>Coste</th>
+					<th>% Gastos</th>
+					<th>Loc. Baja</th>
+					<th>Cancelar</th>
+				{/if}
+
+
+
+
+			{section name=i loop=$alojamientos}
+			<tr>
+				<td align = "center">
+					<input type= 'checkbox' name= 'seleccion_4nivel{$smarty.section.i.index}' value="" onChange="desmarcarBorrar_4nivel({$smarty.section.i.index})">
+					<input type= 'hidden' name= 'selec_4nivel{$smarty.section.i.index}' value="N">
+				</td>
+				<td><input type= 'text' name= 'fecha_entrada_alojamiento{$smarty.section.i.index}' size='10' value="{$alojamientos[i].fecha_entrada_alojamiento}" class="camposololecturacenter"  readonly>
+				</td>
+
+				<td><input type= 'text' name= 'nombre_alojamiento{$smarty.section.i.index}' size='25' value="{$alojamientos[i].nombre_alojamiento}" style=" text-align:left; background:#EFEFEF" readonly>
+					<input type= 'hidden' name= 'alojamiento{$smarty.section.i.index}' value="{$alojamientos[i].alojamiento}">
+					<input type= 'hidden' name= 'clave_alojamiento{$smarty.section.i.index}' value="{$alojamientos[i].clave_alojamiento}">		
+				</td>
+
+				<td><input type= 'text' name= 'orden_alojamiento{$smarty.section.i.index}' size='2' value="{$alojamientos[i].orden_alojamiento}" style=" text-align:center; background:#EFEFEF" onChange="seleccionar_4nivel({$smarty.section.i.index})">
+				</td>																																				
+
+				<td>
+					<select name= 'habitacion_alojamiento{$smarty.section.i.index}' align="" onChange="seleccionar_4nivel({$smarty.section.i.index})"> 
+						{foreach from=$comboHabitaciones item=fila10}
+							{if {$alojamientos[i].habitacion_alojamiento} == {$fila10.codigo}}
+								<option value="{$fila10.codigo}" selected>{$fila10.nombre}</option>
+							{else}
+								<option value="{$fila10.codigo}">{$fila10.nombre}</option>
+							{/if}	
+						{/foreach}
+					</select>
+					<input type= 'hidden' name= 'habitacion_old{$smarty.section.i.index}' value="{$alojamientos[i].habitacion_alojamiento}">
+				</td>
+
+				{if {$alojamientos[i].interfaz_caracteristica_alojamiento} == null}
+					<td>
+						<select name= 'caracteristica_alojamiento{$smarty.section.i.index}' align="" onChange="seleccionar_4nivel({$smarty.section.i.index})"> 
+							{foreach from=$comboHabitaciones_car item=fila10}
+								{if {$alojamientos[i].caracteristica_alojamiento} == {$fila10.codigo}}
+									<option value="{$fila10.codigo}" selected>{$fila10.nombre}</option>
+								{else}
+									<option value="{$fila10.codigo}">{$fila10.nombre}</option>
+								{/if}	
+							{/foreach}
+						</select>
+						<input type= 'hidden' name= 'caracteristica_old{$smarty.section.i.index}' value="{$alojamientos[i].caracteristica_alojamiento}">
+
+					</td>
+				{else}
+					<td>
+						<input type= 'text' name= 'caracteristica_alojamiento{$smarty.section.i.index}' size='30' value="{$alojamientos[i].interfaz_caracteristica_alojamiento}" readonly>
+						<input type= 'hidden' name= 'caracteristica_old{$smarty.section.i.index}' value="{$alojamientos[i].caracteristica_alojamiento}">
+					</td>
+				{/if}
+
+				<td><input type= 'text' name= 'uso_alojamiento{$smarty.section.i.index}' size='2' value="{$alojamientos[i].uso_alojamiento}" style=" text-align:right" onChange="seleccionar_4nivel({$smarty.section.i.index})">
+				</td>
+
+				<td>
+					<select name= 'regimen_alojamiento{$smarty.section.i.index}' align="" style=" width:48px" onChange="seleccionar_4nivel({$smarty.section.i.index})"> 
+						{foreach from=$comboRegimen item=fila3}
+							{if {$alojamientos[i].regimen_alojamiento} == {$fila3.valor}}
+								<option value="{$fila3.valor}" selected>{$fila3.mostrar}</option>
+							{else}
+								<option value="{$fila3.valor}">{$fila3.mostrar}</option>
+							{/if}	
+						{/foreach}
+					</select> 
+					<input type= 'hidden' name= 'regimen_old{$smarty.section.i.index}' value="{$alojamientos[i].regimen_alojamiento}">
+				</td>
+
+				<td><input type= 'text' name= 'acuerdo_alojamiento{$smarty.section.i.index}' size='4' value="{$alojamientos[i].acuerdo_alojamiento}" class="camposololecturacenter"  readonly  onChange="seleccionar_4nivel({$smarty.section.i.index})">
+				</td>
+
+				<td><input type= 'text' name= 'noches_alojamiento{$smarty.section.i.index}' size='2' value="{$alojamientos[i].noches_alojamiento}" style=" text-align:right" onChange="seleccionar_4nivel({$smarty.section.i.index})">
+				</td>
+
+				<td><input type= 'text' name= 'cantidad_habitaciones_alojamiento{$smarty.section.i.index}' size='2' value="{$alojamientos[i].cantidad_habitaciones_alojamiento}" style=" text-align:right" onChange="seleccionar_4nivel({$smarty.section.i.index})">
+				</td>
+
+				<td><input type= 'text' name= 'pax_alojamiento{$smarty.section.i.index}' size='2' value="{$alojamientos[i].pax_alojamiento}" style=" text-align:right" class="camposololecturanumber"  readonly>
+				</td>
+
+				<td><input type= 'text' name= 'adultos_alojamiento{$smarty.section.i.index}' size='2' value="{$alojamientos[i].adultos_alojamiento}" style=" text-align:right" onChange="seleccionar_4nivel({$smarty.section.i.index})">
+				</td>
+
+				<td><input type= 'text' name= 'ninos1_alojamiento{$smarty.section.i.index}' size='2' value="{$alojamientos[i].ninos1_alojamiento}" style=" text-align:right" onChange="seleccionar_4nivel({$smarty.section.i.index})">
+				</td>
+
+				<td><input type= 'text' name= 'bebes_alojamiento{$smarty.section.i.index}' size='2' value="{$alojamientos[i].bebes_alojamiento}" style=" text-align:right" onChange="seleccionar_4nivel({$smarty.section.i.index})">
+				</td>
+
+				<td><input type= 'text' name= 'novios_alojamiento{$smarty.section.i.index}' size='2' value="{$alojamientos[i].novios_alojamiento}" style=" text-align:right" onChange="seleccionar_4nivel({$smarty.section.i.index})">
+				</td>
+
+				<td>
+					<select name= 'situacion_alojamiento{$smarty.section.i.index}' align="" style=" width:48px" onChange="seleccionar_4nivel({$smarty.section.i.index})"> 
+						{foreach from=$comboSituacion_cupos item=fila3}
+							{if {$alojamientos[i].situacion_alojamiento} == {$fila3.valor}}
+								<option value="{$fila3.valor}" selected>{$fila3.mostrar}</option>
+							{else}
+								<option value="{$fila3.valor}">{$fila3.mostrar}</option>
+							{/if}	
+						{/foreach}
+					</select> 
+					<input type= 'hidden' name= 'regimen_old{$smarty.section.i.index}' value="{$alojamientos[i].regimen_alojamiento}">
+				</td>
+
+				<td><input type= 'text' name= 'tipo_nombre_acuerdo_alojamiento{$smarty.section.i.index}' size='7' value="{$alojamientos[i].tipo_nombre_acuerdo_alojamiento}" class="camposololecturacenter"  readonly>
+
+				<td><input type= 'text' name= 'pvp_total_alojamiento{$smarty.section.i.index}' size='7' value="{$alojamientos[i].pvp_total_alojamiento}" class="camposololecturanumber" onChange="seleccionar_4nivel({$smarty.section.i.index})">
+
+					<input type= 'hidden' name= 'tipo_acuerdo_alojamiento{$smarty.section.i.index}' value="{$alojamientos[i].tipo_acuerdo_alojamiento}">
+				</td>
+				<td>
+					<select name= 'tipo_precio_alojamiento{$smarty.section.i.index}' align="" style=" width:100px" onChange="seleccionar_4nivel({$smarty.section.i.index})"> 
+						{foreach from=$comboTipo_precios_reserva item=fila3}
+							{if {$alojamientos[i].tipo_precio_alojamiento} == {$fila3.valor}}
+								<option value="{$fila3.valor}" selected>{$fila3.mostrar}</option>
+							{else}
+								<option value="{$fila3.valor}">{$fila3.mostrar}</option>
+							{/if}	
+						{/foreach}
+					</select> 
+				</td>	
+				<!--
+				{if {$alojamientos[i].situacion_alojamiento} neq "OK"}
+					<td><input type="button" name= 'confirma_alo{$smarty.section.i.index}' value="Confirmar"  style="height:20px; width:60px; color:#FFFFFF; background:#0066CC; font-family:Arial; font-weight: bold; font-size:10px; text-align:center; border-radius: 10px 10px 10px 10px;" onClick="NuevoRegistro_Reserva()"/>
+					</td>
+				{else}
+					<td><input type="button" name= 'confirma_alo{$smarty.section.i.index}' value="Modificar"  style="height:20px; width:60px; color:#FFFFFF; background:#0066CC; font-family:Arial; font-weight: bold; font-size:10px; text-align:center; border-radius: 10px 10px 10px 10px;" onClick="NuevoRegistro_Reserva()"/>
+					</td>
+				{/if}
+				-->
+
+
+				{if {$alojamientos[i].interfaz_caracteristica_alojamiento} != null}
+				<td>
+					<input type= 'text' name= 'interfaz_codigo_alojamiento{$smarty.section.i.index}' size='9' class="camposololecturacenter" value="{$alojamientos[i].interfaz_codigo_alojamiento}" readonly>
+				</td>	
+				<!--<td>		
+					<input type= 'text' name= 'interfaz_codigo_alojamiento_alojamiento{$smarty.section.i.index}' size='7' value="{$alojamientos[i].interfaz_codigo_alojamiento_alojamiento}" readonly>
+				</td>	-->
+				<!--<td>
+					<input type= 'text' name= 'interfaz_lineas_alojamiento{$smarty.section.i.index}' size='7' value="{$alojamientos[i].interfaz_lineas_alojamiento}" readonly>
+				</td>	-->
+				<td>
+					<input type= 'text' name= 'interfaz_localizador_alojamiento{$smarty.section.i.index}' size='9' class="camposololecturacenter" value="{$alojamientos[i].interfaz_localizador_alojamiento}" readonly>
+				</td>	
+
+				<td>
+					<input type="button" onclick="window.open('pdf_bono_hotel_Restel.php?loc={$reservas[i].localizador}', '', 'width=780px,height=900px,toolbar=no,scrollbars=yes')"  target="_blank" value="BONO" class="boton" name="boton_documentacion">
+				</td>
+
+				<!--<td style="background:#0066CC; text-align:center; border-radius: 10px 10px 10px 10px;">
+					<a href='mostrar_contenido.php?id_contenido={$destinatarios[i].contenido}' target='_blank' onclick="window.open(this.href, this.target, 'toolbar=0,location=0,status=0,menubar=0,scrollbars=yes,resizable=yes,width=800,height=800'); return false;">
+						<span style='color:white;font-family:Arial;font-weight: bold;font-size:8.0pt;'>Mostrar</span>
+					</a>	
+
+				</td>	-->
+
+
+				<td>
+					<input type= 'text' name= 'interfaz_importe_alojamiento{$smarty.section.i.index}' size='9' class="camposololecturacenter" value="{$alojamientos[i].interfaz_importe_alojamiento}" readonly>
+				</td>
+
+				<td>
+					<input type= 'text' name= 'interfaz_porcentaje_cancelacion_alojamiento{$smarty.section.i.index}' size='8' value="{$alojamientos[i].interfaz_porcentaje_cancelacion_alojamiento}" onChange="seleccionar_4nivel({$smarty.section.i.index})">
+				</td>	
+
+				<td>
+					<input type= 'text' name= 'interfaz_localizador_baja_alojamiento{$smarty.section.i.index}' size='10' value="{$alojamientos[i].interfaz_localizador_baja_alojamiento}" onChange="seleccionar_4nivel({$smarty.section.i.index})">
+				</td>	
+
+				{/if}	
+
+				<td align = "center">
+					<input type= 'checkbox' name= 'borrar_4nivel{$smarty.section.i.index}' value="" onChange="desmarcarSeleccion_4nivel({$smarty.section.i.index})">
+					<input type= 'hidden' name= 'borra_4nivel{$smarty.section.i.index}' value="N">
+				</td>
+
+
+			</tr>
+			{/section}
+
+		</table>
+
+
+		{section name=i loop=$reservas}
+
+		<table width="75%" border = "0" align = "left" height="4">
+				<tr height="30">
+					<td>
+						<img width="100%" height="3" alt="" src="imagenes/cghes.gif">
+					</td>
+					<td width="100%">
+						<img width="100%" height="3" alt="" src="imagenes/cghec.gif">
+					</td>
+
+				{section name=i loop=$reservas}	
+				{if {$reservas[i].bloqueada} eq "Si" and {$usuario} eq {$reservas[i].bloqueada_usuario}}
+ 					<td>
+						<input type="button" id="boton_anadir_alojamiento" value="Añadir alojamiento" class="boton" onClick="mostrarOcultar('seccion_anadir_alojamiento')"/>
+					</td>
+				{/if}
+				{/section}
+
+					<td>
+						<img width="50" height="3" alt="" src="imagenes/cghee.gif">
+					</td>
+
+				</tr>
+		</table>
+
+
+		<div id='seccion_anadir_alojamiento' style="display: {$seccion_anadir_alojamiento_display}">
+		<input type= 'hidden' name= 'seccion_anadir_alojamiento_display' value="{$seccion_anadir_alojamiento_display}">
+
+		<table width="100%" border = "0" align = "left" height="4">
+				<tr height="10">
+
+					<th width="65" align = "left">F.Desde</th>
+					<td align = "left">
+						<input type= 'text' id= 'busca_alojamiento_fecha_desde' name= 'busca_alojamiento_fecha_desde' size='8' onkeypress="return CancelSubmit(event)">
+
+						<img id="botonbuscaalojamientosdesde{$smarty.section.i.index}" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'busca_alojamiento_fecha_desde',
+							button : "botonbuscaalojamientosdesde{$smarty.section.i.index}",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>
+					</td>
+
+					<th width="65" align = "left">F.Hasta</th>
+					<td align = "left">
+						<input type= 'text' id= 'busca_alojamiento_fecha_hasta' size='8' onkeypress="return CancelSubmit(event)">
+
+						<img id="botonbuscaalojamientoshasta{$smarty.section.i.index}" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'busca_alojamiento_fecha_hasta',
+							button : "botonbuscaalojamientoshasta{$smarty.section.i.index}",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>
+					</td>
+
+
+					<!--<th width="65" align = "left">Pais</th>
+					<td align = "left">
+						<select id="busca_alojamiento_pais" align=""  style=" width:150px"> 
+							{foreach from=$comboPaises item=fila}
+								{if {$reservas[i].busca_alojamiento_pais} == {$fila.codigo}}
+									<option value="{$fila.codigo}" selected>{$fila.nombre}</option>
+								{else}
+									<option value="{$fila.codigo}">{$fila.nombre}</option>
+								{/if}
+							{/foreach}
+						</select> 
+					</td>
+
+					<th width="65" align = "left">Provincia</th>
+					<td align = "left">
+						<select id="busca_alojamiento_provincia" align=""  style=" width:150px"> 
+							{foreach from=$comboProvincias item=fila}
+								{if {$reservas[i].busca_alojamiento_provincia} == {$fila.codigo}}
+									<option value="{$fila.codigo}" selected>{$fila.nombre}</option>
+								{else}
+									<option value="{$fila.codigo}">{$fila.nombre}</option>
+								{/if}
+							{/foreach}
+						</select> 
+					</td>
+
+					<th width="65" align = "left">Ciudad</th>
+					<td align = "left">
+						<select id="busca_alojamiento_ciudad" align=""  style=" width:140px"> 
+							{foreach from=$comboCiudades item=fila}
+								{if {$reservas[i].busca_alojamiento_ciudad} == {$fila.codigo}}
+									<option value="{$fila.codigo}" selected>{$fila.nombre}</option>
+								{else}
+									<option value="{$fila.codigo}">{$fila.nombre}</option>
+								{/if}
+							{/foreach}
+						</select> 
+					</td>
+				<tr height="10">
+
+				</tr>
+				<tr height="10">
+					<th width="65" align = "left">Categoria</th>
+					<td align = "left" colspan="1">
+						<select id="busca_alojamiento_categoria" align=""  style=" width:100px"> 
+							{foreach from=$comboCategorias item=fila}
+								{if {$reservas[i].busca_alojamiento_categoria} == {$fila.codigo}}
+									<option value="{$fila.codigo}" selected>{$fila.nombre}</option>
+								{else}
+									<option value="{$fila.codigo}">{$fila.nombre}</option>
+								{/if}
+							{/foreach}
+						</select> 
+					</td>
+
+					<th width="65" align = "left">Situacion</th>
+					<td align = "left">
+						<select id="busca_alojamiento_situacion" align=""  style=" width:100px"> 
+							{foreach from=$comboSituacion item=fila}
+								{if {$reservas[i].busca_alojamiento_situacion} == {$fila.codigo}}
+									<option value="{$fila.codigo}" selected>{$fila.nombre}</option>
+								{else}
+									<option value="{$fila.codigo}">{$fila.nombre}</option>
+								{/if}
+							{/foreach}
+						</select> 
+					</td>-->
+
+					<th width="65" align = "left">Alojamiento</th>
+					<td align = "left">
+						<!--<select id="busca_alojamiento_alojamiento" align=""  style=" width:150px"> 
+							{foreach from=$comboAlojamientos item=fila}
+								{if {$reservas[i].busca_alojamiento_alojamiento} == {$fila.id}}
+									<option value="{$fila.id}" selected>{$fila.nombre}</option>
+								{else}
+									<option value="{$fila.id}">{$fila.nombre}</option>
+								{/if}
+							{/foreach}
+						</select> -->
+						<input type= 'text' id= 'busca_alojamiento_alojamiento' name= 'busca_alojamiento_alojamiento' size='40' value="">
+					</td>
+
+					<th width="65" align = "left">Consulta</th>
+					<td align = "left">
+						<select id="busca_alojamiento_consulta" name="busca_alojamiento_consulta" align=""  style=" width:150px"> 
+							{foreach from=$comboTipo_consulta_alojamientos item=fila}
+								{if {$reservas[i].busca_alojamiento_consulta} == {$fila.valor}}
+									<option value="{$fila.valor}" selected>{$fila.mostrar}</option>
+								{else}
+									<option value="{$fila.valor}">{$fila.mostrar}</option>
+								{/if}
+							{/foreach}
+						</select> 
+
+					</td>
+
+					<td align = "left" colspan="2">
+
+						<input type="button" id="boton_buscar_alojamiento" value="BUSCAR ALOJAMIENTO" class="boton" onClick="Cargar_busqueda_alojamientos()"/>
+	
+						<img id="ajax_load_alojamientos" src="imagenes/ajax_load.gif" style="display:none"/>
+					</td>
+
+				</tr>
+				<tr height="10">
+
+				</tr>
+				<tr height="30">
+
+					<td colspan="11">
+						<div id="pageContentAlojamientos"></div>
+						<input type= 'hidden' name= 'Añadir_Reserva_Alojamiento'/>
+					</td>
+				</tr>
+
+		</table>
+		</div>
+
+	
+			{/section}
+
+
+<!-------------------------------------------------------------->
+<!-------------------------------------------------------------->
+<!-------------------------SERVICIOS------------------------->
+<!-------------------------------------------------------------->
+
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" style="padding:15px 0px 15px 0px;">
+			<tbody>
+				<tr >
+					<td>
+						<img width="15" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+
+					<td align='center' bgcolor='#333399' width="15%" height="23px" style="color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+							<font color='#CCFFFF' size='3'><B><I>Servicios</I></B></font>
+					</td>
+					
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+				{section name=i loop=$reservas}	
+				{if {$reservas[i].bloqueada} eq "Si" and {$usuario} eq {$reservas[i].bloqueada_usuario}}
+					<td>
+						<input type="button" id="boton_grabar_servicios" value="GRABAR" class="boton" onClick="Reserva_grabar_servicios()"/>
+					</td>
+				{/if}
+				{/section}	
+					<td>
+						<input type= "hidden" name= "actuar_5nivel" value="">
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+				<tr height="10"></tr>
+			</tbody>
+		</table>
+	
+		{$mensaje1_servicios}
+		{$mensaje2_servicios}
+
+		<table>
+			<tr class="cabeceratabla">
+				<th>Sel</th>
+				<th>Fecha</th>
+				<th>Ord</th>
+				<th>Proveedor</th>
+				<th>Servicio</th>
+				<th>Pax</th>
+				<th>Adu</th>
+				<th>Niñ</th>
+				<th>Veces</th>
+				<th>Sit.</th>
+				<th>Tipo Ac.</th>
+				<th>Pvp</th>
+				<th>Tipo Pvp</th>
+				<th>Borrar</th>
+			</tr>
+
+
+
+			{section name=i loop=$servicios}
+			<tr>
+				<td align = "center">
+					<input type= 'checkbox' name= 'seleccion_5nivel{$smarty.section.i.index}' value="" onChange="desmarcarBorrar_5nivel({$smarty.section.i.index})">
+					<input type= 'hidden' name= 'selec_5nivel{$smarty.section.i.index}' value="N">
+				</td>
+				<td><input type= 'text' name= 'servicios_fecha{$smarty.section.i.index}' size='10' value="{$servicios[i].servicios_fecha}" class="camposololecturacenter"  readonly>
+				</td>
+
+				<td><input type= 'text' name= 'servicios_orden{$smarty.section.i.index}' size='2' value="{$servicios[i].servicios_orden}" style=" text-align:center" onChange="seleccionar_5nivel({$smarty.section.i.index})">
+				<input type= 'hidden' name= 'servicios_clave{$smarty.section.i.index}' value="{$servicios[i].servicios_clave}">
+				</td>
+
+				<td><input type= 'text' name= 'servicios_nombre_proveedor{$smarty.section.i.index}' size='30' value="{$servicios[i].servicios_nombre_proveedor}" class="camposololecturatext" readonly>
+				</td>
+
+				<td><input type= 'text' name= 'servicios_nombre_servicio{$smarty.section.i.index}' size='35' value="{$servicios[i].servicios_nombre_servicio}" class="camposololecturatext" readonly>
+					<input type= 'hidden' name= 'servicios_id_servicio{$smarty.section.i.index}' value="{$servicios[i].servicios_id_servicio}">
+				</td>
+
+				<td><input type= 'text' name= 'servicios_pax{$smarty.section.i.index}' size='2' value="{$servicios[i].servicios_pax}" class="camposololecturanumber" readonly>
+				</td>
+
+				<td><input type= 'text' name= 'servicios_adultos{$smarty.section.i.index}' size='2' value="{$servicios[i].servicios_adultos}" style=" text-align:right" onChange="seleccionar_5nivel({$smarty.section.i.index})">
+				</td>
+
+				<td><input type= 'text' name= 'servicios_ninos{$smarty.section.i.index}' size='2' value="{$servicios[i].servicios_ninos}" style=" text-align:right" onChange="seleccionar_5nivel({$smarty.section.i.index})">
+				</td>
+
+				<td><input type= 'text' name= 'servicios_veces{$smarty.section.i.index}' size='2' value="{$servicios[i].servicios_veces}" style=" text-align:right" onChange="seleccionar_5nivel({$smarty.section.i.index})">
+				</td>
+
+				<td>
+					<select name= 'servicios_situacion{$smarty.section.i.index}' align="" style=" width:55px" onChange="seleccionar_5nivel({$smarty.section.i.index})"> 
+						{foreach from=$comboSituacion_cupos item=fila3}
+							{if {$servicios[i].servicios_situacion} == {$fila3.valor}}
+								<option value="{$fila3.valor}" selected>{$fila3.mostrar}</option>
+							{else}
+								<option value="{$fila3.valor}">{$fila3.mostrar}</option>
+							{/if}	
+						{/foreach}
+					</select> 
+				</td>
+
+				<td><input type= 'text' name= 'servicios_tipo_cupo{$smarty.section.i.index}' size='12' value="{$servicios[i].servicios_tipo_cupo}" class="camposololecturacenter"  readonly>
+
+				<td><input type= 'text' name= 'servicios_pvp_total{$smarty.section.i.index}' size='7' value="{$servicios[i].servicios_pvp_total}" class="camposololecturanumber" onChange="seleccionar_5nivel({$smarty.section.i.index})">
+				</td>
+
+				<td>
+					<select name= 'servicios_tipo_precio{$smarty.section.i.index}' align="" style=" width:100px" onChange="seleccionar_5nivel({$smarty.section.i.index})"> 
+						{foreach from=$comboTipo_precios_reserva item=fila3}
+							{if {$servicios[i].servicios_tipo_precio} == {$fila3.valor}}
+								<option value="{$fila3.valor}" selected>{$fila3.mostrar}</option>
+							{else}
+								<option value="{$fila3.valor}">{$fila3.mostrar}</option>
+							{/if}	
+						{/foreach}
+					</select> 
+				</td>				
+				
+				<td align = "center">
+					<input type= 'checkbox' name= 'borrar_5nivel{$smarty.section.i.index}' value="" onChange="desmarcarSeleccion_5nivel({$smarty.section.i.index})">
+					<input type= 'hidden' name= 'borra_5nivel{$smarty.section.i.index}' value="N">
+				</td>
+
+
+			</tr>
+			{/section}
+
+		</table>
+
+		{section name=i loop=$reservas}
+
+		<table width="75%" border = "0" align = "left" height="4">
+				<tr height="30">
+					<td>
+						<img width="100%" height="3" alt="" src="imagenes/cghes.gif">
+					</td>
+					<td width="100%">
+						<img width="100%" height="3" alt="" src="imagenes/cghec.gif">
+					</td>
+
+				{section name=i loop=$reservas}	
+				{if {$reservas[i].bloqueada} eq "Si" and {$usuario} eq {$reservas[i].bloqueada_usuario}}
+ 					<td>
+						<input type="button" id="boton_anadir_servicio" value="Añadir servicio" class="boton" onClick="mostrarOcultar('seccion_anadir_servicio')"/>
+					</td>
+				{/if}
+				{/section}	
+
+					<td>
+						<img width="50" height="3" alt="" src="imagenes/cghee.gif">
+					</td>
+
+				</tr>
+		</table>
+
+		<div id='seccion_anadir_servicio' style="display: {$seccion_anadir_servicio_display}">
+		<input type= 'hidden' name= 'seccion_anadir_servicio_display' value="{$seccion_anadir_servicio_display}">
+
+		<table width="90%" border = "0" align = "left" height="4">
+				<tr height="10">
+
+					<th width="50" align = "left">Fecha</th>
+					<td align = "left">
+						<input type= 'text' id= 'busca_servicio_fecha' name= 'busca_servicio_fecha' size='10' onkeypress="return CancelSubmit(event)">
+
+						<img id="botonbuscaserviciofecha{$smarty.section.i.index}" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'busca_servicio_fecha',
+							button : "botonbuscaserviciofecha{$smarty.section.i.index}",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>
+					</td>
+
+					<th width="45" align = "left">Prov.</th>
+					<td align = "left">
+						<select id="busca_servicio_proveedor" name="busca_servicio_proveedor" align=""  style=" width:150px"> 
+							{foreach from=$comboProveedores item=fila}
+								{if {$reservas[i].busca_servicio_proveedor} == {$fila.id}}
+									<option value="{$fila.id}" selected>{$fila.nombre}</option>
+								{else}
+									<option value="{$fila.id}">{$fila.nombre}</option>
+								{/if}
+							{/foreach}
+						</select> 
+					</td>
+
+					<th width="50" align = "left">Codigo</th>
+					<td align = "left">
+						<input type= 'text' id= 'busca_servicio_codigo' name= 'busca_servicio_codigo' size='8' onkeypress="return CancelSubmit(event)">
+					</td>
+
+					<th width="50" align = "left">Tipo</th>
+					<td align = "left">
+						<select id="busca_servicio_tipo" align=""  style=" width:120px"> 
+							{foreach from=$comboTipos_servicios item=fila}
+								{if {$reservas[i].busca_servicio_tipo} == {$fila.codigo}}
+									<option value="{$fila.codigo}" selected>{$fila.nombre}</option>
+								{else}
+									<option value="{$fila.codigo}">{$fila.nombre}</option>
+								{/if}
+							{/foreach}
+						</select> 
+					</td>
+
+					<!--<th width="50" align = "left">Ciudad</th>
+					<td align = "left">
+						<select id="busca_servicio_ciudad" align=""  style=" width:150px"> 
+							{foreach from=$comboCiudades item=fila}
+								{if {$reservas[i].busca_servicio_ciudad} == {$fila.codigo}}
+									<option value="{$fila.codigo}" selected>{$fila.nombre}</option>
+								{else}
+									<option value="{$fila.codigo}">{$fila.nombre}</option>
+								{/if}
+							{/foreach}
+						</select> 
+					</td>-->
+
+					<td align = "left" colspan="2">
+
+						<input type="button" id="boton_buscar_servicio" value="BUSCAR SERVICIO" class="boton" onClick="Cargar_busqueda_servicios()"/>
+	
+						<img id="ajax_load_servicios" src="imagenes/ajax_load.gif" style="display:none"/>
+					</td>
+
+
+				</tr>
+				<tr height="10">
+
+				</tr>
+				<tr height="30">
+
+					<td colspan="12">
+						<div id="pageContentServicios"></div>
+						<input type= 'hidden' name= 'Añadir_Reserva_Servicio'/>
+					</td>
+				</tr>
+
+		</table>
+		</div>
+			{/section}
+
+
+
+
+
+
+
+<!-------------------------------------------------------------->
+<!-------------------------------------------------------------->
+<!-------------------------CONDICIONES------------------------>
+<!-------------------------------------------------------------->
+
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary=""  style="padding:15px 0px 15px 0px;">
+				<tbody>
+					<tr>
+						<td>
+							<img width="10px" height="4" alt="" src="imagenes/cghes.gif">
+						</td>
+
+						<td align='center' bgcolor='#333399' width="25%" height="23px" style="color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+							<font color='#CCFFFF' size='3'><B><I>Desglose de Precios</I></B></font>
+						</td>
+
+
+						<td width="100%">
+							<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+						</td>
+
+
+						<td>
+							<img width="20px" height="4" alt="" src="imagenes/cghee.gif">
+						</td>
+					</tr>
+				</tbody>
+		</table>
+
+
+		<table>
+			<tr class="cabeceratabla">
+				<th>Orden</th>
+				<th>Detalle</th>
+				<th>Persona</th>
+				<th>Cant.</th>
+				<th>Total</th>
+			</tr>
+
+
+
+			{section name=i loop=$condiciones}
+			<tr>
+
+
+				<td><input type= 'text' name= 'habitacion_reserva{$smarty.section.i.index}' size='7' value="{$condiciones[i].habitacion_reserva}" class="camposololecturacenter" readonly>
+				</td>
+				<td><input type= 'text' name= 'detalle{$smarty.section.i.index}' size='60' value="{$condiciones[i].detalle}" class="camposololecturatext" readonly>
+				</td>
+				<td><input type= 'text' name= 'precio_pax{$smarty.section.i.index}' size='10' value="{$condiciones[i].precio_pax}" class="camposololecturanumber" readonly>
+				</td>
+				<td><input type= 'text' name= 'pax{$smarty.section.i.index}' size='10' value="{$condiciones[i].pax}" class="camposololecturanumber" readonly>
+				</td>
+				<td><input type= 'text' name= 'precio_total{$smarty.section.i.index}' size='10' value="{$condiciones[i].precio_total}" class="camposololecturanumber" readonly>
+				</td>
+
+
+			</tr>
+			{/section}
+
+		</table>
+
+
+
+<!-------------------------------------------------------------->
+<!-------------------------------------------------------------->
+<!-------------------------PRECIOS------------------------------>
+<!-------------------------------------------------------------->
+
+
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" style="padding:15px 0px 15px 0px;">
+				<tbody>
+					<tr>
+						<td>
+							<img width="10px" height="4" alt="" src="imagenes/cghes.gif">
+						</td>
+
+						<td align='center' bgcolor='#333399' width="15%" height="23px" style="color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+							<font color='#CCFFFF' size='3'><B><I>Precios</I></B></font>
+						</td>
+
+
+						<td width="100%">
+							<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+						</td>
+
+
+						<td>
+							<img width="20px" height="4" alt="" src="imagenes/cghee.gif">
+						</td>
+					</tr>
+				</tbody>
+		</table>
+
+		{section name=i loop=$reservas}
+
+
+		<table width="85%" border = "0" align = "left" height="40" class="Preciosreserva">
+
+				<tr height="30">
+					<th width="100" align = "center"></th>
+					<th width="130" align = "center">Pvp</th>
+					<th width="130" align = "center">Comisionable</th>
+					<th width="130" align = "center">No comisionable</th>
+					<th width="90" align = "center">Comision</th>
+					<th width="130" align = "center">Importe comision</th>
+					<th width="130" align = "center">Impuesto comision</th>
+					<th width="130" align = "center">Total</th>
+					<th width="130" align = "center">Divisa</th>
+				</tr>
+
+				<tr height="30">
+					<th width="100" align = "left">Calculados</th>
+					<td width="130" align = "left"><input type= 'text' name= 'calculado_pvp{$smarty.section.i.index}' size='10' class="camposololecturanumber" value="{$reservas[i].calculado_pvp}" readonly></td>
+					<td width="130" align = "left"><input type= 'text' name= 'pvp_calculado_comisionable{$smarty.section.i.index}' size='16' class="camposololecturanumber" value="{$reservas[i].pvp_calculado_comisionable}" readonly></td>
+					<td width="130" align = "left"><input type= 'text' name= 'pvp_calculado_no_comisionable{$smarty.section.i.index}' size='16' class="camposololecturanumber" value="{$reservas[i].pvp_calculado_no_comisionable}" readonly></td>
+					<td width="90" align = "left"><input type= 'text' name= 'pvp_calculado_comision{$smarty.section.i.index}' size='7' class="camposololecturanumber" value="{$reservas[i].pvp_calculado_comision}" readonly></td>
+					<td width="130" align = "left"><input type= 'text' name= 'pvp_calculado_importe_comision{$smarty.section.i.index}' size='16' class="camposololecturanumber" value="{$reservas[i].pvp_calculado_importe_comision}" readonly></td>
+					<td width="130" align = "left"><input type= 'text' name= 'pvp_calculado_impuesto_comision{$smarty.section.i.index}' size='16' class="camposololecturanumber" value="{$reservas[i].pvp_calculado_impuesto_comision}" readonly></td>
+					<td width="130" align = "left"><input type= 'text' name= 'pvp_calculado_total{$smarty.section.i.index}' size='16' class="camposololecturanumber" value="{$reservas[i].pvp_calculado_total}" readonly></td>
+					<!--<td>
+						<select name= 'divisa_base{$smarty.section.i.index}' align="" style=" width:130px" readonly> 
+							{foreach from=$comboDivisas item=fila3}
+								{if {$reservas[i].divisa_base} == {$fila3.codigo}}
+									<option value="{$fila3.codigo}" selected>{$fila3.nombre}</option>
+								{else}
+									<option value="{$fila3.codigo}">{$fila3.nombre}</option>
+								{/if}	
+							{/foreach}
+						</select> 
+					</td>-->
+					<td width="130" align = "left"><input type= 'text' name= 'divisa_base{$smarty.section.i.index}' size='15' class="camposololecturatext" value="{$reservas[i].divisa_base}" readonly></td>
+				</tr>
+
+				<tr height="30">
+					<th width="100" align = "left">Finales</th>
+					<td width="130" align = "left"><input type= 'text' name= 'pvp{$smarty.section.i.index}' size='10' class="camposololecturanumber" value="{$reservas[i].pvp}" readonly></td>
+					<td width="130" align = "left"><input type= 'text' id= 'pvp_comisionable{$smarty.section.i.index}' name= 'pvp_comisionable{$smarty.section.i.index}' size='16' class="camposololecturanumber" value="{$reservas[i].pvp_comisionable}" readonly></td>
+					<td width="130" align = "left"><input type= 'text' name= 'pvp_no_comisionable{$smarty.section.i.index}' size='16' class="camposololecturanumber" value="{$reservas[i].pvp_no_comisionable}" readonly></td>
+					<td width="90" align = "left"><input type= 'text' name= 'pvp_comision{$smarty.section.i.index}' size='7' class="camposololecturanumber" value="{$reservas[i].pvp_comision}" readonly></td>
+					<td width="130" align = "left"><input type= 'text' name= 'pvp_importe_comision{$smarty.section.i.index}' size='16' class="camposololecturanumber" value="{$reservas[i].pvp_importe_comision}" readonly></td>
+					<td width="130" align = "left"><input type= 'text' name= 'pvp_impuesto_comision{$smarty.section.i.index}' size='16' class="camposololecturanumber" value="{$reservas[i].pvp_impuesto_comision}" readonly></td>
+					<td width="130" align = "left"><input type= 'text' name= 'pvp_total{$smarty.section.i.index}' size='16' class="camposololecturanumber" value="{$reservas[i].pvp_total}" readonly></td>
+					<td>
+						<select name= 'divisa_actual{$smarty.section.i.index}' align="" style=" width:130px" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboDivisas item=fila3}
+								{if {$reservas[i].divisa_actual} == {$fila3.codigo}}
+									<option value="{$fila3.codigo}" selected>{$fila3.nombre}</option>
+								{else}
+									<option value="{$fila3.codigo}">{$fila3.nombre}</option>
+								{/if}	
+							{/foreach}
+						</select> 
+					</td>
+				</tr>
+
+				<tr height="30">
+					<th width="100" align = "left" colspan="6"></th>
+						<td width="130" align = "left"><input type= 'text' name= 'precobro{$smarty.section.i.index}' size='16' class="camposololecturacenter"  value="{$reservas[i].precobro}" readonly></td>
+				</tr>
+		</table>
+
+		<table width="90%" border = "0" align = "left" height="40" style="clear:both">
+
+				<tr height="40" align="left">
+					<th width="140" align = "left" colspan= "2">Solicitud de modificacion de precios</th>
+					<td>
+						<select name= 'modificar{$smarty.section.i.index}' align="" style=" width:55px" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila3}
+								{if {$reservas[i].modificar} == {$fila3.valor}}
+									<option value="{$fila3.valor}" selected>{$fila3.mostrar}</option>
+								{else}
+									<option value="{$fila3.valor}">{$fila3.mostrar}</option>
+								{/if}	
+							{/foreach}
+						</select> 
+					</td>
+					<th width="80" align = "left" colspan= "1">Motivo</th>
+					<td width="110" align = "left"><input type= 'text' name= 'modificacion_motivo{$smarty.section.i.index}' size='60' style=" text-align:left" value="{$reservas[i].modificacion_motivo}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					<th width="40" align = "left" colspan= "1">Resp.</th>
+					<td width="130" align = "left"><input type= 'text' name= 'modificacion_responsable{$smarty.section.i.index}' size='10' class="camposololecturacenter"  value="{$reservas[i].modificacion_responsable}" readonly></td>
+				</tr>
+
+				<tr height="30">
+					<th width="140" align = "left" colspan= "1">comisionable</th>
+					<td width="130" align = "left"><input type= 'text' name= 'modificar_comisionable{$smarty.section.i.index}' size='16' style=" text-align:right" value="{$reservas[i].modificar_comisionable}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					<th width="120" align = "left" colspan= "1">Detalle factura</th>
+					<td width="130" align = "left" colspan="2"><input type= 'text' name= 'modificar_detalle_comisionable{$smarty.section.i.index}' size='50' style=" text-align:left" value="{$reservas[i].modificar_detalle_comisionable}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					<th width="40" align = "left" colspan= "1">Free</th>
+					<td>
+						<select name= 'free{$smarty.section.i.index}' align="" style=" width:55px" onChange="seleccionar({$smarty.section.i.index})"> 
+							{foreach from=$comboSino item=fila3}
+								{if {$reservas[i].free} == {$fila3.valor}}
+									<option value="{$fila3.valor}" selected>{$fila3.mostrar}</option>
+								{else}
+									<option value="{$fila3.valor}">{$fila3.mostrar}</option>
+								{/if}	
+							{/foreach}
+						</select> 
+					</td>
+				</tr>
+				<tr height="30">
+					<th width="140" align = "left" colspan= "1">No comisionable</th>
+					<td width="130" align = "left"><input type= 'text' name= 'modificar_no_comisionable{$smarty.section.i.index}' size='16' style=" text-align:right" value="{$reservas[i].modificar_no_comisionable}" onChange="seleccionar({$smarty.section.i.index})"></td>
+					<th width="120" align = "left" colspan= "1">Detalle factura</th>
+					<td width="130" align = "left" colspan="2"><input type= 'text' name= 'modificar_detalle_no_comisionable{$smarty.section.i.index}' size='50' style=" text-align:left" value="{$reservas[i].modificar_detalle_no_comisionable}" onChange="seleccionar({$smarty.section.i.index})"></td>
+				</tr>
+				<tr height="30">
+					<th width="140" align = "left" colspan= "1">Comision</th>
+					<td width="130" align = "left"><input type= 'text' name= 'modificar_comision{$smarty.section.i.index}' size='16' style=" text-align:right" value="{$reservas[i].modificar_comision}" onChange="seleccionar({$smarty.section.i.index})"></td>
+
+
+				</tr>
+
+		</table>
+
+
+		{/section}
+
+
+
+
+		<table width="100%" cellspacing="0" cellpadding="0" border="0" summary="" style="clear:both">
+			<tbody>
+				<tr height="50">
+					<td>
+						<img width="50" height="6" alt="" src="imagenes/cghes.gif">
+					</td>
+					<td width="100%">
+						<img width="100%" height="6" alt="" src="imagenes/cghec.gif">
+					</td>
+					
+				{section name=i loop=$reservas}	
+				{if {$reservas[i].bloqueada} eq "Si" and {$usuario} eq {$reservas[i].bloqueada_usuario}}
+					<td>
+						<input type="button" id="boton_grabar_final" value="GRABAR" class="boton" onClick="Reserva_grabar_Tipo_Registro_final()"/>
+					</td>
+					<td>
+						<img width="25" height="6" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<input type="button" id="boton_actualizar_final" value="ACUALIZAR PRECIOS" class="boton" onClick="Actualizar_Precios()"/>
+					</td>
+
+				{/if}
+				{/section}	
+					<td>
+						<img width="25" height="6" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<img width="50" height="6" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<table width="100%" cellspacing="0" cellpadding="0" border="0" summary="" style="clear:both">
+			<tbody>
+				<tr>
+					<td>
+						<img width="200" height="2" alt="" src="imagenes/cghes.gif">
+					</td>
+					<td width="100%">
+						<img width="100%" height="2" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<img width="100" height="2" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		{include file="$pie"}
+	</form>
+
+ </BODY>
+</HTML>
+
+
+
+

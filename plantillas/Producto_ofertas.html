@@ -1,0 +1,414 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 5.0 Transitional//EN">
+<HTML>
+
+
+
+ <HEAD>
+  <meta charset="utf-8">
+  <TITLE> Menú </TITLE>
+  <META NAME="Generator" CONTENT="EditPlus">
+  <META NAME="Author" CONTENT="Jose de Frias">
+  <META NAME="Keywords" CONTENT="">
+  <META NAME="Description" CONTENT="">
+  <link rel="StyleSheet" href="css/comun.css">
+  <script type="text/javascript" src="funciones_js/funciones.js"></script>
+  <script type="text/javascript" src="funciones_js_ajax/Ofertas.js"></script>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+ <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+
+  <link rel="StyleSheet" href="css/calendario/calendar-blue2.css">
+  <script type="text/javascript" src="funciones_js/calendario/calendar.js"></script>
+  <script type="text/javascript" src="funciones_js/calendario/calendar-es.js"></script>
+  <script type="text/javascript" src="funciones_js/calendario/calendar-setup.js"></script>
+  <link rel="shortcut icon" type="image/x-icon" href="imagenes/favicon_hit.ico">
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+ </HEAD>
+
+<body background="imagenes/fondo.jpg">
+
+	{include file="$cabecera"}
+	{include file="$menu"}
+
+	<form name="mantenimiento_tabla" method = "post" action="">
+		
+		<table border = "0" align = "left">
+			<tr>
+				<td>
+					<input type=image src="imagenes/selector_inicio2.jpg" width="25" height="15" onclick="Selector(1);">
+					<input type= "hidden" name= "botonSelector" value="0">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_anterior2.jpg" width="25" height="15" onclick="Selector(2);">	
+				</td>			
+				<td>
+					<select name="filadesde" align="" onchange="submit();"> 
+						{foreach from=$combo item=fila}
+							<!--<option value="{$fila.inicio}">{$fila.inicio} - {$fila.fin}</option>-->
+							
+							{if {$filades} == {$fila.inicio}}
+								<option value="{$fila.inicio}" selected>{$fila.inicio} - {$fila.fin}</option>
+							{else}
+								<option value="{$fila.inicio}">{$fila.inicio} - {$fila.fin}</option>
+							{/if}
+							
+						{/foreach}
+					</select> 
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_siguiente2.jpg" width="25" height="15" onclick="Selector(3);">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_fin2.jpg" width="25" height="15" onclick="Selector(4);">
+				</td>
+				<td>
+					<th>&nbsp;&nbsp;&nbsp;</th>
+				</td>
+				<td>
+					<th>Tipo:</th>
+				</td>
+
+				<td>
+					<select name="buscar_tipo" onChange="submit();"> 
+						{foreach from=$comboTipo item=fila11}
+							{if {$buscar_tipo} == {$fila11.valor}}
+								<option value="{$fila11.valor}" selected>{$fila11.mostrar}</option>
+							{else}
+								<option value="{$fila11.valor}">{$fila11.mostrar}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>
+
+				<td>
+					<th>&nbsp;&nbsp;&nbsp;</th>
+				</td>
+				<td>
+					<th>Estado:</th>
+				</td>
+
+				<td>
+					<select name="buscar_estado" onChange="submit();"> 
+						{foreach from=$comboActividad item=fila11}
+							{if {$buscar_estado} == {$fila11.valor}}
+								<option value="{$fila11.valor}" selected>{$fila11.mostrar}</option>
+							{else}
+								<option value="{$fila11.valor}">{$fila11.mostrar}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>
+
+			</tr>
+		</table>
+
+		<BR>	
+
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" class="lineatitulo">
+			<tbody>
+				<tr>
+					<td>
+						<img width="20" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+
+
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_buscar.jpg" width="70" height="25">-->
+						<input type="button" id="boton_buscar" value="BUSCAR" class="boton" onClick="Buscar_general()"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_grabar.jpg" width="70" height="25" onClick="grabar()">-->
+						<input type="button" id="boton_grabar" value="GRABAR" class="boton" onClick="grabar()"/>
+						<input type= "hidden" name= "actuar" value="">
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_salir.jpg" width="70" height="25" onClick="salir('S')">-->
+						<input type= "hidden" name= "ir_a" value="">
+					</td>
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		{$mensaje1}
+		{$mensaje2}
+
+		<table border = "0" align = "left" class="fondotabla" style="clear:both">
+			<tr class="cabeceratabla">
+				<th>Sel</th>
+				<th>Orden</th>
+				<th>Tipo</th>
+				<th>Folleto</th>
+				<th>Cuadro</th>
+				<th>Descripcion</th>
+				<th>Desde</th>
+				<th>Hasta</th>
+				<th>Estado</th>
+				<th>Borrar</th>
+			</tr>
+
+			{section name=i loop=$producto_ofertas}
+			<tr>
+				<td align = "center">
+					<input type= 'checkbox' name= 'seleccion{$smarty.section.i.index}' value="" onChange="desmarcarBorrar({$smarty.section.i.index})">
+					<input type= 'hidden' name= 'selec{$smarty.section.i.index}' value="N">
+					<input type= 'hidden' name= 'id{$smarty.section.i.index}' size='2' value="{$producto_ofertas[i].id}">
+				</td>
+				<td><input type= 'text' name= 'orden{$smarty.section.i.index}' size='2' class="center" value="{$producto_ofertas[i].orden}" onChange="seleccionar({$smarty.section.i.index})"></td>
+
+
+				<td>
+					<select name= 'tipo{$smarty.section.i.index}' align="" style="width:120px;" disabled> 
+						{foreach from=$comboTipo item=fila3}
+							{if {$producto_ofertas[i].tipo} == {$fila3.valor}}
+								<option value="{$fila3.valor}" selected>{$fila3.mostrar}</option>
+							{else}
+								<option value="{$fila3.valor}">{$fila3.mostrar}</option>
+							{/if}	
+						{/foreach}
+					</select> 
+				</td>
+
+				<td>
+					<input type= 'hidden' name= 'folleto{$smarty.section.i.index}' size='6' value="{$producto_ofertas[i].folleto}" disabled>
+					<input type= 'text' name= 'nombre_folleto{$smarty.section.i.index}' size='28' value="{$producto_ofertas[i].nombre_folleto}" disabled>
+				</td>
+
+				<td>
+					<input type= 'hidden' name= 'cuadro{$smarty.section.i.index}' size='6' value="{$producto_ofertas[i].cuadro}" onChange="seleccionar({$smarty.section.i.index})">
+					<input type= 'text' name= 'nombre_cuadro{$smarty.section.i.index}' size='30' value="{$producto_ofertas[i].nombre_cuadro}" disabled>
+				</td>
+
+				<td>
+					<input type= 'hidden' name= 'paquete{$smarty.section.i.index}' size='6' value="{$producto_ofertas[i].paquete}">
+
+					<input type= 'hidden' name= 'regimen{$smarty.section.i.index}' size='2' value="{$producto_ofertas[i].regimen}">
+
+					<input type= 'hidden' name= 'ciudad{$smarty.section.i.index}' size='3' value="{$producto_ofertas[i].ciudad}">
+
+					<input type= 'hidden' name= 'proveedor{$smarty.section.i.index}' size='3' value="{$producto_ofertas[i].proveedor}">
+
+					<input type= 'hidden' name= 'codigo_servicio{$smarty.section.i.index}' size='15' value="{$producto_ofertas[i].codigo_servicio}">
+
+					<input type= 'text' name= 'descripcion{$smarty.section.i.index}' size='50' 
+
+					{if {$producto_ofertas[i].tipo} == 'H'}
+						value="{$producto_ofertas[i].descripcion} - {$producto_ofertas[i].regimen}"
+					{else}
+						value="{$producto_ofertas[i].descripcion}"
+					{/if}
+
+					disabled>
+
+
+				</td>
+
+
+				<td>
+
+					<!--<input type= 'text' name= 'desde{$smarty.section.i.index}' size='10' class="center" value="{$producto_ofertas[i].desde}" onChange="seleccionar({$smarty.section.i.index})">-->
+
+					<input type= 'text' id= 'desde{$smarty.section.i.index}' name= 'desde{$smarty.section.i.index}' size='10' style="text-align:center;" value="{$producto_ofertas[i].desde}" onChange="seleccionar({$smarty.section.i.index})">
+				
+						<img id="botondesde{$smarty.section.i.index}" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'desde{$smarty.section.i.index}',
+							button : "botondesde{$smarty.section.i.index}",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>	
+
+				</td>
+
+				<td>
+					<!--<input type= 'text' name= 'hasta{$smarty.section.i.index}' size='10' class="center" value="{$producto_ofertas[i].hasta}" onChange="seleccionar({$smarty.section.i.index})">-->
+
+					<input type= 'text' id= 'hasta{$smarty.section.i.index}' name= 'hasta{$smarty.section.i.index}' size='10' style="text-align:center;" value="{$producto_ofertas[i].hasta}" onChange="seleccionar({$smarty.section.i.index})">
+				
+						<img id="botonhasta{$smarty.section.i.index}" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'hasta{$smarty.section.i.index}',
+							button : "botonhasta{$smarty.section.i.index}",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>	
+
+				</td>
+
+
+
+				<td>
+					<select name= 'estado{$smarty.section.i.index}' align="" style="width:75px;" onChange="seleccionar({$smarty.section.i.index})"> 
+						{foreach from=$comboActividad item=fila3}
+							{if {$producto_ofertas[i].estado} == {$fila3.valor}}
+								<option value="{$fila3.valor}" selected>{$fila3.mostrar}</option>
+							{else}
+								<option value="{$fila3.valor}">{$fila3.mostrar}</option>
+							{/if}	
+						{/foreach}
+					</select> 
+				</td>
+
+
+
+
+				<td align = "center">
+					<input type= 'checkbox' name= 'borrar{$smarty.section.i.index}' value="" onChange="desmarcarSeleccion({$smarty.section.i.index})">
+					<input type= 'hidden' name= 'borra{$smarty.section.i.index}' value="N">
+				</td>
+			</tr>
+			{/section}
+
+
+
+			
+
+			{section name=j loop=$sProducto_ofertasnuevos}
+			<tr>
+				<td align = "center">
+					<input type= 'checkbox' name= 'Nuevoseleccion{$smarty.section.j.index}' value="">
+					<input type= 'hidden' name= 'Nuevoselec{$smarty.section.j.index}' value="N">
+				</td>
+
+				<td><input type= 'text' name= 'Nuevoorden{$smarty.section.j.index}' size='2'  class="center"
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperaorden}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar({$smarty.section.j.index})"></td>
+
+
+
+				<td>
+					<select name= 'Nuevotipo{$smarty.section.j.index}' style="width:120px;"> 
+						{foreach from=$comboTipo item=fila11}
+
+							{if {$recuperatipo} == {$fila11.valor} and {$smarty.section.j.index} == 0}
+								<option value="{$recuperatipo}" selected>{$fila11.mostrar}</option>
+							{else}
+								<option value="{$fila11.valor}">{$fila11.mostrar}</option>
+							{/if}
+
+
+						{/foreach}
+					</select> 
+				</td>
+					
+				<td>
+					<select name= 'Nuevofolleto{$smarty.section.j.index}' style="width:180px;" onChange='carga_cuadros({$smarty.section.j.index})'> 
+						{foreach from=$comboFolletos item=fila11}
+
+							{if {$recuperafolleto} == {$fila11.codigo} and {$smarty.section.j.index} == 0}
+								<option value="{$recuperafolleto}" selected>{$fila11.nombre}</option>
+							{else}
+								<option value="{$fila11.codigo}">{$fila11.nombre}</option>
+							{/if}
+
+
+						{/foreach}
+					</select> 
+				</td>
+
+
+				<td>
+					<select id ='Nuevocuadro{$smarty.section.j.index}' name='Nuevocuadro{$smarty.section.j.index}' style="width:190px;" onChange='carga_paquetes_servicios({$smarty.section.j.index})'>
+					</select>
+					<img id="ajax_load_cuadros{$smarty.section.j.index}" src="imagenes/ajax_load.gif" style="float:right; margin:7px 0px 0px 0px; display:none"/>
+				</td>
+
+				<td>
+					<select id ='Nuevodescripcion{$smarty.section.j.index}' name='Nuevodescripcion{$smarty.section.j.index}' style="width:295px;">
+					</select>
+					<img id="ajax_load_descripcion{$smarty.section.j.index}" src="imagenes/ajax_load.gif" style="float:right; margin:7px 0px 0px 0px; display:none"/>
+				</td>
+
+
+
+				<td><input type= 'text' id= 'Nuevodesde{$smarty.section.j.index}' name= 'Nuevodesde{$smarty.section.j.index}' size='10' 
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperadesde}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar({$smarty.section.j.index})">
+						<img id="botonNuevodesde{$smarty.section.j.index}" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'Nuevodesde{$smarty.section.j.index}',
+							button : "botonNuevodesde{$smarty.section.j.index}",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>	
+				</td>
+
+
+				<td><input type= 'text' id= 'Nuevohasta{$smarty.section.j.index}' name= 'Nuevohasta{$smarty.section.j.index}' size='10' 
+						{if {$smarty.section.j.index} == 0}
+							value="{$recuperadesde}"
+						{else}
+							value=""
+						{/if}
+				onchange="Nuevosseleccionar({$smarty.section.j.index})">
+						<img id="botonNuevohasta{$smarty.section.j.index}" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'Nuevohasta{$smarty.section.j.index}',
+							button : "botonNuevohasta{$smarty.section.j.index}",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>	
+				</td>
+
+				<td>
+					<select name= 'Nuevoestado{$smarty.section.j.index}' style="width:75px;"> 
+						{foreach from=$comboActividad item=fila11}
+
+							{if {$recuperaestado} == {$fila11.valor} and {$smarty.section.j.index} == 0}
+								<option value="{$recuperaestado}" selected>{$fila11.mostrar}</option>
+							{else}
+								<option value="{$fila11.valor}">{$fila11.mostrar}</option>
+							{/if}
+
+
+						{/foreach}
+					</select> 
+				</td>
+
+
+			{/section}
+
+			
+
+		</table>
+
+		{include file="$pie"}
+	</form>
+
+
+ </BODY>
+</HTML>
+
+
+
+

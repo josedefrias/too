@@ -1,0 +1,367 @@
+/*#nav {
+padding:0;
+width: 650px;
+margin: 0 auto;
+list-style:none;
+height: 100%
+position:relative;
+z-index:500;
+font-family:arial, verdana, sans-serif;
+}*/
+
+body,html { height:100%}
+body {
+margin-left:auto;
+margin-right:auto;
+width:96%;
+background-color:#FFFFFF;
+/*margin: 0;
+background: url(imagenes/hts_cabecera1.jpg) top center no-repeat;*/
+}
+
+select {
+font-size: 13px;/*tamaño de la letra del select*/
+color:#660033;/*color de letra*/
+font-family: Arial, Helvetica, sans-serif;
+background-color:#FFFFFF;/*#CCFFFF*/
+}
+
+.lineatitulo {
+	padding:10px;
+
+}
+
+.cabeceratabla {
+	background-color:#C5C5C7;
+	clear:both;
+}
+
+.cabeceratabla_precios {
+	background-color:#333399;
+	color:#FFFFFF; 
+	clear:both;
+}
+
+.subcabeceratabla_precios {
+	background-color:#BEBEBE;
+	color:#000000; 
+}
+
+.celda_precios {
+	background-color:#FFFFFF;
+	color:#000000; 
+	font-weight: bold;
+}
+
+.celda_precios_suplementos {
+	background-color:#FFFFFF;
+	color:#000000; 
+}
+
+.fondotabla {
+	background:#DFDFDF;
+}
+
+.fondotabla2 {
+	background:#E6FFFF
+}
+
+.fondocelda2 {
+	color: #DADADA;
+}
+
+.fondotabla_borde {
+	background-color:#DFDFDF;
+	/*-moz-border-radius: 15px;*/
+	/*border-radius: 15px;*/
+	border:solid 1px #333399;
+	display:block;
+	overflow:hidden;
+	padding:0px 0px 0px 0px;
+
+}
+
+.camposololecturatext {
+	text-align:left; 
+	background:#EFEFEF;
+}
+.camposololecturatextbold {
+	text-align:left; 
+	background:#EFEFEF;
+	font-weight: bold;
+}
+.camposololecturanumber {
+	text-align:right; 
+	background:#EFEFEF;
+}
+.camposololecturanumberbold {
+	text-align:right; 
+	background:#EFEFEF;
+	font-weight: bold;
+}
+.camposololecturacenter {
+	text-align:center; 
+	background:#EFEFEF;
+}
+.camposololecturacenterbold {
+	text-align:center; 
+	background:#EFEFEF;
+	font-weight: bold;
+}
+
+.camposololecturacenterboldgrande {
+	text-align:center; 
+	background:#333399;
+	font-weight: bold;
+	font-size:17px;
+	color:#FFFFFF;
+}
+
+.campotext {
+	text-align:left; 
+}
+.campotextbold {
+	text-align:left; 
+	font-weight: bold;
+}
+.camponumber {
+	text-align:right; 
+}
+.camponumberbold {
+	text-align:right; 
+	font-weight: bold;
+}
+.campocenter {
+	text-align:center; 
+}
+.campocenterbold {
+	text-align:center; 
+	font-weight: bold;
+}
+
+.campocenterbold {
+	text-align:center; 
+	font-weight: bold;
+}
+
+.botones_cuadro {
+	width:100px; 
+	height:22px; 
+	color:#FFFFFF; 
+	background:#333399; 
+	font-family:Arial; 
+	font-weight: bold; 
+	font-size:10px; 
+	text-align:center; 
+	border-radius: 10px 10px 10px 10px;
+}
+
+.botones_cuadro_seleccionado {
+	width:200px; 
+	height:22px; 
+	color:#FFFFFF; 
+	background:#333399; 
+	font-family:Arial;										
+	font-weight: bold; 
+	font-size:15px; 
+	text-align:center; 
+	box-shadow: 8px 5px 25px #000;
+	-moz-box-shadow: -8px -5px 25px #000;
+	-webkit-box-shadow: -8px -5px 25px #000;
+	border-radius: 10px 10px 10px 10px;
+}
+
+.margen_habitaciones_reserva_paquetes {
+	clear:both;
+	margin:10px 5px; 
+}
+
+
+/*body
+{
+margin:0;
+padding:0;
+}
+.right
+{
+float:right;
+width:300px;
+background-color:#b0e0e6;
+}*/
+
+
+#nav {
+padding:0;
+width: 1300px;
+margin:0;
+list-style:none;
+height:27px;
+position:relative;
+z-index:1;
+font-family:arial, verdana, sans-serif;
+}
+/*arial, verdana, sans-serif*/
+
+#nav li.top {display:block; float:left;}
+#nav li a.top_link {
+display:block;
+float:left;
+height:28px;
+line-height:27px;
+color:#ccc;
+text-decoration:none;
+font-size:14px;
+font-weight:bold;
+padding:0 0 0 12px;
+cursor:pointer;
+/*background: url(https://lh3.googleusercontent.com/_dsEG33PDaHw/TZ09RHaFbzI/AAAAAAAABTE/6p3R65Ner8s/blank.png);*/
+/*background: #333399;*/
+ /* Safari 4-5, Chrome 1-9 */ background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#000066), to(#3366CC)); 
+ /* Safari 5.1, Chrome 10+ */ background: -webkit-linear-gradient(top, #000066, #3366CC); 
+ /* Firefox 3.6+ */ background: -moz-linear-gradient(top, #000066, #3366CC); 
+ /* IE 10 */ background: -ms-linear-gradient(top, #000066, #3366CC); 
+ /* Opera 11.10+ */ background: -o-linear-gradient(top, #000066, #3366CC);
+}
+#nav li a.top_link span {
+float:left;
+display:block;
+padding:0 24px 0 12px;
+height:28px;
+/*background:url(https://lh3.googleusercontent.com/_dsEG33PDaHw/TZ09RHaFbzI/AAAAAAAABTE/6p3R65Ner8s/blank.png) right top;*/
+/*background:#333399 right top;*/
+ /* Safari 4-5, Chrome 1-9 */ background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#000066), to(#3366CC)) right top; 
+ /* Safari 5.1, Chrome 10+ */ background: -webkit-linear-gradient(top, #000066, #3366CC) right top; 
+ /* Firefox 3.6+ */ background: -moz-linear-gradient(top, #000066, #3366CC) right top; 
+ /* IE 10 */ background: -ms-linear-gradient(top, #000066, #3366CC) right top; 
+ /* Opera 11.10+ */ background: -o-linear-gradient(top, #000066, #3366CC) right top;
+}
+#nav li a.top_link span.down {
+float:left;
+display:block;
+padding:0 24px 0 12px;
+height:28px;
+/*background:url(https://lh4.googleusercontent.com/_dsEG33PDaHw/TZ09Rc6Bo-I/AAAAAAAABTM/Hw8Z7P-ArJY/blanka.png) no-repeat right top;*/
+/*background:#333399 no-repeat right top;*/
+ /* Safari 4-5, Chrome 1-9 */ background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#000066), to(#3366CC)) right top; 
+ /* Safari 5.1, Chrome 10+ */ background: -webkit-linear-gradient(top, #000066, #3366CC) right top; 
+ /* Firefox 3.6+ */ background: -moz-linear-gradient(top, #000066, #3366CC) right top; 
+ /* IE 10 */ background: -ms-linear-gradient(top, #000066, #3366CC) right top; 
+ /* Opera 11.10+ */ background: -o-linear-gradient(top, #000066, #3366CC) right top;
+}
+/*#nav li a.top_link:hover {color:#fff; background: url(https://lh6.googleusercontent.com/_dsEG33PDaHw/TZ09ROu843I/AAAAAAAABTA/YiHQiVi2PvA/blank_over.png) no-repeat;}
+#nav li a.top_link:hover span {background:url(https://lh6.googleusercontent.com/_dsEG33PDaHw/TZ09ROu843I/AAAAAAAABTA/YiHQiVi2PvA/blank_over.png) no-repeat right top;}
+#nav li a.top_link:hover span.down {background:url(https://lh5.googleusercontent.com/_dsEG33PDaHw/TZ09RW6ujwI/AAAAAAAABTI/ZhMxmj3L_UU/blank_overa.png) no-repeat right top;}*/
+
+#nav li a.top_link:hover {
+color:#fff; 
+/*background: #000066 no-repeat;*/
+ /* Safari 4-5, Chrome 1-9 */ background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#3366CC), to(#000066)) no-repeat; 
+ /* Safari 5.1, Chrome 10+ */ background: -webkit-linear-gradient(top, #3366CC, #000066) no-repeat; 
+ /* Firefox 3.6+ */ background: -moz-linear-gradient(top, #3366CC, #000066) no-repeat; 
+ /* IE 10 */ background: -ms-linear-gradient(top, #3366CC, #000066) no-repeat; 
+ /* Opera 11.10+ */ background: -o-linear-gradient(top, #3366CC, #000066) no-repeat;
+}
+#nav li a.top_link:hover span {
+/*background: #000066 no-repeat right top;*/
+ /* Safari 4-5, Chrome 1-9 */ background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#3366CC), to(#000066)) right top;
+ /* Safari 5.1, Chrome 10+ */ background: -webkit-linear-gradient(top, #3366CC, #000066) right top; 
+ /* Firefox 3.6+ */ background: -moz-linear-gradient(top, #3366CC, #000066) right top;
+ /* IE 10 */ background: -ms-linear-gradient(top, #3366CC, #000066) right top;
+ /* Opera 11.10+ */ background: -o-linear-gradient(top, #3366CC, #000066) right top;
+}
+#nav li a.top_link:hover span.down {
+/*background:#000066 no-repeat right top;*/
+ /* Safari 4-5, Chrome 1-9 */ background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#3366CC), to(#000066)) right top;
+ /* Safari 5.1, Chrome 10+ */ background: -webkit-linear-gradient(top, #3366CC, #000066) right top; 
+ /* Firefox 3.6+ */ background: -moz-linear-gradient(top, #3366CC, #000066) right top;
+ /* IE 10 */ background: -ms-linear-gradient(top, #3366CC, #000066) right top;
+ /* Opera 11.10+ */ background: -o-linear-gradient(top, #3366CC, #000066) right top;
+}
+
+/*#nav li:hover > a.top_link {color:#fff; background: url(https://lh6.googleusercontent.com/_dsEG33PDaHw/TZ09ROu843I/AAAAAAAABTA/YiHQiVi2PvA/blank_over.png) no-repeat;}
+#nav li:hover > a.top_link span {background:url(https://lh6.googleusercontent.com/_dsEG33PDaHw/TZ09ROu843I/AAAAAAAABTA/YiHQiVi2PvA/blank_over.png) no-repeat right top;}
+#nav li:hover > a.top_link span.down {background:url(https://lh5.googleusercontent.com/_dsEG33PDaHw/TZ09RW6ujwI/AAAAAAAABTI/ZhMxmj3L_UU/blank_overa.png) no-repeat right top;}*/
+
+#nav li:hover > a.top_link {
+color:#fff; 
+/*background: #000066 no-repeat;*/
+ /* Safari 4-5, Chrome 1-9 */ background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#3366CC), to(#000066)) no-repeat; 
+ /* Safari 5.1, Chrome 10+ */ background: -webkit-linear-gradient(top, #3366CC, #000066) no-repeat; 
+ /* Firefox 3.6+ */ background: -moz-linear-gradient(top, #3366CC, #000066) no-repeat; 
+ /* IE 10 */ background: -ms-linear-gradient(top, #3366CC, #000066) no-repeat; 
+ /* Opera 11.10+ */ background: -o-linear-gradient(top, #3366CC, #000066) no-repeat;
+}
+#nav li:hover > a.top_link span {
+/*background: #000066 no-repeat right top;*/
+ /* Safari 4-5, Chrome 1-9 */ background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#3366CC), to(#000066)) right top;
+ /* Safari 5.1, Chrome 10+ */ background: -webkit-linear-gradient(top, #3366CC, #000066) right top; 
+ /* Firefox 3.6+ */ background: -moz-linear-gradient(top, #3366CC, #000066) right top;
+ /* IE 10 */ background: -ms-linear-gradient(top, #3366CC, #000066) right top;
+ /* Opera 11.10+ */ background: -o-linear-gradient(top, #3366CC, #000066) right top;
+}
+#nav li:hover > a.top_link span.down {
+/*background: #000066 no-repeat right top;*/
+ /* Safari 4-5, Chrome 1-9 */ background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#3366CC), to(#000066)) right top;
+ /* Safari 5.1, Chrome 10+ */ background: -webkit-linear-gradient(top, #3366CC, #000066) right top; 
+ /* Firefox 3.6+ */ background: -moz-linear-gradient(top, #3366CC, #000066) right top;
+ /* IE 10 */ background: -ms-linear-gradient(top, #3366CC, #000066) right top;
+ /* Opera 11.10+ */ background: -o-linear-gradient(top, #3366CC, #000066) right top;
+}
+
+
+
+#nav li:hover {position:relative; z-index:2;}
+#nav ul,
+#nav li:hover ul ul,
+#nav li:hover ul li:hover ul ul,
+#nav li:hover ul li:hover ul li:hover ul ul,
+#nav li:hover ul li:hover ul li:hover ul li:hover ul ul
+{position:absolute; left:-9999px; top:-9999px; width:0; height:0x; margin:0; padding:0; list-style:none;font-size:14px;}
+
+#nav li:hover ul.sub{
+left:0;
+top:28px;
+background: #fff;
+padding:3px;
+/*border:1px solid #3a93d2;*/
+border:3px solid #000066;
+
+white-space:nowrap;
+width:120px;
+height:auto;
+z-index:3;
+}
+#nav li:hover ul.sub li{
+display:block;
+height:20px;
+position:relative;
+float:left;
+width:120px;
+font-weight:normal;
+}
+#nav li:hover ul.sub li a{
+display:block;
+font-size:12px;
+height:20px;
+width:120px;
+line-height:20px;
+text-indent:5px;
+color:#000;
+text-decoration:none;
+}
+#nav li ul.sub li a.fly
+{background:#fff url("../imagenes//arrow.gif") 110px 7px no-repeat;}
+#nav li:hover ul.sub li a:hover
+/*{background:#3a93d2; color:#fff;}*/
+{background:#000066; color:#fff;}
+#nav li:hover ul.sub li a.fly:hover
+/*{background:#3a93d2 url(https://lh4.googleusercontent.com/_dsEG33PDaHw/TZ0rcSPpqlI/AAAAAAAABSc/RseHiYluzAM/arrow_over.gif) 110px 7px no-repeat; color:#fff;}*/
+{background:#000066 110px 7px no-repeat; color:#fff;}
+
+#nav li:hover ul li:hover > a.fly {background:#333399 url(https://lh4.googleusercontent.com/_dsEG33PDaHw/TZ0rcSPpqlI/AAAAAAAABSc/RseHiYluzAM/arrow_over.gif) 110px 7px no-repeat; color:#fff;}
+
+#nav li:hover ul li:hover ul,
+#nav li:hover ul li:hover ul li:hover ul,
+#nav li:hover ul li:hover ul li:hover ul li:hover ul,
+#nav li:hover ul li:hover ul li:hover ul li:hover ul li:hover ul
+{left:118px; top:-4px; background: #fff; padding:3px; border:3px solid #000066; white-space:nowrap; width:120px; z-index:4; height:auto;}

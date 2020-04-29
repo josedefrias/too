@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 5.0 Transitional//EN">
+<HTML>
+
+
+ <HEAD>
+  <meta charset="utf-8">
+  <TITLE> Login </TITLE>
+  <META NAME="Generator" CONTENT="EditPlus">
+  <META NAME="Author" CONTENT="Jose de Frias">
+  <META NAME="Keywords" CONTENT="">
+  <META NAME="Description" CONTENT="">
+  <link rel="StyleSheet" href="css/comun.css">
+  <script type="text/javascript" src="funciones_js/funciones.js"></script>
+  <link rel="shortcut icon" type="image/x-icon" href="http://hitravel.es/imagenes/favicon_hit.ico">
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+ </HEAD>
+
+
+<body background="imagenes/fondo.jpg">
+
+	{include file="$cabecera"}
+	{include file="$menu"}
+
+
+	<form name="frm_entrar" method = "post" action="">
+																					
+		{if {$nombre} eq ""}
+		<table border = "0" align = "left">
+			<tr align = "left">
+				<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+				<th><font color='#993300'>{$mensaje}</font></th>
+			</tr>
+			<tr align = "left">
+				<th>&nbsp;&nbsp;</th>
+			</tr>
+			<tr align = "left">
+				<th>Usuario&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+				<td><input type= 'text' name= 'usuario' size='20' value=""</td>
+			</tr>
+			<tr align = "left">
+				<th>&nbsp;&nbsp;</th>
+			</tr>
+			<tr align = "left">
+
+				<th>Contraseña&nbsp;&nbsp;</th>
+				<td><input type= 'password' name= 'password' size='20' value=""</td>
+			</tr>
+			<tr align = "left">
+
+				<th>&nbsp;&nbsp;</th>
+
+			</tr>
+
+			<tr align = "right">
+
+				<th>&nbsp;&nbsp;</th>
+				<td>
+					<input type=image src="imagenes/boton_entrar.jpg" width="70" height="25">
+				</td>
+			</tr>
+		{/if}
+
+
+		</table>
+				
+	</form>
+		{include file="$pie"}
+
+ </BODY>
+</HTML>
+
+
+
+

@@ -1,0 +1,289 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 5.0 Transitional//EN">
+<HTML>
+
+ <HEAD>
+  <meta charset="utf-8">
+  <TITLE> Menú </TITLE>
+  <META NAME="Generator" CONTENT="EditPlus">
+  <META NAME="Author" CONTENT="Jose de Frias">
+  <META NAME="Keywords" CONTENT="">
+  <META NAME="Description" CONTENT="">
+  <link rel="StyleSheet" href="css/comun.css">
+  <script type="text/javascript" src="funciones_js/funciones.js"></script>
+  <link rel="shortcut icon" type="image/x-icon" href="imagenes/favicon_hit.ico">
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+ </HEAD>
+
+<body background="imagenes/fondo.jpg">
+
+	{include file="$cabecera"}
+	{include file="$menu"}
+
+	<form name="mantenimiento_tabla" method = "post" action="">
+		
+		<table border = "0" align = "left">
+			<tr>
+
+				<th rowspan="2" style="padding: 5px 10px;"align = "left">Interfaz:</th>
+
+				<td rowspan="2">
+					<select name="buscar_interfaz" align=""> 
+						{foreach from=$comboInterfaces item=fila}
+							{if {$buscar_interfaz} == {$fila.codigo}}
+								<option value="{$fila.codigo}" selected>{$fila.nombre}</option>
+							{else}
+								<option value="{$fila.codigo}">{$fila.nombre}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>
+
+
+
+					<th align = "left" style="padding:0px 15px;">Provincia:</th>
+
+				<td>
+					<select name="buscar_provincia" align=""> 
+						{foreach from=$comboProvincias item=fila}
+							{if {$buscar_provincia} == {$fila.codigo}}
+								<option value="{$fila.codigo}" selected>{$fila.nombre}</option>
+							{else}
+								<option value="{$fila.codigo}">{$fila.nombre}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>
+
+
+
+
+					<th align = "left" style="padding:0px 15px;">Poblacion:</th>
+
+				<td>
+					<input type= 'text' name= 'buscar_poblacion' size='35' value="{$buscar_poblacion}">
+				</td>
+
+
+
+					<th align = "left" style="padding:0px 15px;">Categoria:</th>
+
+				<td>
+					<input type= 'text' name= 'buscar_categoria' size='4' value="{$buscar_categoria}" class="campocenter">
+				</td>
+			</tr>
+			<tr>
+
+					<th align = "left" style="padding:0px 15px;">Hotel:</th>
+
+				<td>
+					<input type= 'text' name= 'buscar_hotel' size='39' value="{$buscar_hotel}">
+				</td>
+
+
+
+
+					<th align = "left" style="padding:0px 15px;">Alojamientos de Hits:</th>
+
+				<td>
+					<select name="alojamientos_sistema" align="" style="width:233px;"> 
+						{foreach from=$comboAlojamientos_Provincia item=fila}
+							{if {$alojamientos_sistema} == {$fila.id}}
+								<option value="{$fila.id}" selected>{$fila.nombre}</option>
+							{else}
+								<option value="{$fila.id}">{$fila.nombre}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>
+					<th align = "left" style="padding:0px 15px;">Hoteles Obtenidos:</th>
+
+				<td>
+					<input type= 'text' name= 'cantidad_hoteles' size='4' value="{$cantidad_hoteles}" class="campocenter" disabled>
+				</td>
+			</tr>
+		</table>
+
+		<BR>	
+
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" class="lineatitulo" style="padding:15px 0px 15px 0px;">
+			<tbody>
+				<tr>
+					<td>
+						<img width="20" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_buscar.jpg" width="70" height="25">-->
+						<input type="button" id="boton_buscar" value="BUSCAR" class="boton" onClick="Buscar_general()"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+
+					<td>
+
+						<input type="button" id="boton_grabar" value="GRABAR" class="boton" onClick="grabar()"/>
+						<input type= "hidden" name= "actuar" value="">
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_salir.jpg" width="70" height="25" onClick="salir('S')">-->
+						<input type= "hidden" name= "ir_a" value="">
+					</td>
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		{$mensaje1}
+		{$mensaje2}
+
+		<table border = "0" align = "left" class="fondotabla" style="clear:both">
+			<tr class="cabeceratabla">
+				<th>Sel</th>
+				<th>Num</th>
+				<th>Codigo</th>
+				<th>Afili.</th>
+				<th>Nombre</th>
+				<th>Direccion</th>
+				<!--<th>Prov.</th>-->
+				<th>Prov.Nom.</th>
+				<th>Poblacion</th>
+				<th>Ciudad<br><div style="font-size: 8pt;">(Obligatorio)</div></th>
+				<th style="width:190px;">Hotel Hits <br><div style="font-size: 8pt;">(Si ya existe en Hits indicar cual es y solo se añadirá la línea de interfaz en el hotel)</div></th>
+				<th>Datos</th>
+				<th>Habit.</th>
+				<th>Obs.</th>
+				<th>Descripcion</th>
+				<!--<th>Como Llegar</th>-->
+				<th>Cat</th>
+				<th>Foto</th>
+				<th>Cal</th>
+				<th>Marca</th>
+				<th>Situa</th>
+				<th>Categoria 2</th>
+			</tr>
+
+			{section name=i loop=$interfaz_alojamientos}
+			<tr>
+				<td align = "center">
+					<input type= 'checkbox' name= 'seleccion{$smarty.section.i.index}' value="" onChange="Seleccionar_Hotal_Interfaz({$smarty.section.i.index})"  {$interfaz_alojamientos[i].habilitado}>
+					<input type= 'hidden' name= 'selec{$smarty.section.i.index}' value="N">
+				</td>
+
+				<td><input type= 'text' name= 'numero{$smarty.section.i.index}' size='2' class="campocenter" value="{$interfaz_alojamientos[i].numero}" readonly></td>
+
+				<td>
+					<input type= 'text' name= 'codigo{$smarty.section.i.index}' size='6' value="{$interfaz_alojamientos[i].codigo}" readonly>
+
+					<!--<input type= 'text' name= 'codigo_interno{$smarty.section.i.index}' size='6' value="{$interfaz_alojamientos[i].codigo_interno}" readonly>-->
+				</td>
+
+				<td><input type= 'text' name= 'afiliacion{$smarty.section.i.index}' size='3' class="campocenter" value="{$interfaz_alojamientos[i].afiliacion}" readonly></td>
+
+				<td><input type= 'text' name= 'nombre{$smarty.section.i.index}' size='30' value="{$interfaz_alojamientos[i].nombre}" readonly></td>
+
+				<td><input type= 'text' name= 'direccion{$smarty.section.i.index}' size='30' value="{$interfaz_alojamientos[i].direccion}" readonly></td>
+
+
+
+				<td><input type= 'text' name= 'provincia_nombre{$smarty.section.i.index}' size='15' value="{$interfaz_alojamientos[i].provincia_nombre}" readonly></td>
+
+
+				<td><input type= 'text' name= 'poblacion{$smarty.section.i.index}' size='15' value="{$interfaz_alojamientos[i].poblacion}" readonly></td>
+
+				<td>
+					<select name= 'ciudad_provincia{$smarty.section.i.index}' align=""> 
+						{foreach from=$comboCiudades_Provincia item=fila4}
+							{if {$interfaz_alojamientos[i].ciudad_provincia} == {$fila4.codigo}}
+								<option value="{$fila4.codigo}" selected>{$fila4.nombre}</option>
+							{else}
+								<option value="{$fila4.codigo}">{$fila4.nombre}</option>
+							{/if}	
+						{/foreach}
+					</select> 
+				</td>
+
+
+				<td>
+					<select name="alojamiento_hits{$smarty.section.i.index}" align="" style="width:190px;"> 
+						{foreach from=$comboAlojamientos_Provincia item=fila}
+							{if {$interfaz_alojamientos[i].alojamiento_hits} == {$fila.id}}
+								<option value="{$fila.id}" selected>{$fila.nombre}</option>
+							{else}
+								<option value="{$fila.id}">{$fila.nombre}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>
+
+				<td>
+					<input type="button" name="boton_ver_datos" style="height:25px; color:#FFFFFF; background:#0066CC; font-family:Arial; font-weight: bold; font-size:10px; text-align:center; border-radius: 10px 10px 10px 10px;" value="Ver" onClick="window.open('Restel_15_Datos_Hotel.php?codigo={$interfaz_alojamientos[i].codigo}', '_blank', 'toolbar=0,location=0,status=0,menubar=0,scrollbars=yes,resizable=yes,width=1200,height=800')"/>
+
+				</td>
+
+				<td>
+					<input type="button" name="boton_ver_habitaciones" style="height:25px; color:#FFFFFF; background:#0066CC; font-family:Arial; font-weight: bold; font-size:10px; text-align:center; border-radius: 10px 10px 10px 10px;" value="Ver" onClick="window.open('Restel_23_Datos_Hotel_Habitaciones.php?codigo={$interfaz_alojamientos[i].codigo}&nombre={$interfaz_alojamientos[i].nombre}', '_blank', 'toolbar=0,location=0,status=0,menubar=0,scrollbars=yes,resizable=yes,width=1100,height=400')"/>
+
+				</td>
+
+				<td>
+					<input type="button" name="boton_ver_habitaciones" style="height:25px; color:#FFFFFF; background:#0066CC; font-family:Arial; font-weight: bold; font-size:10px; text-align:center; border-radius: 10px 10px 10px 10px;" value="Ver" onClick="window.open('Restel_24_Datos_Hotel_Observaciones.php?codigo={$interfaz_alojamientos[i].codigo}&nombre={$interfaz_alojamientos[i].nombre}', '_blank', 'toolbar=0,location=0,status=0,menubar=0,scrollbars=yes,resizable=yes,width=1100,height=400')"/>
+
+				</td>
+
+				<td><textarea name='descripcion{$smarty.section.i.index}' cols="30" rows="1" value="{$interfaz_alojamientos[i].descripcion_habitaciones}">{$interfaz_alojamientos[i].descripcion}</textarea></td>
+
+
+				<td><input type= 'text' name= 'categoria{$smarty.section.i.index}' size='2' class="campocenter" value="{$interfaz_alojamientos[i].categoria}" readonly></td>
+
+				<td>
+					<input type="button" name="boton_ver_foto" style="height:25px; color:#FFFFFF; background:#0066CC; font-family:Arial; font-weight: bold; font-size:10px; text-align:center; border-radius: 10px 10px 10px 10px;" value="Foto" onClick="window.open('{$interfaz_alojamientos[i].foto}', '_blank', 'toolbar=0,location=0,status=0,menubar=0,scrollbars=yes,resizable=yes,width=800,height=600')"/>
+					<input type= 'hidden' name= 'foto{$smarty.section.i.index}' size='15' value="{$interfaz_alojamientos[i].foto}" readonly>
+				</td>
+
+				<td><input type= 'text' name= 'calidad{$smarty.section.i.index}' size='2' class="campocenter" value="{$interfaz_alojamientos[i].calidad}" readonly></td>
+
+				<td><input type= 'text' name= 'marca{$smarty.section.i.index}' size='15' value="{$interfaz_alojamientos[i].marca}" readonly></td>
+
+				<td>
+					<input type="button" name="boton_ver_mapa" style="height:25px; color:#FFFFFF; background:#0066CC; font-family:Arial; font-weight: bold; font-size:10px; text-align:center; border-radius: 10px 10px 10px 10px;" value="Mapa" onClick="window.open('http://maps.google.com?q={$interfaz_alojamientos[i].latitud},{$interfaz_alojamientos[i].longitud}', '_blank', 'toolbar=0,location=0,status=0,menubar=0,scrollbars=yes,resizable=yes,width=1400,height=600')"/>
+					<input type= 'hidden' name= 'longitud{$smarty.section.i.index}' size='10' value="{$interfaz_alojamientos[i].longitud}" readonly>
+					<input type= 'hidden' name= 'latitud{$smarty.section.i.index}' size='10' value="{$interfaz_alojamientos[i].latitud}" readonly>
+				</td>			
+
+				<td>
+					<input type= 'text' name= 'categoria2_nombre{$smarty.section.i.index}' size='15' value="{$interfaz_alojamientos[i].categoria2_nombre}" readonly>
+
+					<input type= 'hidden' name= 'categoria2{$smarty.section.i.index}' size='15' value="{$interfaz_alojamientos[i].categoria2}" readonly>
+
+					<input type= 'hidden' name= 'codigo_cobol{$smarty.section.i.index}' size='8' class="campocenter" value="{$interfaz_alojamientos[i].codigo_cobol}">
+
+					<input type= 'hidden' name= 'divisa{$smarty.section.i.index}' size='3' class="campocenter" value="{$interfaz_alojamientos[i].divisa}">
+				</td>
+
+			</tr>
+			{/section}
+
+
+		</table>
+
+
+		{include file="$pie"}
+	</form>
+
+
+ </BODY>
+</HTML>
+
+
+
+

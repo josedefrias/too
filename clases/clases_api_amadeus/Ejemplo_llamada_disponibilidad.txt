@@ -1,0 +1,5 @@
+http://wwwaps.panavision-tours.es:8089/amadeusgw/dReserva.asp?xml=<PoweredAir_MultiAvailability><messageActionDetails><functionDetails><businessFunction>1</businessFunction><actionCode>44</actionCode></functionDetails>
+</messageActionDetails><requestSection><availabilityProductInfo><availabilityDetails><departureDate>010815</departureDate></availabilityDetails>
+<departureLocationInfo><cityAirport>MAD</cityAirport></departureLocationInfo><arrivalLocationInfo><cityAirport>TCI</cityAirport>
+</arrivalLocationInfo></availabilityProductInfo><availabilityOptions><productTypeDetails><typeOfRequest>TN</typeOfRequest>
+</productTypeDetails></availabilityOptions></requestSection></PoweredAir_MultiAvailability>

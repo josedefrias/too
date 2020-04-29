@@ -1,0 +1,1926 @@
+package es.panavision.amadeusgw;
+
+import beans.ClasesVueloBean;
+import beans.VueloBean;
+import es.panavision.amadeusgw.dao.ReserBean;
+import es.panavision.amadeusgw.dao.ReservasDAO;
+import java.util.Random;
+import java.io.*;
+import java.lang.reflect.Array;
+import java.net.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Hashtable;
+import java.util.Vector;
+import oracle.xml.parser.v2.*;
+import org.w3c.dom.*;
+import resonline.core.dao.CircuitoDAO;
+import resonline.core.manager.ResManager;
+
+public class AmadeusClient 
+{
+
+  //String urlvalue = null;                          
+  String urlvalue = "http://wwwaps.panavision-tours.es:8089/amadeusgw/d2.asp";
+  ArrayList pasajeros = new ArrayList();
+  ArrayList mVuelos = new ArrayList();
+  ArrayList vuelosLongWay = new ArrayList();
+  ArrayList fechasViaje = new ArrayList();
+  Hashtable mVuelosNodisp = new Hashtable();
+  Hashtable tablaOrigenes = new Hashtable();
+  
+  int ref_savia = 0;
+  
+  int npax = 0;
+  long fecha_emi = 0L;
+  long fecha_aviso = 0L;
+
+
+
+  public AmadeusClient()
+  {
+    
+  }
+  
+  //Si es para reservar
+  public AmadeusClient(boolean isReserva)
+  {
+     
+
+if(isReserva)
+    {
+        urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/dReserva.asp");
+    }else{
+        Random rand = new Random();
+        int x = rand.nextInt(10);
+        switch(x)
+        {
+          case 0: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d0.asp");
+                  break;
+          case 1: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d1.asp");
+                  break;
+          case 2: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d2.asp");
+                  break;
+          case 3: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d3.asp");
+                  break;
+          case 4: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d4.asp");
+                  break;
+          case 5: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d5.asp");
+                  break;
+          case 6: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d6.asp");
+                  break;
+          case 7: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d7.asp");
+                  break;
+          case 8: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d8.asp");
+                  break;
+          case 9: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d9.asp");
+                  break;
+          case 10: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d10.asp");
+                  break;
+                  
+          case 11: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d11.asp");
+                  break;
+          case 12: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d12.asp");
+                  break;
+          case 13: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d13.asp");
+                  break;
+          case 14: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d14.asp");
+                  break;
+          case 15: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d15.asp");
+                  break;
+          case 16: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d16.asp");
+                  break;
+          case 17: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d17.asp");
+                  break;
+         case 18: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d18.asp");
+                  break;
+          case 19: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d19.asp");
+                  break;
+          case 20: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d20.asp");
+                  break;
+                  
+          case 21: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d21.asp");
+                  break;
+          case 22: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d22.asp");
+                  break;
+          case 23: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d23.asp");
+                  break;
+          case 24: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d24.asp");
+                  break;
+          case 25: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d25.asp");
+                  break;
+          case 26: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d26.asp");
+                  break;
+          case 27: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d27.asp");
+                  break;
+          case 28: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d28.asp");
+                  break;
+          case 29: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d29.asp");
+                  break;
+          case 30: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d30.asp");
+                  break;
+                  
+          case 31: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d31.asp");
+                  break;
+          case 32: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d32.asp");
+                  break;
+          case 33: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d33.asp");
+                  break;
+          case 34: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d34.asp");
+                  break;
+          case 35: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d35.asp");
+                  break;
+          case 36: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d36.asp");
+                  break;
+          case 37: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d37.asp");
+                  break;
+          case 38: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d38.asp");
+                  break;
+          case 39: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d39.asp");
+                  break;
+          case 40: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d40.asp");
+                  break;
+          
+          case 41: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d41.asp");
+                  break;
+          case 42: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d42.asp");
+                  break;
+          case 43: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d43.asp");
+                  break;
+          case 44: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d44.asp");
+                  break;
+          case 45: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d45.asp");
+                 break;
+          case 46: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d46.asp");
+                  break;
+          case 47: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d47.asp");
+                  break;
+          case 48: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d48.asp");
+                  break;
+          case 49: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d49.asp");
+                  break;
+          case 50: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d50.asp");
+                  break;
+                  
+          case 51: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d51.asp");
+                  break;
+          case 52: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d52.asp");
+                  break;
+          case 53: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d53.asp");
+                  break;
+          case 54: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d54.asp");
+                  break;
+          case 55: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d55.asp");
+                  break;
+          case 56: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d56.asp");
+                  break;
+          case 57: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d57.asp");
+                  break;
+          case 58: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d58.asp");
+                  break;
+          case 59: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d59.asp");
+                  break;
+          case 60: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d60.asp");
+                  break;
+                  
+          default: urlvalue = new String("http://wwwaps.panavision-tours.es:8089/amadeusgw/d30.asp");
+                  break;         
+      }
+    }
+    
+    
+    
+  }
+  
+  /**
+   * Ambito: Interno
+   * @throws java.lang.Exception
+   * @return El XML devuelto por el gw de amadeus
+   * @param El XML a enviar al gw de amadeus
+   */
+  private String sendData(String datos) throws Exception
+  {
+    String returnVal = null;
+    StringBuffer str=new StringBuffer();
+
+    int c = 0;
+
+    // Construye un objeto URL que apunte al servlet
+    URL url = new URL(urlvalue);
+
+    // Se crea una conexion con el Servlet
+    HttpURLConnection con = (HttpURLConnection)url.openConnection();
+
+    // Se prepara la conexion para poder enviar y recibir
+    con.setDoInput(true);
+    con.setDoOutput(true);
+
+    // Desabilita la cache
+    con.setUseCaches(false);
+
+    con.connect();
+    
+    
+    // Manda los datos como Post
+     DataOutputStream out = new DataOutputStream(con.getOutputStream());
+     out.writeBytes("xml="+datos);
+    out.flush();
+     out.close();
+
+    // Recoge la respuesta del servlet como un InputStreamReader
+     InputStream in = con.getInputStream();
+     InputStreamReader res = new InputStreamReader(in);
+     while((c=res.read())!=-1){
+                 str.append((char)c);
+     }
+
+    String cookie = con.getHeaderField("Set-Cookie"); 
+
+
+     returnVal = str.toString();
+     return returnVal;
+  }
+
+  /**
+   * Ambito: Interno
+   * Envia un XML al gw de amadeus, pero solicita que se recupere
+   * antes la reserva y se cierre después
+   * @throws java.lang.Exception
+   * @return El XML devuelto por el GW
+   * @param PNR de la reserva a recuperar
+   * @param datos XML a enviar
+   */
+  private String retrieveAndSendData(String datos, String pPNR) throws Exception
+  {
+    String returnVal = null;
+    StringBuffer str=new StringBuffer();
+    int c = 0;
+
+    // Construye un objeto URL que apunte al servlet
+      URL url = new URL(urlvalue);
+
+    // Se crea una conexion con el Servlet
+     HttpURLConnection con = (HttpURLConnection)url.openConnection();
+    // Se prepara la conexion para poder enviar y recibir
+      con.setDoInput(true);
+      con.setDoOutput(true);
+
+    // Desabilita la cache
+      con.setUseCaches(false);
+
+    // Manda los datos como Post
+     DataOutputStream out = new DataOutputStream(con.getOutputStream());
+     out.writeBytes("xml="+datos+"&pretrieve="+pPNR);
+     out.flush();
+     out.close();
+
+    // Recoge la respuesta del servlet como un InputStreamReader
+     InputStream in = con.getInputStream();
+     InputStreamReader res = new InputStreamReader(in);
+     while((c=res.read())!=-1){
+                 str.append((char)c);
+     }
+     in.close();
+     
+
+     returnVal = str.toString();
+     return returnVal;
+  }
+
+
+  /**
+   * Ámbito: Interno
+   * Genera el XML de los pasajeros a partir de una reserva TMS
+   * @return XML de los pasajeros
+   * @param pRes Reserva TMS de la reserva
+   */
+  public String getXMLPax(ReservaAmadeus pRes) throws Exception
+  {
+      String pre_datosxml = "<travellerInfo>";
+     String post_datosxml = "</travellerInformation></travellerInfo>\n";
+     ReservasDAO rdao = new ReservasDAO();                       
+     pasajeros = rdao.getPax(pRes);
+     rdao.checkout();
+     npax = pasajeros.size();
+     
+     String cat1 = new String(); 
+     for(int i=0; i<pasajeros.size(); i++) 
+     {
+       Pasajero pax = (Pasajero)pasajeros.get(i);
+       cat1 += pre_datosxml+
+                      "<elementManagementPassenger><reference><qualifier>PT</qualifier>"+
+                      "<number>"+(i+1)+"</number></reference><segmentName>NM</segmentName>"+
+                      "</elementManagementPassenger><travellerInformation>"+
+                     "<traveller><surname>"+formatearPasajero(pax.getApellidos())+
+                     "</surname><quantity>1</quantity></traveller><passenger><firstName>"+
+                     formatearPasajero(pax.getNombre())+"</firstName><type>"+pax.getTipo()+"</type></passenger>\n"
+              +post_datosxml;
+      
+       pax.setRef_savia(ref_savia);
+       ref_savia++;
+     }
+     
+     pRes.setPasajeros(pasajeros);
+     return cat1;
+                            
+  }
+  
+  public String formatearPasajero(String resI)
+  {
+    String res = resI;
+    res = res.replaceAll("Ñ", "N");
+
+    res = res.replaceAll("ñ", "n");
+
+    res = res.replaceAll("á", "a");
+
+    res = res.replaceAll("Á", "A");
+
+    res = res.replaceAll("É", "E");
+
+    res = res.replaceAll("é", "e");
+
+    res = res.replaceAll("í", "i");
+
+    res = res.replaceAll("Í", "I");
+
+    res = res.replaceAll("ó", "o");
+
+    res = res.replaceAll("Ó", "O");
+
+    res = res.replaceAll("ú", "u");
+
+    res = res.replaceAll("Ú", "U");
+
+    res = res.replaceAll("ü", "u");
+
+    res = res.replaceAll("Ü", "U");
+
+    res = res.replaceAll("ª", "");
+
+    res = res.replaceAll(" ", "");
+    
+    res = res.replaceAll("%20", "");
+
+    res = res.replaceAll("\"", "");
+
+    return res;
+  }
+
+
+   /**
+   * Ámbito: Interno
+   * Genera el XML de los vuelos a partir de una reserva TMS, actualizando
+   * la fecha de ticketing
+   * @return XML de los vuelos
+   * @param pRes Reserva TMS de la reserva
+   */
+  public String getXMLVuelos(ReservaAmadeus pRes) throws Exception
+  {                            
+     String vuelos_pre = "";                            
+     String vuelos_mid = "";
+     String vuelos_post = "";
+     ReservasDAO rdao = new ReservasDAO();
+     mVuelos = rdao.getVuelos(pRes);
+     rdao.checkout();
+     boolean haEntrado= false;
+     for(int v=0; v < vuelosLongWay.size(); v++){
+          Vuelos vLW = (Vuelos)vuelosLongWay.get(v);
+          vuelos_mid += "<originDestinationDetails><originDestination><origin>"+vLW.getOrigen()+"</origin>" +
+          "<destination>"+vLW.getDestino()+"</destination></originDestination>";
+         for(int i=0; i < mVuelos.size(); i++) 
+         {
+          
+           Vuelos v1 = (Vuelos)mVuelos.get(i);
+
+           if(!mVuelosNodisp.containsKey(v1.getOrigen()+"-"+v1.getDestino())) {
+             haEntrado=true;
+             SimpleDateFormat df = new SimpleDateFormat("ddMMyy");
+             String strDate = df.format(v1.getFecha());
+             //Fecha del longWay actual
+             String fechaLW = df.format(vLW.getFecha());
+             if(!fechaLW.equals(strDate))
+             {
+               continue;
+             }
+             String company = "";
+             if(v1.getCompania().equals("XG"))
+             {
+               company = "IB";
+             }else
+             {
+               company = v1.getCompania();
+             }
+             vuelos_mid += "<itineraryInfo><elementManagementItinerary><reference><qualifier>ST</qualifier>"+
+                           "<number>1</number></reference><segmentName>AIR</segmentName></elementManagementItinerary>"+
+                           "<airAuxItinerary><travelProduct><product><depDate>"+strDate+"</depDate></product>"+
+                           "<boardpointDetail><cityCode>"+v1.getOrigen()+"</cityCode></boardpointDetail><offpointDetail>"+
+                           "<cityCode>"+v1.getDestino()+"</cityCode></offpointDetail><company>"+
+                           "<identification>"+company+"</identification></company><productDetails>"+
+                           "<identification>"+v1.getNumeroVuelo()+"</identification><classOfService>"+
+                           v1.getClase()+"</classOfService></productDetails></travelProduct><messageAction>"+
+                           "<business><function>1</function></business></messageAction><relatedProduct>"+
+                           "<quantity>"+npax+"</quantity>";
+                           if(v1.getStatus().equals("OK")){
+                            vuelos_mid += "<status>NN</status>";
+                           }else{
+                            vuelos_mid += "<status>PE</status>";
+                           }
+                          vuelos_mid += "</relatedProduct></airAuxItinerary>"+
+                           "</itineraryInfo>\n";
+                         
+             if(fecha_emi == 0L) 
+             {
+               Calendar cal = new GregorianCalendar(); 
+               cal.setTimeInMillis(v1.getFecha().getTime()); 
+               cal.add(Calendar.DATE, - v1.getTicketing());
+               //fecha_emi = v1.getFecha().getTime() - v1.getTicketing()*24*60*60*1000;
+               fecha_emi = cal.getTimeInMillis();
+               cal.add(Calendar.DATE, - 1);
+               fecha_aviso = cal.getTimeInMillis();
+             }else if( fecha_emi > (v1.getFecha().getTime() - v1.getTicketing()*24*60*60*1000))
+             {
+               Calendar cal = new GregorianCalendar(); 
+               cal.setTimeInMillis(v1.getFecha().getTime()); 
+               cal.add(Calendar.DATE, - v1.getTicketing());
+               fecha_emi = cal.getTimeInMillis(); 
+               cal.add(Calendar.DATE, - 1);
+               fecha_aviso = cal.getTimeInMillis();           
+               //fecha_emi = v1.getFecha().getTime() - v1.getTicketing()*24*60*60*1000;
+             }
+             
+             v1.setRef_savia(ref_savia);
+             ref_savia++;
+           }
+         }
+     
+        vuelos_mid += "</originDestinationDetails>\n";
+     }
+     pRes.setVuelos(mVuelos);
+     if(vuelos_mid.equals("") || !haEntrado)
+     {
+       return null;
+     }
+     return (vuelos_pre + vuelos_mid + vuelos_post);
+  }
+  
+  
+  /**
+   * Ámbito: Interno
+   * Genera el XML de los vuelos a partir de una reserva TMS, sólo para 
+   * aquellos vuelos TMS que aun no tienen referencia SAVIA, actualizando
+   * la fecha de ticketing
+   * @return XML de los vuelos
+   * @param pRes Reserva TMS de la reserva
+   */
+  public String getXMLAddVuelos(ReservaAmadeus pRes) throws Exception
+  {
+     String vuelos_pre = "<originDestinationDetails><originDestination/>";
+     String vuelos_mid = new String();
+     String vuelos_post = "</originDestinationDetails>\n";
+     ReservasDAO rdao = new ReservasDAO();
+     mVuelos = rdao.getAddVuelos(pRes);
+     
+     if(mVuelos.size() == 0) 
+     {
+       return null;
+     }
+     
+     ref_savia = rdao.getMaxElements(pRes);
+     ref_savia++;
+     rdao.checkout();
+     for(int i=0; i < mVuelos.size(); i++) 
+     {
+       Vuelos v1 = (Vuelos)mVuelos.get(i);
+       SimpleDateFormat df = new SimpleDateFormat("ddMMyy");
+       String strDate = df.format(v1.getFecha());
+       vuelos_mid += "<itineraryInfo><elementManagementItinerary><reference><qualifier>ST</qualifier>"+
+                     "<number>1</number></reference><segmentName>AIR</segmentName></elementManagementItinerary>"+
+                     "<airAuxItinerary><travelProduct><product><depDate>"+strDate+"</depDate></product>"+
+                     "<boardpointDetail><cityCode>"+v1.getOrigen()+"</cityCode></boardpointDetail><offpointDetail>"+
+                     "<cityCode>"+v1.getDestino()+"</cityCode></offpointDetail><company>"+
+                     "<identification>"+v1.getCompania()+"</identification></company><productDetails>"+
+                     "<identification>"+v1.getNumeroVuelo()+"</identification><classOfService>"
+                     +v1.getClase()+"</classOfService></productDetails></travelProduct><messageAction>"+
+                     "<business><function>1</function></business></messageAction><relatedProduct>"+
+                     "<quantity>"+npax+"</quantity><status>PE</status></relatedProduct></airAuxItinerary>"+
+                     "</itineraryInfo>\n";
+                     
+       if(fecha_emi == 0L) 
+       {
+          Calendar cal = new GregorianCalendar(); 
+           cal.setTimeInMillis(v1.getFecha().getTime()); 
+           cal.add(Calendar.DATE, - v1.getTicketing());
+           fecha_emi = cal.getTimeInMillis(); 
+           cal.add(Calendar.DATE, - 1);
+           fecha_aviso = cal.getTimeInMillis(); 
+          
+         //fecha_emi = v1.getFecha().getTime() - v1.getTicketing()*24*60*60*1000;
+       }else if( fecha_emi > (v1.getFecha().getTime() - v1.getTicketing()*24*60*60*1000))
+       {
+            Calendar cal = new GregorianCalendar(); 
+           cal.setTimeInMillis(v1.getFecha().getTime()); 
+           cal.add(Calendar.DATE, - v1.getTicketing());
+           fecha_emi = cal.getTimeInMillis();
+           cal.add(Calendar.DATE, - 1);
+           fecha_aviso = cal.getTimeInMillis();            
+         //fecha_emi = v1.getFecha().getTime() - v1.getTicketing()*24*60*60*1000;
+       }
+       
+       v1.setRef_savia(ref_savia);
+       ref_savia++;
+     }
+     return (vuelos_pre + vuelos_mid + vuelos_post);
+  }
+  
+  
+ /**
+   * Ámbito: Interno
+   * Analiza el XML devuelto por Amadeus para rellenar el objeto reserva con
+   * el PNR los datos de los pasajeros y los vuelos
+   * @throws java.lang.Exception
+   * @param pXML
+   * @param pXML
+   */
+  private ReservaAmadeus parseXMLAmadeus(String pXML) throws Exception 
+  {
+      ReservaAmadeus res1 = new ReservaAmadeus();
+      
+      DOMParser parser = new DOMParser();
+      StringReader strreader = new StringReader(pXML);
+      parser.parse(strreader);
+      XMLDocument xmldoc = (XMLDocument)parser.getDocument();
+     
+      NodeList nl = xmldoc.getElementsByTagName("controlNumber");
+      XMLElement tn = (XMLElement)nl.item(0);
+      String PNR = tn.getText();
+      
+      res1.setPnr(PNR);
+      
+      // PASAJEROS
+      NodeList npasajeros = (NodeList)xmldoc.getElementsByTagName("travellerInfo");
+      
+      for(int i=0; i<npasajeros.getLength(); i++) 
+      {
+        XMLElement elem1 = (XMLElement)npasajeros.item(i);
+        Pasajero p1 = new Pasajero();
+        
+        XMLElement tref = (XMLElement)elem1.getElementsByTagName("number").item(0);
+        p1.setRef_savia(Integer.parseInt(tref.getText()));
+        
+        XMLElement tnombre = (XMLElement)elem1.getElementsByTagName("firstName").item(0);
+        p1.setNombre(tnombre.getText());
+        
+        XMLElement tapellido = (XMLElement)elem1.getElementsByTagName("surname").item(0);
+        p1.setApellidos(tapellido.getText());
+
+        res1.getPasajeros().add(p1);
+      }
+      
+      // VUELOS
+      NodeList listaVuelos = xmldoc.getElementsByTagName("itineraryInfo");
+
+      for(int j=0; j<listaVuelos.getLength(); j++) 
+      {
+        XMLElement ele1 = (XMLElement)listaVuelos.item(j);
+        Vuelos v1 = new Vuelos();
+        
+        XMLElement tnumber = (XMLElement)ele1.getElementsByTagName("number").item(0);
+        v1.setRef_savia(Integer.parseInt(tnumber.getText()));
+
+        XMLElement elecompani = null;
+        if(ele1.getElementsByTagName("companyDetail")!= null ){
+          elecompani = (XMLElement)ele1.getElementsByTagName("companyDetail").item(0);
+          XMLElement tcompania = null;
+          if(elecompani != null){
+            tcompania =  (XMLElement)elecompani.getElementsByTagName("identification").item(0); 
+            v1.setCompania(tcompania.getText());
+          }else
+          {
+            continue;
+          }
+        }else
+        {
+          continue;
+        }
+        XMLElement eleorigen = (XMLElement)ele1.getElementsByTagName("boardpointDetail").item(0);
+        XMLElement torigen = (XMLElement)eleorigen.getElementsByTagName("cityCode").item(0); 
+        v1.setOrigen(torigen.getText());
+
+        XMLElement eledestino = (XMLElement)ele1.getElementsByTagName("offpointDetail").item(0);
+        XMLElement tdestino = (XMLElement)eledestino.getElementsByTagName("cityCode").item(0); 
+        v1.setDestino(tdestino.getText());
+        
+        XMLElement elevuelo = (XMLElement)ele1.getElementsByTagName("productDetails").item(0);
+        XMLElement tvuelo = (XMLElement)elevuelo.getElementsByTagName("identification").item(0); 
+        v1.setNumeroVuelo(tvuelo.getText());
+                  
+        XMLElement thsalida = (XMLElement)ele1.getElementsByTagName("depTime").item(0); 
+        v1.setHsalida(thsalida.getText());
+
+        XMLElement thllegada = (XMLElement)ele1.getElementsByTagName("arrTime").item(0); 
+        v1.setHllegada(thllegada.getText());
+
+        XMLElement tstatus = (XMLElement)ele1.getElementsByTagName("status").item(0); 
+        v1.setStatus(tstatus.getText());
+        
+        XMLElement tclase = (XMLElement)ele1.getElementsByTagName("classOfService").item(0);
+        v1.setClase(tclase.getText());
+
+        res1.getVuelos().add(v1);
+        
+      }
+      
+      NodeList elemMgmt = xmldoc.getElementsByTagName("elementManagementData");
+      for(int nodos=0; nodos<elemMgmt.getLength(); nodos++) {
+        XMLElement nodo = (XMLElement)elemMgmt.item(nodos);
+        XMLElement segment = (XMLElement)nodo.getElementsByTagName("segmentName").item(0);
+        if(segment.getText().equals("AP")) 
+        {
+          XMLElement ref_ap = (XMLElement)nodo.getElementsByTagName("number").item(0);
+          res1.setRef_ap(ref_ap.getText());
+        }else if(segment.getText().equals("TK")) 
+        {
+          XMLElement ref_tk = (XMLElement)nodo.getElementsByTagName("number").item(0);
+          res1.setRef_tk(ref_tk.getText());
+        }
+      }
+      
+      return res1;
+  }
+  
+  
+  /**
+   * Ámbito: Interno
+   * Recupera la 
+   * @throws java.lang.Exception
+   * @return 
+   * @param pnr
+   */
+  public ReservaAmadeus recuperaReserva(String pnr) throws Exception 
+  {
+     String xml = "<PoweredPNR_Retrieve><retrievalFacts><retrieve><type>2</type></retrieve>"+
+                  "<reservationOrProfileIdentifier><reservation><controlNumber>"+pnr+
+                  "</controlNumber></reservation></reservationOrProfileIdentifier></retrievalFacts>"+
+                  "</PoweredPNR_Retrieve>";
+                  
+     String respuesta = this.retrieveAndSendData(xml, pnr);
+     ReservaAmadeus res1 = this.parseXMLAmadeus(respuesta);
+     
+     return res1;
+  }
+  
+  /**
+   * Ámbito: Web Service
+   * Realiza la reserva completa de un aereo para la reserva TMS con localizador
+   * y los vuelos correspondientes a orden. Si la reserva ya tiene PNR en 
+   * TMS, comparar los vuelos de amadeus con los de TMS. 
+   * @throws java.lang.Exception
+   * @return El XML devuelto por Amadeus
+   * @param orden
+   * @param localizador
+   * @webmethod 
+   */
+  public String realizaReservaAereo(String localizador, int orden, String delegacion) throws Exception
+  {
+     ReservasDAO rdao = new ReservasDAO();
+     String pnr = rdao.getPNRs(localizador, orden);
+     rdao.checkout();
+     String respuesta = new String();
+     
+     // El CRS es nuevo
+     if(pnr.length() > 6) 
+     {
+       respuesta = this.realizaNuevaReservaAereo(localizador, orden, delegacion);
+     }else 
+     {
+        // El CRS puede tener diferencias con AMADEUS 
+        ReservaAmadeus res1 = this.recuperaReserva(pnr);
+        res1.setLocalizador(localizador);
+        res1.setOrden(orden);
+        
+        ReservaAmadeus restms = new ReservaAmadeus();
+        restms.setPnr(pnr);
+        restms.setLocalizador(localizador);
+        restms.setOrden(orden);
+        restms.getPasajeros().addAll(rdao.getPax(restms));
+        restms.getVuelos().addAll(rdao.getVuelos(restms));
+        // Ajustes de pasajeros
+        // 1.- Pasajeros que no estan en el CRS, no se contempla
+        // 2.- Pasajeros que ya no estan en el CRS
+        ArrayList ar1 = res1.getPaxNotIn(restms);
+        if(ar1.size() > 0) {
+          this.cancelarNombres(pnr, ar1);
+        }
+        // 3.- Pasajeros distintos
+        ar1 = restms.getPaxNotEquals(res1);
+        if(ar1.size()>0) {
+          this.actualizarNombres(pnr, ar1);
+        }
+        
+        // Ajustes de vuelos
+        // 1.- Trayectos que no estan en el CRS
+        this.anadirVuelo(localizador, orden);
+
+        // 2.- Trayectos que ya no están en el CRS
+        ar1 = res1.getVuelosNotIn(restms);
+        if(ar1.size()>0) {
+          this.cancelarVuelos(pnr, ar1);
+        }
+        // 3.- Vuelos modificados
+        ar1 = restms.getVuelosNotEquals(res1);
+        if(ar1.size()>0) {
+          this.actualizarVuelos(pnr, ar1);
+        }
+     }
+     return respuesta;
+  }
+
+
+  public String getRP(String delegacion) 
+  {
+    String RP = "MADI12655";
+    if(delegacion == null || "null".equals(delegacion) || "AME".equals(delegacion) || "MAD".equals(delegacion) || "CAN".equals(delegacion)) 
+    {
+      RP = "MADI12655";
+    } else 
+    if("AST".equals(delegacion) || "BIO".equals(delegacion) ) 
+    {
+      RP = "BIOI12174";
+    } else
+    if("BCN".equals(delegacion)) 
+    {
+      RP = "BCNI12327";
+    } else 
+    if("LCG".equals(delegacion)) 
+    {
+      RP = "SCQI12214";
+    } else
+    if("SVQ".equals(delegacion)) 
+    {
+      RP = "SVQI12191";
+    } else
+    if("VLC".equals(delegacion)) 
+    {
+      RP = "VLCI12119";
+    }
+    return RP;
+  }
+
+  /**
+   * Ámbito: Interno
+   * Realiza la reserva completa de un aereo para la reserva TMS con localizador
+   * y los vuelos correspondientes a orden. Si la reserva ya tiene PNR en 
+   * TMS, comparar los vuelos de amadeus con los de TMS. 
+   * @throws java.lang.Exception
+   * @return El XML devuelto por Amadeus
+   * @param orden
+   * @param localizador
+   * @webmethod 
+   */
+  public String realizaNuevaReservaAereo(String localizador, int orden, String delegacion) throws Exception
+  {
+    ReservasDAO rdao = new ReservasDAO();
+    String reserva_cabecera = "<PoweredPNR_AddMultiElements>"+
+                          "   <pnrActions><optionCode>267</optionCode>"+
+                          "<optionCode>11</optionCode></pnrActions>";
+    String reserva_fin = "</PoweredPNR_AddMultiElements>"; 
+    String reserva_pax, reserva_tk, reserva_vuelos, reserva_op;
+    String reserva_osi = "";
+    String rpDeleg = this.getRP(delegacion);
+    //String reserva_rf= this.getReservaRf(delegacion);
+    String reserva_rf = "<dataElementsIndiv><elementManagementData><reference><qualifier>OT</qualifier>"+
+                        "<number>1</number></reference><segmentName>RF</segmentName></elementManagementData>"+
+                        "<freetextData><freetextDetail><subjectQualifier>3</subjectQualifier><type>P22</type>"+
+                        "</freetextDetail><longFreetext>RESERVA ON-LINE/"+ rpDeleg +"</longFreetext></freetextData></dataElementsIndiv>"+
+                        "</dataElementsMaster>";
+    ReserBean reservaBean = rdao.getDatosReserva(localizador);
+    String usuario = reservaBean.getUsuario();
+    String reserva_ap = "<dataElementsMaster><marker1/>"+
+                        "<dataElementsIndiv><elementManagementData><reference><qualifier>OT</qualifier>"+
+                        "<number>1</number></reference><segmentName>AP</segmentName></elementManagementData>"+
+                        "<freetextData><freetextDetail><subjectQualifier>3</subjectQualifier><type>6</type>"+
+                        "</freetextDetail><longFreetext>915860800,"+usuario+"@panavision-tours.es"+
+                        "</longFreetext></freetextData>"+
+                        "</dataElementsIndiv>";
+                        
+     String respuesta = null;                        
+     
+     ReservaAmadeus res1 = new ReservaAmadeus();
+     res1.setLocalizador(localizador);
+     res1.setOrden(orden);
+     res1.setContactoap(usuario);
+
+    try
+    {
+        ref_savia = 2;
+        reserva_pax = getXMLPax(res1);
+        
+        reserva_vuelos = getXMLVuelos(res1);
+        if(reserva_vuelos == null)
+        {
+          return "";
+        }
+
+        //System.out.println("Antes: " +fecha_e);
+        //SimpleDateFormat df1 = new SimpleDateFormat();
+        Calendar cal = new GregorianCalendar(); 
+        cal.setTimeInMillis(fecha_emi);
+        Date fecha_e = cal.getTime();
+        Date fecha_a = cal.getTime();
+        //cal.add(Calendar.DATE, - v1.getTicketing());        
+        if(cal.get(cal.DAY_OF_WEEK) == 1)
+        {
+           cal.add(Calendar.DATE, -2);
+           fecha_emi = cal.getTimeInMillis();
+           fecha_e = cal.getTime();
+           cal.add(Calendar.DATE, -1);
+           fecha_aviso = cal.getTimeInMillis();
+           fecha_a = cal.getTime();
+        }
+
+        cal = new GregorianCalendar(); 
+        cal.setTimeInMillis(fecha_aviso);                
+        if(cal.get(cal.DAY_OF_WEEK) == 1)
+        {
+           cal.add(Calendar.DATE, -2);
+           fecha_aviso = cal.getTimeInMillis();
+           fecha_a = cal.getTime();
+        }        
+        
+        res1.setFechaemi(fecha_e);
+        
+        SimpleDateFormat df2 = new SimpleDateFormat("ddMMyy"); 
+        
+        Vuelos vuel = (Vuelos)mVuelos.get(0);
+        //Para la compañía SK habrá que introducir el aviso de cancelación
+        if(vuel.getCompania().equals("SK")){
+          reserva_op = "<dataElementsIndiv><elementManagementData><segmentName>OP</segmentName></elementManagementData><optionElement><optionDetail>" + 
+          "<officeId>"+ rpDeleg +"</officeId><date>"+ df2.format(fecha_a)+"</date>" + 
+          "</optionDetail></optionElement></dataElementsIndiv>";         
+          reserva_tk = "<dataElementsIndiv><elementManagementData><reference><qualifier>OT</qualifier>"+
+                      "<number>1</number></reference><segmentName>TK</segmentName></elementManagementData>"+
+                     "<ticketElement><passengerType>PAX</passengerType><ticket><indicator>XL</indicator><date>"+
+                      df2.format(fecha_e)+"</date><officeId>"+ rpDeleg +"</officeId></ticket></ticketElement>"+"</dataElementsIndiv>"; 
+        }else{
+          reserva_op = "";
+          reserva_tk = "<dataElementsIndiv><elementManagementData><reference><qualifier>OT</qualifier>"+
+                      "<number>1</number></reference><segmentName>TK</segmentName></elementManagementData>"+
+                      "<ticketElement><passengerType>PAX</passengerType><ticket><indicator>TL</indicator><date>"+
+                      df2.format(fecha_e)+"</date><officeId>"+ rpDeleg +"</officeId></ticket></ticketElement>"+"</dataElementsIndiv>"; 
+    
+          
+        }
+        
+        //Incluye la opción OSI si existiera para cada una de las compañías
+        ResManager mng = new ResManager();
+        String comp = vuel.getCompania();
+        String osi = mng.dameOSICompany(comp);    
+
+        //Apaño para los OSIS de Iberia según clase
+        if("IB".equals(comp)){
+            String osiCanada = this.getOsiCanadiense(mVuelos);
+            if(comp.equals("IB") && osiCanada != null){          
+              osi = osiCanada;        
+            }else
+            {
+              osi = "TTOO";            
+            }
+        }
+        //Ñapa para los vuelos de Vueling que han metido como iberia.
+        if("IB".equals(comp) && Integer.parseInt(vuel.getNumeroVuelo()) > 5000 && Integer.parseInt(vuel.getNumeroVuelo()) < 6000 && "X".equals(vuel.getClase()))
+        {
+          osi = "TOESP";
+        }        
+        //Los clickair se operan como Iberia
+        if(comp.equals("XG"))
+        {
+          comp = "IB";
+        }
+       
+        //SAS lleva como compañía YY
+        /*if(comp.equals("SK"))
+        {
+          comp = "YY";
+        }*/
+        
+        if(osi != null){
+          reserva_osi = "<dataElementsIndiv><elementManagementData><reference><qualifier>OT</qualifier><number>1</number></reference>" +
+          "<segmentName>OS</segmentName></elementManagementData><freetextData><freetextDetail><subjectQualifier>3</subjectQualifier>"+
+          "<companyId>"+comp+"</companyId></freetextDetail>"+
+          "<longFreetext>"+osi+"</longFreetext></freetextData></dataElementsIndiv>";        
+        }
+        
+        if(comp.equals("AF"))
+        {
+          /*reserva_osi = "<dataElementsIndiv><elementManagementData><reference><qualifier>OT</qualifier><number>1</number></reference>" +
+          "<segmentName>RM</segmentName></elementManagementData><miscellaneousRemark><remarks><type>RM</type><freetext>SK TLPW AF TO</freetext></remarks></miscellaneousRemark></dataElementsIndiv>";*/
+
+          reserva_osi = "<dataElementsIndiv><elementManagementData><segmentName>SK</segmentName></elementManagementData><serviceRequest><ssr><type>TLPW</type><companyId>AF</companyId><freetext>TO</freetext></ssr></serviceRequest></dataElementsIndiv>";
+
+
+        }
+        
+       String rm_reserva = "<dataElementsIndiv><elementManagementData><reference><qualifier>OT</qualifier><number>1</number></reference>" +
+                                               "<segmentName>RM</segmentName></elementManagementData><miscellaneousRemark><remarks><type>RM</type>" +
+                                                               "<freetext>LOC"+localizador+"//"+reservaBean.getFechaSal()+"//"+reservaBean.getCuadro()+"//"+reservaBean.getFolleto() +"</freetext></remarks></miscellaneousRemark></dataElementsIndiv>";
+
+        //Resetear la fecha de emision para los otros vuelos
+        fecha_emi = 0L;                           
+        String xmldatos = new String(reserva_cabecera+reserva_pax+reserva_vuelos+
+                                          reserva_ap+reserva_op+reserva_tk+reserva_osi+reserva_rf+rm_reserva+reserva_fin);
+        xmldatos = xmldatos.replace('\n',' ');
+        System.out.println("XMLDATOS: "+ xmldatos);
+
+        respuesta = this.sendData(xmldatos);
+        System.out.println("XMLRESPUESTA" + respuesta);
+       
+        DOMParser parser = new DOMParser();
+        StringReader strreader = new StringReader(respuesta);
+        parser.parse(strreader);
+        XMLDocument xmldoc = (XMLDocument)parser.getDocument();
+       
+        NodeList nl = xmldoc.getElementsByTagName("controlNumber");
+        XMLElement tn = null;
+        String PNR = null;
+        if(nl != null){
+          tn = (XMLElement)nl.item(0);
+          //System.out.println("MBH amadeusClient PNR  "+tn.getTagName().toString());
+          PNR = tn.getText();
+        }else
+        {
+          PNR = "AMAD_ERR";
+        }
+        
+        //int pos = respuesta.indexOf("<controlNumber>");
+        //String PNR = respuesta.substring(pos+15, pos+21 );
+        //System.out.println("PNR: "+PNR);
+        res1.setPnr(PNR);
+        
+        
+        for(int i=0; i<pasajeros.size(); i++) 
+        {
+          Pasajero p1 = (Pasajero)pasajeros.get(i);          
+        }
+        
+        NodeList listaVuelos = xmldoc.getElementsByTagName("itineraryInfo");
+
+        for(int j=0; j<listaVuelos.getLength(); j++) 
+        {
+          XMLElement ele1 = (XMLElement)listaVuelos.item(j);
+          Vuelos v1 = new Vuelos();
+          
+          XMLElement tnumber = (XMLElement)ele1.getElementsByTagName("number").item(0);
+
+          XMLElement elecompani = (XMLElement)ele1.getElementsByTagName("companyDetail").item(0);
+          XMLElement tcompania = (XMLElement)elecompani.getElementsByTagName("identification").item(0); 
+
+          XMLElement eleorigen = (XMLElement)ele1.getElementsByTagName("boardpointDetail").item(0);
+          XMLElement torigen = (XMLElement)eleorigen.getElementsByTagName("cityCode").item(0); 
+
+          XMLElement eledestino = (XMLElement)ele1.getElementsByTagName("offpointDetail").item(0);
+          XMLElement tdestino = (XMLElement)eledestino.getElementsByTagName("cityCode").item(0); 
+          
+          XMLElement elevuelo = (XMLElement)ele1.getElementsByTagName("productDetails").item(0);
+          XMLElement tvuelo = (XMLElement)elevuelo.getElementsByTagName("identification").item(0); 
+                    
+          XMLElement thsalida = (XMLElement)ele1.getElementsByTagName("depTime").item(0); 
+
+          XMLElement thllegada = (XMLElement)ele1.getElementsByTagName("arrTime").item(0); 
+
+          XMLElement tstatus = (XMLElement)ele1.getElementsByTagName("status").item(0); 
+          
+          
+          for(int j2=0; j2<mVuelos.size(); j2++) 
+          {
+             Vuelos auxv = (Vuelos)mVuelos.get(j2);
+             int numv = Integer.parseInt(auxv.getNumeroVuelo());             
+             //Orígenes raros escandinavos
+             /*String origenAm = "";
+             String destinoAm = "";
+             if(torigen.getText().equals("ARN"))
+                origenAm = "STO";
+              else 
+                origenAm = torigen.getText();
+
+                
+            //Destinos raros
+            if(tdestino.getText().equals("ARN"))
+                  destinoAm = "STO";
+             else 
+                  destinoAm = tdestino.getText();
+              */            
+
+             if(auxv.getCompania().equals(tcompania.getText()) &&
+                auxv.getOrigen().equals(torigen.getText()) && auxv.getDestino().equals(tdestino.getText()) 
+                && (numv == Integer.parseInt(tvuelo.getText()))) 
+                {
+                   auxv.setRef_savia(Integer.parseInt(new String(tnumber.getText())));
+                   auxv.setHsalida(thsalida.getText());
+                   auxv.setHllegada(thllegada.getText());
+                   auxv.setStatus(tstatus.getText());
+                }
+             //System.out.println("Vuelo "+auxv.getNumeroVuelo()+", ref="+auxv.getRef_savia());
+          }
+          
+        }
+        
+        //System.out.println("Ref ap = "+ref_savia);
+        NodeList elemMgmt = xmldoc.getElementsByTagName("elementManagementData");
+        for(int nodos=0; nodos<elemMgmt.getLength(); nodos++) {
+          XMLElement nodo = (XMLElement)elemMgmt.item(nodos);
+          XMLElement segment = (XMLElement)nodo.getElementsByTagName("segmentName").item(0);
+          if(segment.getText().equals("AP")) 
+          {
+            XMLElement ref_ap = (XMLElement)nodo.getElementsByTagName("number").item(0);
+            res1.setRef_ap(ref_ap.getText());
+          }else if(segment.getText().equals("TK")) 
+          {
+            XMLElement ref_tk = (XMLElement)nodo.getElementsByTagName("number").item(0);
+            res1.setRef_tk(ref_tk.getText());
+          }
+        }
+        
+        rdao.saveInfoReserva(res1, true);
+       
+    }catch(Exception e1) 
+    {
+      e1.printStackTrace();
+      System.out.println("Error: "+e1.toString());
+      res1.setErrorsavia("Error inesperado, no se devuelve localizador");
+      rdao.saveInfoReserva(res1, true);
+    }finally
+    {
+      rdao.checkout();
+    }    
+    return respuesta;
+  }
+   
+   
+  /**
+   * Ámbito: Web Service
+   * Realiza la reserva de todos los vuelos correspondientes a 
+   * la reserva TMS. Ver realizarReservaAereo. 
+   * @throws java.lang.Exception
+   * @return El XML devuelto por Amadeus
+   * @param localizador
+   * @webmethod 
+   */
+  public String realizarReservaCompletaAereos (String localizador, String delegacion) throws Exception
+  {
+      ReservasDAO rdao = new ReservasDAO();
+      ArrayList aereos = rdao.getOrdenes(localizador);
+      rdao.checkout();
+      String xmls = new String();
+      
+      for(int i=0; i<aereos.size(); i++) 
+      {
+        Integer orden1 = (Integer)aereos.get(i);
+        xmls += this.realizaReservaAereo(localizador, orden1.intValue(), delegacion) + "\n";
+      } 
+      return xmls;
+  }
+
+  public String realizarReservaCompletaAereosDisponibles (String localizador, ArrayList vuelos, String delegacion) throws Exception
+  {
+      ReservasDAO rdao = new ReservasDAO();
+      ArrayList aereos = rdao.getOrdenes(localizador);
+      rdao.checkout();
+      String xmls = new String();
+      mVuelosNodisp = new Hashtable();
+      ArrayList v = new ArrayList();
+      for(int i=0; i<vuelos.size(); i++) 
+      {
+        VueloBean auxv1 = (VueloBean)vuelos.get(i);
+        if(auxv1.getEstado().equals("RQ"))
+        {
+          String clave = auxv1.getOrigen()+"-"+auxv1.getDestino();
+          mVuelosNodisp.put(clave,auxv1); 
+        }else{
+          v.add(auxv1);
+        }
+      }
+      CircuitoDAO dao = new CircuitoDAO();
+      vuelosLongWay.addAll(dao.getLongWayAmadeus(v));
+      for(int i=0; i<aereos.size(); i++) 
+      {
+        Integer orden1 = (Integer)aereos.get(i);
+        xmls += this.realizaReservaAereo(localizador, orden1.intValue(), delegacion) + "\n";
+      } 
+      return xmls;
+  }
+  
+  /**
+   * Ámbito: Interno
+   * Cancela todos los vuelos correspondientes al PNR
+   * @throws java.lang.Exception
+   * @return XML del gw
+   * @param pPNR
+   */
+  public String cancelacionTotal(String pPNR) throws Exception
+  {
+    String pre_xml = "<PoweredPNR_Cancel><reservationInfo><reservation><controlNumber>";
+    String post_xml = "</controlNumber></reservation></reservationInfo><pnrActions><optionCode>"+
+                      "11</optionCode></pnrActions><cancelElements><entryType>I</entryType>"+
+                      "</cancelElements></PoweredPNR_Cancel>";
+
+    String respuesta = this.sendData(pre_xml+pPNR+post_xml);
+    
+    return respuesta;
+  }
+  
+  /**
+   * Ámbito: Web Service
+   * Anula todos los CRS una reserva TMS a partir de su localizador
+   * @throws java.lang.Exception
+   * @return XML devuelto por el GW
+   * @param localizador
+   * @webmethod 
+   */
+  public String anularReserva(String localizador) throws Exception 
+  {
+    ReservasDAO rdao = new ReservasDAO();
+    ArrayList pnrs = rdao.getPNRs(localizador);
+    rdao.checkout();
+    String xmls = new String();
+    for(int i=0; i<pnrs.size(); i++) 
+    {
+      xmls += this.cancelacionTotal((String)pnrs.get(i)) + "\n";
+    }
+    return xmls;
+  }
+   
+  /**
+   * Ámbito: Web Service
+   * Anula el CRS correspondiente al localizador y el orden
+   * @throws java.lang.Exception
+   * @return XML devuelto por el GW
+   * @param orden
+   * @param localizador
+   * @webmethod 
+   */
+  public String anularCRSReserva(String localizador, int orden) throws Exception
+  {
+    ReservasDAO rdao = new ReservasDAO();
+    String pnr = rdao.getPNRs(localizador, orden);
+    rdao.checkout();
+    String xmls = new String();
+    xmls += this.cancelacionTotal(pnr);
+    return xmls;
+  }
+  
+  /**
+   * Ámbito: Web Service
+   * Actualiza el nombre de un pasajero en Amadeus para todos los PNRs
+   * contenidos en el localizador.
+   * @throws java.lang.Exception
+   * @return XML devuelto por el GW
+   * @param nl_pas
+   * @param localizador
+   * @webmethod 
+   */
+  public String actualizarNombre(String localizador, String nl_pas) throws Exception
+  {
+    ReservasDAO rdao = new ReservasDAO();
+    ArrayList pPNR = rdao.getPNRs(localizador);
+    rdao.checkout();
+    String xmls = new String();
+    for(int i=0; i<pPNR.size(); i++) 
+    {
+        String pnr = (String)pPNR.get(i);
+        Pasajero p1 = rdao.getPasajero( localizador, nl_pas);
+        String actualizar = "<PoweredPNR_NameUpdate><recordLocator><reservation><controlNumber>"+pnr+
+            "</controlNumber></reservation></recordLocator><passenger><passengerDetails><paxDetails>"+
+            "<surname>"+p1.getApellidos()+"</surname><quantity>1</quantity><status>C</status></paxDetails>"+
+            "<otherPaxDetails><givenName>"+p1.getNombre()+"</givenName><uniqueCustomerIdentifier>"+
+            p1.getRef_savia()+"</uniqueCustomerIdentifier></otherPaxDetails></passengerDetails></passenger>"+
+            "</PoweredPNR_NameUpdate>";
+
+        xmls += this.retrieveAndSendData(actualizar, pnr);            
+     }    
+    return xmls;
+  }
+  
+  
+  /**
+   * Ámbito: Web Service
+   * Actualiza el nombre de un pasajero en Amadeus para todos los PNRs
+   * contenidos en el localizador.
+   * @throws java.lang.Exception
+   * @return XML devuelto por el GW
+   * @param nl_pas
+   * @param localizador
+   */
+  public String actualizarNombres(String pnr, ArrayList pPasajeros) throws Exception
+  {
+  
+    String xmls = new String();
+    
+    for(int i=0; i<pPasajeros.size(); i++) 
+    {
+        Pasajero p1 = (Pasajero)pPasajeros.get(i);
+        String actualizar = "<PoweredPNR_NameUpdate><recordLocator><reservation><controlNumber>"+pnr+
+            "</controlNumber></reservation></recordLocator><passenger><passengerDetails><paxDetails>"+
+            "<surname>"+p1.getApellidos()+"</surname><quantity>1</quantity><status>C</status></paxDetails>"+
+            "<otherPaxDetails><givenName>"+p1.getNombre()+"</givenName><uniqueCustomerIdentifier>"+
+            p1.getRef_savia()+"</uniqueCustomerIdentifier></otherPaxDetails></passengerDetails></passenger>"+
+            "</PoweredPNR_NameUpdate>";
+
+        xmls += this.retrieveAndSendData(actualizar, pnr);            
+     }    
+    return xmls;
+  }
+
+  /**
+   * Ámbito: Interno
+   * Da de baja un pasajero dentro de un CRS de TMS
+   * @throws java.lang.Exception
+   * @return XML devuelto por el GW
+   * @param nl_pas
+   * @param orden
+   * @param localizador
+   */
+  public String cancelarNombre(String localizador, int orden, String nl_pas) throws Exception
+  {
+     ReservasDAO rdao = new ReservasDAO();
+     String pPNR = rdao.getPNRs(localizador, orden);
+     Pasajero pPasaj = rdao.getPasajero(localizador, nl_pas);
+     rdao.checkout();
+     String respuesta = new String();
+     
+     if(pPNR != null) {
+        String cabecera = "<PoweredPNR_Cancel><reservationInfo><reservation><controlNumber>"+
+                      pPNR+"</controlNumber></reservation></reservationInfo><pnrActions>"+
+                      "<optionCode>11</optionCode></pnrActions><cancelElements><entryType>E</entryType>";
+
+                                                 String pie = "</cancelElements></PoweredPNR_Cancel>";
+        String cuerpo = new String();
+      
+        cuerpo += "<element><identifier>PT</identifier><number>"+pPasaj.getRef_savia()+"</number></element>";
+      
+        respuesta = this.sendData(cabecera + cuerpo + pie);
+     }
+      
+      return (respuesta);
+                                               
+  }
+
+  /**
+   * Ámbito: Interno
+   * Da de baja del PNR a todos los pasajeros de pPasaj
+   * @throws java.lang.Exception
+   * @return XML devuelto por el GW
+   * @param pPasaj
+   * @param pPNR
+   */
+  public String cancelarNombres(String pPNR, ArrayList pPasaj) throws Exception
+  {
+     String cabecera = "<PoweredPNR_Cancel><reservationInfo><reservation><controlNumber>"+
+                      pPNR+"</controlNumber></reservation></reservationInfo><pnrActions>"+
+                      "<optionCode>11</optionCode></pnrActions><cancelElements><entryType>E</entryType>";
+
+                                               String pie = "</cancelElements></PoweredPNR_Cancel>";
+      String cuerpo = new String();
+      
+                                               for(int i=0; i<pPasaj.size(); i++) {
+         Pasajero p1 = (Pasajero)pPasaj.get(i);
+         cuerpo += "<element><identifier>PT</identifier><number>"+p1.getRef_savia()+"</number></element>";
+                                               }
+      
+      String respuesta = this.sendData(cabecera + cuerpo + pie);
+      
+      return (respuesta);
+                                               
+  }
+  
+  
+  
+  /**
+   * Ámbito: Interno
+   * Cancela un trayecto TMS de un PNR
+   * @throws java.lang.Exception
+   * @return XML devuelto por el GW
+   * @param nl_tra
+   * @param orden
+   * @param localizador
+   */
+  public String cancelarTrayecto(String localizador, int orden, String nl_tra) throws Exception
+  {
+    ReservasDAO rdao = new ReservasDAO();
+     String pPNR = rdao.getPNRs(localizador, orden);
+     Vuelos pVuelos = rdao.getVuelos(localizador, orden, nl_tra);
+     rdao.checkout();
+     String cabecera = "<PoweredPNR_Cancel><reservationInfo><reservation><controlNumber>"+
+                      pPNR+"</controlNumber></reservation></reservationInfo><pnrActions>"+
+                      "<optionCode>11</optionCode></pnrActions><cancelElements><entryType>E</entryType>";
+
+                                               String pie = "</cancelElements></PoweredPNR_Cancel>";
+      String cuerpo = new String();
+      
+      cuerpo += "<element><identifier>ST</identifier><number>"+pVuelos.getRef_savia()+"</number></element>";
+                                               
+      
+      String respuesta = this.sendData(cabecera + cuerpo + pie);
+      
+      return (respuesta);
+                                               
+  }
+
+  /**
+   * Ámbito: interno
+   * Cancela todos los vuelos de pVuelos del PNR de amadeus
+   * @throws java.lang.Exception
+   * @return XML devuelto por el GW
+   * @param pVuelos
+   * @param pPNR
+   */
+  public String cancelarVuelos(String pPNR, ArrayList pVuelos) throws Exception
+  {
+     String cabecera = "<PoweredPNR_Cancel><reservationInfo><reservation><controlNumber>"+
+                      pPNR+"</controlNumber></reservation></reservationInfo><pnrActions>"+
+                      "<optionCode>11</optionCode></pnrActions><cancelElements><entryType>E</entryType>";
+
+                                               String pie = "</cancelElements></PoweredPNR_Cancel>";
+      String cuerpo = new String();
+      
+                                               for(int i=0; i<pVuelos.size(); i++) {
+         Vuelos p1 = (Vuelos)pVuelos.get(i);
+         cuerpo += "<element><identifier>ST</identifier><number>"+p1.getRef_savia()+"</number></element>";
+                                               }
+      
+      String respuesta = this.sendData(cabecera + cuerpo + pie);
+      
+      return (respuesta);
+                                               
+  }
+
+  /**
+   * Ámbito: interno
+   * Actualiza los datos de los pVuelos del PNR de amadeus
+   * @throws java.lang.Exception
+   * @return XML devuelto por el GW
+   * @param pVuelos
+   * @param pPNR
+   */
+  public String actualizarVuelos(String pPNR, ArrayList pVuelos) throws Exception
+  {
+      String xmls = new String();
+                                               for(int i=0; i<pVuelos.size(); i++) {
+         Vuelos v1 = (Vuelos)pVuelos.get(i);
+
+             String xml = "<PoweredPNR_AddMultiElements><reservationInfo><reservation><controlNumber>"+
+                       pPNR+"</controlNumber></reservation></reservationInfo><pnrActions>"+
+                       "<optionCode>267</optionCode><optionCode>11</optionCode></pnrActions>"+
+                       "<originDestinationDetails><originDestination/><itineraryInfo><elementManagementItinerary>"+
+                       "<reference><number>"+v1.getRef_savia()+"</number></reference></elementManagementItinerary>"+
+                       "<airAuxItinerary><travelProduct><productDetails><classOfService>"+v1.getClase()+"</classOfService>"+
+                       "</productDetails></travelProduct><relatedProduct><status>C</status></relatedProduct>"+
+                       "</airAuxItinerary></itineraryInfo></originDestinationDetails></PoweredPNR_AddMultiElements>";
+
+      
+          xmls += this.retrieveAndSendData(xml, pPNR);
+      }
+      
+      return (xmls);
+  }
+
+  /**
+   * Ámbito: Interno
+   * Añade todos los vuelos del trayecto CRS de TMS que aun no tengan
+   * un localizador amadeus
+   * @throws java.lang.Exception
+   * @return 
+   * @param orden
+   * @param localizador
+   */
+  public String anadirVuelo (String localizador, int orden) throws Exception
+  {
+    String reserva_cabecera = "<PoweredPNR_AddMultiElements>"+
+                          "   <pnrActions> <optionCode>267</optionCode>"+
+                          "<optionCode>11</optionCode></pnrActions>";
+    String reserva_fin = "</PoweredPNR_AddMultiElements>"; 
+    String reserva_vuelos;
+    String reserva_tk;
+    
+    String respuesta = null;
+    
+    ReservaAmadeus pRes = new ReservaAmadeus();
+    pRes.setLocalizador(localizador);
+    pRes.setOrden(orden);
+    ReservasDAO rdao = new ReservasDAO();
+    String pPNR = rdao.getPNRs(localizador, orden);
+    try
+    {
+        fecha_emi = 0L;
+        npax = rdao.getnPax(pRes);
+        
+        reserva_vuelos = this.getXMLAddVuelos(pRes);
+        
+        if(reserva_vuelos != null) {
+
+          Date fecha_e = new Date(fecha_emi);
+          SimpleDateFormat df1 = new SimpleDateFormat("EEE"); 
+          if(df1.format(fecha_e).equals("Sun")) 
+          {
+            fecha_emi = fecha_emi - 2*24*60*60*1000;
+            fecha_e = new Date(fecha_emi);
+          }
+  
+          SimpleDateFormat df2 = new SimpleDateFormat("ddMMyy"); 
+          pRes.setFechaemi(fecha_e);
+          
+          reserva_tk = "<dataElementsIndiv><elementManagementData><reference><qualifier>OT</qualifier>"+
+                      "<number>1</number></reference><segmentName>TK</segmentName></elementManagementData>"+
+                      "<ticketElement><passengerType>PAX</passengerType><ticket><indicator>TL</indicator><date>"+
+                      df2.format(fecha_e)+"</date></ticket></ticketElement>"+"</dataElementsIndiv>";
+  
+                                           
+          String xmldatos = new String(reserva_cabecera+reserva_vuelos
+                                            +/*reserva_tk+*/reserva_fin);
+          xmldatos = xmldatos.replace('\n',' ');
+  
+          respuesta = this.retrieveAndSendData(xmldatos, pPNR);
+           
+          DOMParser parser = new DOMParser();
+          StringReader strreader = new StringReader(respuesta);
+          parser.parse(strreader);
+          XMLDocument xmldoc = (XMLDocument)parser.getDocument();
+         
+          NodeList nl = xmldoc.getElementsByTagName("controlNumber");
+          XMLElement tn = (XMLElement)nl.item(0);
+          String PNR = tn.getText();
+          
+          pRes.setPnr(PNR);
+          
+          
+          for(int i=0; i<pasajeros.size(); i++) 
+          {
+            Pasajero p1 = (Pasajero)pasajeros.get(i);
+            //System.out.println("Pasajero "+p1.getNl_pas()+", ref="+p1.getRef_savia());
+          }
+          
+          NodeList listaVuelos = xmldoc.getElementsByTagName("itineraryInfo");
+  
+          for(int j=0; j<listaVuelos.getLength(); j++) 
+          {
+            XMLElement ele1 = (XMLElement)listaVuelos.item(j);
+            Vuelos v1 = new Vuelos();
+            
+            XMLElement tnumber = (XMLElement)ele1.getElementsByTagName("number").item(0);
+  
+            XMLElement elecompani = (XMLElement)ele1.getElementsByTagName("companyDetail").item(0);
+            XMLElement tcompania = (XMLElement)elecompani.getElementsByTagName("identification").item(0); 
+  
+            XMLElement eleorigen = (XMLElement)ele1.getElementsByTagName("boardpointDetail").item(0);
+            XMLElement torigen = (XMLElement)eleorigen.getElementsByTagName("cityCode").item(0); 
+  
+            XMLElement eledestino = (XMLElement)ele1.getElementsByTagName("offpointDetail").item(0);
+            XMLElement tdestino = (XMLElement)eledestino.getElementsByTagName("cityCode").item(0); 
+            
+            XMLElement elevuelo = (XMLElement)ele1.getElementsByTagName("productDetails").item(0);
+            XMLElement tvuelo = (XMLElement)elevuelo.getElementsByTagName("identification").item(0); 
+                      
+            XMLElement thsalida = (XMLElement)ele1.getElementsByTagName("depTime").item(0); 
+  
+            XMLElement thllegada = (XMLElement)ele1.getElementsByTagName("arrTime").item(0); 
+  
+            XMLElement tstatus = (XMLElement)ele1.getElementsByTagName("status").item(0); 
+  
+            for(int j2=0; j2<mVuelos.size(); j2++) 
+            {
+               Vuelos auxv = (Vuelos)mVuelos.get(j2);
+               int numv = Integer.parseInt(auxv.getNumeroVuelo());
+               if(auxv.getCompania().equals(tcompania.getText()) &&
+                  auxv.getOrigen().equals(torigen.getText()) &&
+                  auxv.getDestino().equals(tdestino.getText()) &&
+                  (numv == Integer.parseInt(tvuelo.getText()))) 
+                  {
+                     auxv.setRef_savia(Integer.parseInt(new String(tnumber.getText())));
+                     auxv.setHsalida(thsalida.getText());
+                     auxv.setHllegada(thllegada.getText());
+                     auxv.setStatus(tstatus.getText());
+                     pRes.getVuelos().add(auxv);
+                  }
+               //System.out.println("Vuelo "+auxv.getNumeroVuelo()+", ref="+auxv.getRef_savia());
+            }
+            
+          }
+          
+          //System.out.println("Ref ap = "+ref_savia);
+          NodeList elemMgmt = xmldoc.getElementsByTagName("elementManagementData");
+          for(int nodos=0; nodos<elemMgmt.getLength(); nodos++) {
+            XMLElement nodo = (XMLElement)elemMgmt.item(nodos);
+            XMLElement segment = (XMLElement)nodo.getElementsByTagName("segmentName").item(0);
+            if(segment.getText().equals("AP")) 
+            {
+              XMLElement ref_ap = (XMLElement)nodo.getElementsByTagName("number").item(0);
+              pRes.setRef_ap(ref_ap.getText());
+            }else if(segment.getText().equals("TK")) 
+            {
+              XMLElement ref_tk = (XMLElement)nodo.getElementsByTagName("number").item(0);
+              pRes.setRef_tk(ref_tk.getText());
+            }
+          }
+          
+          rdao.saveInfoReserva(pRes, false);
+        }
+    }catch(Exception e1) 
+    {
+      e1.printStackTrace();
+      System.out.println("Error: "+e1.toString());
+    }finally
+    {
+      rdao.checkout();
+    }
+    
+    return respuesta;
+  }
+  
+  /**
+   * Ambito: Interno
+   * Consulta al API de amadeus los vuelos disponibles que cumplen el 
+   * criterio
+   * @throws java.lang.Exception
+   * @return 
+   * @param pCriterios
+   */
+  public ArrayList disponibilidad( Vuelos pCriterios ) throws Exception
+  {
+
+    String textoClase = "";
+    String textoCompania = "";
+    String textoNumVuelo = "";
+    boolean esXG = false;
+    boolean esVY = false;
+
+    //Sólo se puede consultar por una clase concreta y no por varias.
+    /*for(int i=0; i<pCriterios.getClases().size(); i++){
+        String clase = String.valueOf(pCriterios.getClases().get(i));
+        textoClase += "<optionClass><productClassDetails><serviceClass>"+clase+
+                    "</serviceClass></productClassDetails></optionClass>";    
+    }*/
+    
+    if(pCriterios.getCompania() != null && "IB".equals(pCriterios.getCompania()) && (pCriterios.getOrigen().equals("SFO") || pCriterios.getDestino().equals("SFO")))
+    {
+      pCriterios.setCompania(null);
+    }
+    if(pCriterios.getCompania() != null) {
+        if(!pCriterios.getCompania().equals("")) {
+           String company = pCriterios.getCompania();
+           if(company.equals("OKREG"))
+           {
+             company = "OK";
+           }
+           if(company.equals("XG"))
+           {
+             company = "IB";
+             esXG = true;
+           }
+           
+          
+           
+           textoCompania = "<airlineOrFlightOption><flightIdentification><airlineCode>"+
+                          company+"</airlineCode>";
+          
+            if (pCriterios.getNumeroVuelo() != null) {
+              if(!pCriterios.getNumeroVuelo().equals("")) {
+                 textoNumVuelo = "<number>"+pCriterios.getNumeroVuelo()+"</number>";
+                 textoCompania = textoCompania+textoNumVuelo;
+               }
+            }
+      
+           textoCompania = textoCompania+"</flightIdentification></airlineOrFlightOption>";
+        }
+    }
+     /*Para el caso escandinavo de Stocolmo, tenemos que hacer este truco*/
+      String origen= "";
+      String destino = "";
+      if(pCriterios.getOrigen().equals("STO"))
+          origen = "ARN";
+      else 
+          origen = pCriterios.getOrigen();
+        //Destinos raros
+      if(pCriterios.getDestino().equals("STO"))
+          destino = "ARN";
+      else 
+          destino = pCriterios.getDestino();
+        
+    SimpleDateFormat df = new SimpleDateFormat("ddMMyy");
+    String strFecha = df.format(pCriterios.getFecha());
+
+    String xml = "<PoweredAir_MultiAvailability><messageActionDetails><functionDetails>"+
+                 "<businessFunction>1</businessFunction><actionCode>44</actionCode>"+
+                 "</functionDetails></messageActionDetails><requestSection><availabilityProductInfo>"+
+                 "<availabilityDetails><departureDate>"+strFecha+"</departureDate>"+
+                 "</availabilityDetails><departureLocationInfo><cityAirport>"+origen+
+                 "</cityAirport></departureLocationInfo><arrivalLocationInfo><cityAirport>"+
+                 destino+"</cityAirport></arrivalLocationInfo></availabilityProductInfo>"
+                 +textoClase+textoCompania+"<availabilityOptions><productTypeDetails><typeOfRequest>TN</typeOfRequest>"+
+                 "</productTypeDetails></availabilityOptions></requestSection>"+
+                 "</PoweredAir_MultiAvailability>";  
+        //System.out.println("disponibilidad=>xmlAmadeus=>"+xml);
+      String respuesta = this.sendData(xml);
+      DOMParser parser = new DOMParser();
+      StringReader strreader = new StringReader(respuesta);
+      parser.parse(strreader);
+      XMLDocument xmldoc = (XMLDocument)parser.getDocument();
+     
+      NodeList nvuelos = xmldoc.getElementsByTagName("flightInfo");
+      
+      ArrayList vuelos_disp = new ArrayList();
+      
+      for(int i=0; i<nvuelos.getLength(); i++) 
+      {
+        XMLElement elem1 = (XMLElement)nvuelos.item(i);
+        
+        XMLElement edep_code = (XMLElement)elem1.getElementsByTagName("departureLocation").item(0);
+        String dep_code = edep_code.getText();
+        
+        XMLElement earr_code = (XMLElement)elem1.getElementsByTagName("arrivalLocation").item(0);
+        String arr_code = earr_code.getText();
+
+        XMLElement ecompania = (XMLElement)elem1.getElementsByTagName("identifier").item(0);
+        String compania = ecompania.getText();
+
+        XMLElement evuelo = (XMLElement)elem1.getElementsByTagName("number").item(0);
+        String vuelo = evuelo.getText();
+        
+        XMLElement edep_date = (XMLElement)elem1.getElementsByTagName("departureDate").item(0);
+        String dep_date = edep_date.getText();
+
+        XMLElement edep_time = (XMLElement)elem1.getElementsByTagName("departureTime").item(0);
+        String dep_time = edep_time.getText();
+
+        XMLElement earr_date = (XMLElement)elem1.getElementsByTagName("arrivalDate").item(0);
+        String arr_date = earr_date.getText();
+
+        XMLElement earr_time = (XMLElement)elem1.getElementsByTagName("arrivalTime").item(0);
+        String arr_time = earr_time.getText();
+
+        XMLElement eestado = (XMLElement)elem1.getElementsByTagName("availabilityStatus").item(0);
+        String estado = eestado.getText();
+
+        NodeList clases = elem1.getElementsByTagName("productClassDetail");
+
+        //Descartamos las clases q no son las nuestras
+        String claseAmadeus = "";        
+        for(int j=0; j<clases.getLength(); j++) {
+           
+           XMLElement tclase =  (XMLElement)clases.item(j);
+           
+           XMLElement nombreClase = (XMLElement)tclase.getElementsByTagName("serviceClass").item(0);
+           claseAmadeus = nombreClase.getText();
+           
+           XMLElement estadoClase = (XMLElement)tclase.getElementsByTagName("availabilityStatus").item(0);
+           estado = estadoClase.getText();
+           
+           
+           for(int x=0; x< pCriterios.getClases().size(); x++){
+                String clase = ((ClasesVueloBean)pCriterios.getClases().get(x)).getClase();
+           
+           if( clase != null && clase.equals(claseAmadeus)){
+               Vuelos auxv = new Vuelos();
+               auxv.setOrigen(dep_code);
+               auxv.setDestino(arr_code);
+               if(esXG)
+               {
+                 auxv.setCompania("XG");
+               }else if(esVY){
+                 auxv.setCompania("VY");
+               }else{
+                auxv.setCompania(compania);
+               }
+               auxv.setFecha(df.parse(dep_date));
+               auxv.setNumeroVuelo(vuelo);
+               auxv.setHsalida(dep_time);
+               auxv.setHllegada(arr_time);
+               auxv.setClase(claseAmadeus);
+               auxv.setStatus(estado);              
+               vuelos_disp.add(auxv);
+                }
+           }
+        }
+      }
+        
+        
+    //System.out.println("respuesta=>"+respuesta);
+    
+    return vuelos_disp;
+
+  }
+  
+  /**
+   * 
+   * @webmethod 
+   */
+  public Vuelos[] disponibilidadVuelos( Vuelos[] pCriterio) throws Exception 
+  {
+  
+      ArrayList dispo = new ArrayList();
+      
+      for(int i=0; i<pCriterio.length; i++) 
+      {
+        Vuelos crit1 = pCriterio[i];
+        dispo.addAll(this.disponibilidad(crit1));
+      }
+      
+      Vuelos[] v2 = new Vuelos[dispo.size()];
+      System.out.println("dispo.size()=>"+dispo.size());
+      for(int j=0; j<dispo.size(); j++) 
+      {
+        Vuelos vuel = (Vuelos)dispo.get(j);             
+        System.out.println("Vuelo: "+ vuel.getOrigen() + "-"+ vuel.getDestino()+ " "+ vuel.getCompania()+ " "+ vuel.getClase() + " " + vuel.getNumeroVuelo() +" Horario" + vuel.getHsalida() +" " + vuel.getStatus());         
+        /*Para el caso escandinavo de Estocolmo, tenemos que hacer este truco*/
+        String origen= "";
+        String destino = "";
+        if(vuel.getOrigen().equals("ARN")){
+            vuel.setOrigen("STO");
+        }
+        //Destinos raros
+        if(vuel.getDestino().equals("ARN")){
+            vuel.setDestino("STO");
+        }
+        v2[j] = vuel;
+      }
+      return v2;
+  }
+  
+  private String getOsiCanadiense(ArrayList vuelos)
+  {
+    for(int i=0; i < vuelos.size(); i++)
+    {
+      Vuelos vuel = (Vuelos)mVuelos.get(i);
+      if("LAX".equals(vuel.getOrigen()) || "LAX".equals(vuel.getDestino()))
+      {
+        return "OFTTOO";
+      }
+      if("WAW".equals(vuel.getOrigen()) || "WAW".equals(vuel.getDestino()) || "WAW".equals(vuel.getOrigen()) || "OTP".equals(vuel.getDestino()))
+      {
+        return "TOESP";
+      }
+      
+      
+      if("JFK".equals(vuel.getOrigen()) || "JFK".equals(vuel.getDestino()) 
+      || "IAD".equals(vuel.getOrigen()) || "IAD".equals(vuel.getDestino()) 
+      || "BWI".equals(vuel.getOrigen()) || "BWI".equals(vuel.getDestino())
+      || "DCA".equals(vuel.getOrigen()) || "DCA".equals(vuel.getDestino())
+      || "BOS".equals(vuel.getOrigen()) || "BOS".equals(vuel.getDestino()))
+      {
+        return "TTOO";
+      }
+    }
+    return null;
+  }
+  
+  
+  /**
+   * Funcion main de prueba
+   * 
+   */
+    public static void main(String[] args)
+    {
+    AmadeusClient ac = new AmadeusClient();
+    System.out.println(ac.formatearPasajero("BOSCO ESPINÓS"));
+        /*AmadeusClient cliente = new AmadeusClient();
+        try{
+          cliente.recuperaReserva("Z4JXLS");
+        }catch(Exception e)
+        {
+          e.printStackTrace();
+        }*/
+      //try {
+        //  AmadeusClient jAmadeus = new AmadeusClient();
+      //Random rand = new Random();
+      //int x = rand.nextInt(10);
+      //System.out.println(x);
+
+          //String respuesta = jAmadeus.sendData(xmlDatos);
+          //String respuesta = jAmadeus.realizaReservaAereo("232998", 3);
+          //String respuesta = jAmadeus.realizarReservaCompletaAereos("272028");
+          //String respuesta = jAmadeus.cancelacionTotal("3ZAMEN");          
+          /*Pasajero auxp = new Pasajero();
+          auxp.setNombre("PPOTE");
+          auxp.setApellidos("BURGS");
+          auxp.setRef_savia(2);
+          String respuesta = jAmadeus.actualizarNombre("2XA7NY", auxp);*/
+          
+          /*Pasajero auxp = new Pasajero();
+          auxp.setRef_savia(3);
+          ArrayList ps = new ArrayList();
+          ps.add(auxp);
+          String respuesta = jAmadeus.cancelarNombre("2XA7NY", ps);*/
+          /*try{
+           AmadeusClient jAmadeus = new AmadeusClient();
+          SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+          
+          Vuelos v1 = new Vuelos();
+          v1.setOrigen("VLC");
+          v1.setDestino("FCO");
+          v1.setFecha(formato.parse("2011-08-07"));
+          v1.setCompania("IB");
+          v1.setNumeroVuelo("5716");
+          //v1.setClase("N");
+          //v1.setClase1("S");
+          
+          Vuelos[] arrv = new Vuelos[1];
+          arrv[0] = v1;
+          Vuelos vu[] = jAmadeus.disponibilidadVuelos(arrv);
+          int cont =0;
+         for(int i=0; i < vu.length; i++)
+          {
+            Vuelos v = (Vuelos)vu[i];
+            System.out.println("Vuelo: "+ v.getOrigen() + "-"+ v.getDestino()+ " "+ v.getCompania()+ " "+ v.getClase() + " " + v.getNumeroVuelo() +" Horario" + v.getHsalida() +" " + v.getStatus());         
+            cont++;
+          }
+          System.out.println(cont);
+          }catch(Exception e)
+          {
+            e.printStackTrace();
+          }*/
+       //String apel = jAmadeus.formatearPasajero("Pedro Mª Pérez");
+     /*   SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+          Vuelos v1 = new Vuelos();
+          v1.setOrigen("MAD");
+          v1.setDestino("EDI");
+          v1.setFecha(formato.parse("2008-07-20"));
+          v1.setCompania("IB");
+          //v1.setNumeroVuelo("7512");
+          //v1.setClase("O");
+          //v1.setClase1("S");
+          
+          Vuelos[] arrv = new Vuelos[1];
+          arrv[0] = v1;
+          Vuelos vu[] = jAmadeus.disponibilidadVuelos(arrv);
+          int cont =0;
+          for(int i=0; i < vu.length; i++)
+          {
+            Vuelos v = (Vuelos)vu[i];
+            System.out.println("Vuelo: "+ v.getOrigen() + "-"+ v.getDestino()+ " "+ v.getCompania()+ " "+ v.getClase() + " " + v.getNumeroVuelo() +" Horario" + v.getHsalida() +" " + v.getStatus());         
+            cont++;
+          }
+
+System.out.println("Respuesta: " );
+      }catch(Exception e1) 
+      {
+        e1.printStackTrace();
+        System.out.println("Error: "+e1.toString());
+      }
+      
+      System.exit(0);
+    }   
+    
+ public Hashtable agrupaPorFecha(ArrayList aVuelos) 
+ {
+        ArrayList aAmadeus = new ArrayList();
+        SimpleDateFormat df = new SimpleDateFormat("ddMMyy");
+        Vuelos vuelo = null;
+        String fechaActual = "X";
+        //Reseteamos las fechas para este PNR 
+        fechasViaje = new ArrayList();
+        Hashtable tablaFechas = new Hashtable();
+        tablaOrigenes = new Hashtable();
+        String origenDest="";
+        ArrayList vuelosFecha = null;
+        for(int i=0; i < aVuelos.size(); i++)
+        {
+          vuelo = (Vuelos)aVuelos.get(i);
+          if(!fechaActual.equals(df.format(vuelo.getFecha())))
+          {
+            if(vuelosFecha == null || vuelosFecha.size() == 0){
+              vuelosFecha = new ArrayList();
+              vuelosFecha.add(vuelo);
+              origenDest = vuelo.getOrigen() + "-"+vuelo.getDestino();
+              fechaActual = df.format(vuelo.getFecha());
+            }else
+            {
+              fechasViaje.add(fechaActual);
+              tablaFechas.put(fechaActual,vuelosFecha);
+              tablaOrigenes.put(fechaActual,origenDest);
+              vuelosFecha = new ArrayList();
+              i--;
+              fechaActual = "X";
+            }       
+          }else
+          {
+            origenDest = origenDest.substring(0,(origenDest.length()-3));
+            origenDest += vuelo.getDestino();
+            vuelosFecha.add(vuelo);
+          }
+        }
+        if(vuelosFecha != null && vuelosFecha.size() > 0)
+        {
+          fechasViaje.add(fechaActual);
+          tablaFechas.put(fechaActual,vuelosFecha);
+          tablaOrigenes.put(fechaActual,origenDest);
+        }
+        return tablaFechas;*/
+}
+   
+   
+}

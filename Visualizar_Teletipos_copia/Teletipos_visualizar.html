@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 5.0 Transitional//EN">
+<HTML>
+
+ <HEAD>
+  <meta charset="utf-8">
+  <TITLE> Menú </TITLE>
+  <META NAME="Generator" CONTENT="EditPlus">
+  <META NAME="Author" CONTENT="Jose de Frias">
+  <META NAME="Keywords" CONTENT="">
+  <META NAME="Description" CONTENT="">
+  <script type="text/javascript" src="funciones_js/funciones.js"></script>
+  <link rel="StyleSheet" href="css/menu.css">
+  <link rel="StyleSheet" href="css/calendario/calendar-blue2.css">
+  <script type="text/javascript" src="funciones_js/calendario/calendar.js"></script>
+  <script type="text/javascript" src="funciones_js/calendario/calendar-es.js"></script>
+  <script type="text/javascript" src="funciones_js/calendario/calendar-setup.js"></script>
+ </HEAD>
+
+<body background="imagenes/fondo.jpg">
+
+	{include file="$cabecera"}
+
+	<form name="mantenimiento_tabla" method = "post" action="" enctype="multipart/form-data">
+
+	{include file="$cabecera_teletipo"}
+<!-------------------------------------------------------------->
+<!-------------------------------------------------------------->
+<!-------------------------VISUALIZAR PLANTILLAS---------------------------->
+<!-------------------------------------------------------------->
+
+		<table width="100%" cellspacing="0" cellpadding="0" border="0" summary="">
+			<tbody>
+				<tr height="10"></tr>
+				<tr>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+					<td>
+						<input type="button" id="boton_hoteles" value="HOTELES" class="botones_cuadro" onClick="salir_teletipos('HO')"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<input type="button" id="boton_hoteles" value="AEREOS" class="botones_cuadro" onClick="salir_teletipos('AE')"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td align='center'>
+						<input type="button" id="boton_visualizar" value="VISUALIZAR" class="botones_cuadro_seleccionado" onClick="salir_teletipos('VI')"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<input type="button" id="boton_destinatarios" value="DESTINATARIOS" class="botones_cuadro" onClick="salir_teletipos('DE')"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<table border = "0" align = "left">
+			<tr height="50">
+				<td>
+					<th>&nbsp;&nbsp;&nbsp;</th>
+				</td>
+				<td>
+					<th>Buscar Ciudad</th>
+				</td>
+				<td>
+					<select name="buscar_ciudad" align=""> 
+						{foreach from=$comboCiudades item=fila}
+							{if {$buscar_ciudad} == {$fila.ciudad}}
+								<option value="{$fila.ciudad}" selected>{$fila.nombre}</option>
+							{else}
+								<option value="{$fila.ciudad}">{$fila.nombre}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>
+				<td>
+					<th>&nbsp;&nbsp;&nbsp;</th>
+				</td>
+				<td>
+					<th>Direccion de correo de prueba</th>
+				</td>
+				<td>
+					<input type= 'text' name= 'direccion_correo_prueba' size='80' value="{$direccion_correo_prueba}">
+				</td>
+					<td>
+						<input type="button" id="boton_nuevo" value="ENVIAR PRUEBA"  style="height:22px; color:#FFFFFF; background:#0066CC; font-family:Arial; font-weight: bold; font-size:10px; text-align:center; border-radius: 10px 10px 10px 10px;" onClick="grabar_2nivel_teletipos_visualizar()"/>
+
+						<input type= "hidden" name= "actuar_2nivel" value="">
+					</td>
+				</td>
+			</tr>
+		</table>
+
+		<table width="100%" cellspacing="0" cellpadding="0" border="0" summary="">
+			<tbody>
+				<tr>
+					<td>
+						<img width="200" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+
+						<input type="button" id="boton_buscar" value="BUSCAR"  style="height:22px; color:#FFFFFF; background:#0066CC; font-family:Arial; font-weight: bold; font-size:10px; text-align:center; border-radius: 10px 10px 10px 10px;" onClick="Buscar_Teletipo()"/>
+
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<!--<td>
+
+						<input type="button" id="boton_nuevo" value="GRABAR"  style="height:22px; color:#FFFFFF; background:#0066CC; font-family:Arial; font-weight: bold; font-size:10px; text-align:center; border-radius: 10px 10px 10px 10px;" onClick="grabar_2nivel_teletipos()"/>
+
+						<input type= "hidden" name= "actuar_2nivel" value="">
+					</td>-->
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+
+		{$html_oferta}
+
+
+		{include file="$pie"}		
+	</form>
+
+ </body>
+</HTML>
+
+
+
+

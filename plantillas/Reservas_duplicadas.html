@@ -1,0 +1,158 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 5.0 Transitional//EN">
+<HTML>
+
+ <HEAD>
+  <meta charset="utf-8">
+  <TITLE> Menú </TITLE>
+  <META NAME="Author" CONTENT="Jose de Frias">
+  <META NAME="Keywords" CONTENT="">
+  <META NAME="Description" CONTENT="">
+  <link rel="StyleSheet" href="css/comun.css">
+  <script type="text/javascript" src="funciones_js/funciones.js"></script>
+  <link rel="shortcut icon" type="image/x-icon" href="imagenes/favicon_hit.ico">
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+  <link rel="StyleSheet" href="css/calendario/calendar-blue2.css">
+  <script type="text/javascript" src="funciones_js/calendario/calendar.js"></script>
+  <script type="text/javascript" src="funciones_js/calendario/calendar-es.js"></script>
+  <script type="text/javascript" src="funciones_js/calendario/calendar-setup.js"></script>
+ </HEAD>
+
+<body background="imagenes/fondo.jpg">
+
+	{include file="$cabecera"}
+	{include file="$menu"}
+
+	<form name="mantenimiento_tabla" method = "post" action="">
+		
+		<table width="200px" border = "0" align = "left">
+			<tr>
+				<td>
+					<input type=image src="imagenes/selector_inicio2.jpg" width="25" height="15" onclick="Selector(1);">
+					<input type= "hidden" name= "botonSelector" value="0">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_anterior2.jpg" width="25" height="15" onclick="Selector(2);">	
+				</td>			
+				<td>
+					<select name="filadesde" align="" onchange="submit();"> 
+						{foreach from=$combo item=fila}
+							<!--<option value="{$fila.inicio}">{$fila.inicio} - {$fila.fin}</option>-->
+							
+							{if {$filades} == {$fila.inicio}}
+								<option value="{$fila.inicio}" selected>{$fila.inicio} - {$fila.fin}</option>
+							{else}
+								<option value="{$fila.inicio}">{$fila.inicio} - {$fila.fin}</option>
+							{/if}
+							
+						{/foreach}
+					</select> 
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_siguiente2.jpg" width="25" height="15" onclick="Selector(3);">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_fin2.jpg" width="25" height="15" onclick="Selector(4);">
+				</td>
+				<td>
+					&nbsp;&nbsp;&nbsp;
+				</td>
+			</tr>
+		</table>			
+
+		<BR>	
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" class="lineatitulo" style="padding:15px 0px 15px 0px;">
+			<tbody>
+				<tr>
+					<td>
+						<img width="20" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_grabar.jpg" width="70" height="25" onClick="grabar()">-->
+						<input type="button" id="boton_grabar" value="DESCARTAR DUPLICADO" class="boton" onClick="grabar()"/>
+						<input type= "hidden" name= "actuar" value="">
+					</td>
+					
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_salir.jpg" width="70" height="25" onClick="salir('S')">-->
+						<input type= "hidden" name= "ir_a" value="">
+					</td>
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		{$mensaje1}
+		{$mensaje2}
+
+		<table border = "0" align = "left" class="fondotabla" style="clear:both">
+			<tr class="cabeceratabla">
+				<th>Sel</th>
+				<th>Loc 1</th>
+				<th>Apellidos 1</th>
+				<th>Nombre 1</th>
+				<th>Fol 1</th>
+				<th>Cuad 1</th>
+				<th>Paqu 1</th>
+				<th>Salid 1</th>
+				<th>Sit</th>
+				<th></th>
+				<th>Loc 2</th>
+				<th>Apellidos 2</th>
+				<th>Nombre 2</th>
+				<th>Fol 2</th>
+				<th>Cuad 2</th>
+				<th>Paqu 2</th>
+				<th>Salid 2</th>
+				<th>Sit</th>
+				
+			</tr>
+
+			{section name=i loop=$reservas_duplicadas}
+			<tr>
+				<td align = "center">
+					<input type= 'checkbox' name= 'seleccion{$smarty.section.i.index}' value="" onChange="Seleccion_precobro({$smarty.section.i.index})">
+					<input type= 'hidden' name= 'selec{$smarty.section.i.index}' value="N">
+				</td>
+				
+				<td><input type= 'text' name= 'localizador1{$smarty.section.i.index}' size='9' value="{$reservas_duplicadas[i].localizador1}" class="camposololecturacenterbold" readonly></td>
+				<td><input type= 'text' name= 'apellido1{$smarty.section.i.index}' size='25' value="{$reservas_duplicadas[i].apellido1}" class="camposololecturatextbold" readonly></td>
+				<td><input type= 'text' name= 'nombre1{$smarty.section.i.index}' size='15' value="{$reservas_duplicadas[i].nombre1}" class="camposololecturatextbold"  readonly></td>
+				<td><input type= 'text' name= 'folleto1{$smarty.section.i.index}' size='5' value="{$reservas_duplicadas[i].folleto1}" class="camposololecturacenter" readonly></td>
+				<td><input type= 'text' name= 'cuadro1{$smarty.section.i.index}' size='5' value="{$reservas_duplicadas[i].cuadro1}" class="camposololecturacenter"  readonly></td>
+				<td><input type= 'text' name= 'paquete1{$smarty.section.i.index}' size='5' value="{$reservas_duplicadas[i].paquete1}" class="camposololecturacenter" readonly></td>
+				<td><input type= 'text' name= 'salida1{$smarty.section.i.index}' size='9' value="{$reservas_duplicadas[i].salida1}" class="camposololecturacenter"  readonly></td>
+				<td><input type= 'text' name= 'situacion1{$smarty.section.i.index}' size='1' value="{$reservas_duplicadas[i].situacion1}" class="camposololecturacenter" readonly></td>
+				<td width="20"></td>
+				<td><input type= 'text' name= 'localizador2{$smarty.section.i.index}' size='9' value="{$reservas_duplicadas[i].localizador2}" class="camposololecturacenterbold" readonly></td>
+				<td><input type= 'text' name= 'apellido2{$smarty.section.i.index}' size='25' value="{$reservas_duplicadas[i].apellido2}" class="camposololecturatextbold" readonly></td>
+				<td><input type= 'text' name= 'nombre2{$smarty.section.i.index}' size='15' value="{$reservas_duplicadas[i].nombre2}" class="camposololecturatextbold"  readonly></td>
+				<td><input type= 'text' name= 'folleto2{$smarty.section.i.index}' size='5' value="{$reservas_duplicadas[i].folleto2}" class="camposololecturacenter" readonly></td>
+				<td><input type= 'text' name= 'cuadro2{$smarty.section.i.index}' size='5' value="{$reservas_duplicadas[i].cuadro2}" class="camposololecturacenter"  readonly></td>
+				<td><input type= 'text' name= 'paquete2{$smarty.section.i.index}' size='5' value="{$reservas_duplicadas[i].paquete2}" class="camposololecturacenter" readonly></td>
+				<td><input type= 'text' name= 'salida2{$smarty.section.i.index}' size='9' value="{$reservas_duplicadas[i].salida2}" class="camposololecturacenter"  readonly></td>
+				<td><input type= 'text' name= 'situacion2{$smarty.section.i.index}' size='1' value="{$reservas_duplicadas[i].situacion2}" class="camposololecturacenter" readonly></td>
+
+			</tr>
+			{/section}
+
+		{include file="$pie"}
+	</form>
+
+
+ </BODY>
+</HTML>
+
+
+
+

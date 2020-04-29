@@ -1,0 +1,272 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 5.0 Transitional//EN">
+<HTML>
+
+ <HEAD>
+  <meta charset="utf-8">
+  <TITLE> Menú </TITLE>
+  <META NAME="Author" CONTENT="Jose de Frias">
+  <META NAME="Keywords" CONTENT="">
+  <META NAME="Description" CONTENT="">
+  <link rel="StyleSheet" href="css/comun.css">
+  <script type="text/javascript" src="funciones_js/funciones.js"></script>
+  <link rel="shortcut icon" type="image/x-icon" href="imagenes/favicon_hit.ico">
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+  <link rel="StyleSheet" href="css/calendario/calendar-blue2.css">
+  <script type="text/javascript" src="funciones_js/calendario/calendar.js"></script>
+  <script type="text/javascript" src="funciones_js/calendario/calendar-es.js"></script>
+  <script type="text/javascript" src="funciones_js/calendario/calendar-setup.js"></script>
+ </HEAD>
+
+<script language="javascript">
+	fecha=new Date(); // Fecha actual
+	
+	function cargafecha() {
+        		fecha.setTime(fecha.getTime() - 24*60*60*1000); //retrasar un dia
+        		fecha.setTime(fecha.getTime() - 7*24*60*60*1000); //retrasar una semana
+		    
+		    auxFecha = fecha.getDate() + "-" + (fecha.getMonth()+1) + "-" + fecha.getFullYear(); //fecha.getYear();
+		    fecha.setTime(fecha.getTime() + 7*24*60*60*1000);
+		    auxFecha2 = fecha.getDate() + "-" + (fecha.getMonth()+1) + "-" + fecha.getFullYear();; //fecha.getYear();
+		    //document.getElementById("buscar_salida_desde").value=auxFecha;
+		    //document.getElementById("buscar_salida_hasta").value=auxFecha2;
+   	 }
+</script>   
+
+<body background="imagenes/fondo.jpg">
+
+	{include file="$cabecera"}
+	{include file="$menu"}
+
+	<form name="mantenimiento_tabla" method = "post" action="">
+		
+		<table width="200px" border = "0" align = "left">
+			<tr>
+				<td>
+					<input type=image src="imagenes/selector_inicio2.jpg" width="25" height="15" onclick="Selector(1);">
+					<input type= "hidden" name= "botonSelector" value="0">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_anterior2.jpg" width="25" height="15" onclick="Selector(2);">	
+				</td>			
+				<td>
+					<select name="filadesde" align="" onchange="submit();"> 
+						{foreach from=$combo item=fila}
+							<!--<option value="{$fila.inicio}">{$fila.inicio} - {$fila.fin}</option>-->
+							
+							{if {$filades} == {$fila.inicio}}
+								<option value="{$fila.inicio}" selected>{$fila.inicio} - {$fila.fin}</option>
+							{else}
+								<option value="{$fila.inicio}">{$fila.inicio} - {$fila.fin}</option>
+							{/if}
+							
+						{/foreach}
+					</select> 
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_siguiente2.jpg" width="25" height="15" onclick="Selector(3);">
+				</td>
+				<td>
+					<input type=image src="imagenes/selector_fin2.jpg" width="25" height="15" onclick="Selector(4);">
+				</td>
+				<td>
+					&nbsp;&nbsp;&nbsp;
+				</td>
+			</tr>
+		</table>			
+			
+		<table width="900px" border = "0" align = "left">
+			<tr>				
+				<td>
+					<th align='left'>Reserva desde:</th>
+				</td>
+
+				<td><input type= 'text' id= 'buscar_desde' name= 'buscar_desde' value="{$buscar_desde}" size='12'>
+						<img id="botonbuscar_desde" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'buscar_desde',
+							button : "botonbuscar_desde",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>					
+				</td>
+
+				<td>
+					&nbsp;&nbsp;&nbsp;
+				</td>
+				<td>
+					<th align='left'>Hasta:</th>
+				</td>
+				
+				<td><input type= 'text' id= 'buscar_hasta' name= 'buscar_hasta' value="{$buscar_hasta}" size='12'>
+						<img id="botonbuscar_hasta" height="20" src="imagenes/cal.gif">
+						<script type="text/javascript">
+							Calendar.setup({
+							inputField : 'buscar_hasta',
+							button : "botonbuscar_hasta",
+							ifFormat : "%d-%m-%Y",
+							align : "tr"
+							});
+						</script>					
+				</td>				
+				<td>
+					&nbsp;&nbsp;&nbsp;
+				</td>				
+
+				<td>
+					<th align='left'>Pais:</th>
+				</td>
+				<td>
+					<select id="buscar_pais" name="buscar_pais"> 
+						{foreach from=$comboPaises item=fila11}
+							{if {$buscar_pais} == {$fila11.codigo}}
+								<option value="{$fila11.codigo}" selected>{$fila11.nombre}</option>
+							{else}
+								<option value="{$fila11.codigo}">{$fila11.nombre}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>
+				<td>
+					&nbsp;&nbsp;&nbsp;
+				</td>				
+
+				<td>
+					<th align='left'>Producto:</th>
+				</td>
+				<td>
+					<select id="buscar_producto" name="buscar_producto"> 
+						{foreach from=$comboProductos item=fila11}
+							{if {$buscar_producto} == {$fila11.codigo}}
+								<option value="{$fila11.codigo}" selected>{$fila11.nombre}</option>
+							{else}
+								<option value="{$fila11.codigo}">{$fila11.nombre}</option>
+							{/if}
+						{/foreach}
+					</select> 
+				</td>				
+		
+			</tr>
+		</table>
+
+		<BR>	
+
+
+		<table width="95%" cellspacing="0" cellpadding="0" border="0" summary="" class="lineatitulo" style="padding:15px 0px 15px 0px;">
+			<tbody>
+				<tr>
+					<td>
+						<img width="20" height="4" alt="" src="imagenes/cghes.gif">
+					</td>
+
+					<td align='left' bgcolor='#333399' width="30%" height="20px" style="color:#000066; font-weight: bold; text-align:center; border-radius: 10px 10px 10px 10px;">
+						<font color='#CCFFFF' size='4'><B><I>Consulta Busquedas Web</I></B></font>
+					</td>
+
+					<td width="100%">
+						<img width="100%" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_buscar.jpg" width="70" height="25">-->
+						<input type="button" id="boton_buscar" value="BUSCAR" class="boton" onClick="Buscar_general()"/>
+					</td>
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+
+					<td>
+						<img width="25" height="4" alt="" src="imagenes/cghec.gif">
+					</td>
+					<td>
+						<!--<input type="image" src="imagenes/boton_salir.jpg" width="70" height="25" onClick="salir('S')">-->
+						<input type= "hidden" name= "ir_a" value="">
+					</td>
+					<td>
+						<img width="50" height="4" alt="" src="imagenes/cghee.gif">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		{$mensaje1}
+		{$mensaje2}
+
+		<table width="95%" border = "0" align = "left" class="fondotabla" style="clear:both">
+			<tr class="cabeceratabla">
+
+				<th>Pais</th>
+				<th>Producto</th>
+				<!--<th>Origen</th>-->
+				<th>Destino</th>
+				<th>Salida</th>
+				<th>Noc</th>
+				<th>Cat</th>
+				<!--<th>Zona</th>
+				<th>Hotel</th>-->
+				
+				<th>Fecha Busq.</th>
+				<th>Pulsar</th>
+				<th>Carga pág.</th>
+				<th>Seg</th>
+				<th>Usuario</th>
+				<th>Web</th>
+
+
+			</tr>
+
+			{section name=i loop=$busquedas_web}
+			<tr>
+				
+
+				<td><input type= 'text' name= 'pais{$smarty.section.i.index}' size='10' value="{$busquedas_web[i].pais}" class="camposololecturatext" readonly></td>
+
+				<td><input type= 'text' name= 'producto{$smarty.section.i.index}' size='8' value="{$busquedas_web[i].producto}" class="camposololecturatext" readonly></td>
+
+				<!--<td><input type= 'text' name= 'origen{$smarty.section.i.index}' size='12' value="{$busquedas_web[i].origen}" class="camposololecturatext" readonly></td>-->
+
+				<td><input type= 'text' name= 'destino{$smarty.section.i.index}' size='20' value="{$busquedas_web[i].destino}" class="camposololecturatext" readonly></td>
+
+				<td><input type= 'text' name= 'salida{$smarty.section.i.index}' size='7' value="{$busquedas_web[i].salida}" class="camposololecturacenter" readonly></td>
+
+				<td><input type= 'text' name= 'noches{$smarty.section.i.index}' size='1' value="{$busquedas_web[i].noches}" class="camposololecturacenter" readonly></td>
+
+				<td><input type= 'text' name= 'categoria{$smarty.section.i.index}' size='1' value="{$busquedas_web[i].categoria}" class="camposololecturacenter" readonly></td>
+
+				<!--<td><input type= 'text' name= 'zona{$smarty.section.i.index}' size='20' value="{$busquedas_web[i].zona}" class="camposololecturatext" readonly></td>
+
+				<td><input type= 'text' name= 'hotel{$smarty.section.i.index}' size='25' value="{$busquedas_web[i].hotel}" class="camposololecturatext" readonly></td>-->
+
+				
+
+				<td><input type= 'text' name= 'fecha_busqueda{$smarty.section.i.index}' size='7' value="{$busquedas_web[i].fecha_busqueda}" class="camposololecturacenter" readonly></td>
+
+				<td><input type= 'text' name= 'busqueda_inicio{$smarty.section.i.index}' size='7' value="{$busquedas_web[i].busqueda_inicio}" class="camposololecturacenter" readonly></td>
+
+
+				<td><input type= 'text' name= 'busqueda_fin{$smarty.section.i.index}' size='7' value="{$busquedas_web[i].busqueda_fin}" class="camposololecturacenter" readonly></td>
+
+				<td><input type= 'text' name= 'segundos{$smarty.section.i.index}' size='1' value="{$busquedas_web[i].segundos}" class="camposololecturacenter" readonly></td>
+
+				<td><input type= 'text' name= 'usuario{$smarty.section.i.index}' size='15' value="{$busquedas_web[i].usuario}" class="camposololecturatext" readonly></td>
+
+				<td><input type= 'text' name= 'web{$smarty.section.i.index}' size='30' value="{$busquedas_web[i].web}" class="camposololecturatext" readonly></td>
+
+			</tr>
+			{/section}
+
+
+
+
+		</table>	
+
+		{include file="$pie"}
+	</form>
+
+
+ </BODY>
+</HTML>
+
+
+
+
