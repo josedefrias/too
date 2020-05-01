@@ -8,7 +8,7 @@
 .IGNORE: check-style-ci check-cpd-ci
  
 check-style:
-	phpcs --standard=CakePHP --extensions=php,ctp -p ./
+	phpcs --standard=PHPCS --extensions=php,ctp -p ./
 
 check-style-ci:
 	phpcs --standard=PHPCS --extensions=php,ctp -p --report=checkstyle --report-file=build/checkstyle.xml ./
